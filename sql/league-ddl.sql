@@ -53,9 +53,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `player` ;
 
 CREATE TABLE IF NOT EXISTS `player` (
-  `player_id` INT NOT NULL,
+  `player_id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(50) NOT NULL,
-  `lastName` VARCHAR(50) NOT NULL,
+  `last_Name` VARCHAR(50) NOT NULL,
   `position` VARCHAR(50) NOT NULL,
   `rating` INT NOT NULL,
   `team_id` INT NULL,
