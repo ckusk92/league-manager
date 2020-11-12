@@ -89,6 +89,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `game` ;
 
 CREATE TABLE IF NOT EXISTS `game` (
+  `game_id` INT NOT NULL AUTO_INCREMENT,
   `home_team_id` INT NOT NULL,
   `away_team_id` INT NOT NULL,
   `game_number` INT NOT NULL,
@@ -96,13 +97,14 @@ CREATE TABLE IF NOT EXISTS `game` (
   `away_score` INT NULL,
   `played` TINYINT NOT NULL,
   INDEX `home_team_id_idx` (`away_team_id` ASC, `home_team_id` ASC) VISIBLE,
+  PRIMARY KEY (`game_id`),
   CONSTRAINT `home_team_id`
     FOREIGN KEY (`home_team_id`)
     REFERENCES `user_team` (`user_team_id`),
   CONSTRAINT `away_team_id`
     FOREIGN KEY (`away_team_id`)
     REFERENCES `user_team` (`user_team_id`)
-  )
+   )
 ENGINE = InnoDB;
 
 
@@ -164,6 +166,9 @@ delimiter //
 create procedure set_known_good_state()
 begin
 
+  delete from game;
+  alter table game auto_increment = 1;
+
   delete from user_team;
   alter table user_team auto_increment = 1;
 
@@ -178,9 +183,6 @@ begin
 
   delete from user;
   alter table user auto_increment = 1;
-
-  delete from game;
-  alter table game auto_increment = 1;
 
   delete from record;
   alter table record auto_increment = 1;
@@ -229,6 +231,9 @@ begin
   insert into user_team (user_id, team_id, user_controlled, rating)
   values (1, 1, true, 80), (1, 2, false, 75), (1, 3, false, 82), (1, 4, false, 69),
          (2, 5, true, 73), (2, 6, false, 77), (2, 7, false, 85), (2, 8, false, 61);
+
+  insert into game (game_id, home_team_id, away_team_id, game_number, home_score, away_score, played)
+  values (1, 1, 1, 1, 0, 0, false), (2, 3, 4, 1, 0, 0, false), (3, 1, 3, 2, 0, 0, false), (4, 2, 4, 2, 0, 0, false);
 
 end //
 
