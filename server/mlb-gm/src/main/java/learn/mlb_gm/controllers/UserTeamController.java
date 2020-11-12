@@ -2,6 +2,7 @@ package learn.mlb_gm.controllers;
 
 import learn.mlb_gm.domain.Result;
 import learn.mlb_gm.domain.UserTeamService;
+import learn.mlb_gm.models.InitInfo;
 import learn.mlb_gm.models.UserTeam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,12 @@ public class UserTeamController {
         }
         return ErrorResponse.build(result);
     }
+
+    @PostMapping("/create")
+    public void initiateUserTeams(@RequestBody InitInfo initInfo) {
+        service.initiateUserTeams(initInfo);
+    }
+
 
     @PutMapping("/{userTeamId}")
     public ResponseEntity<Object> update(@PathVariable int userTeamId, @RequestBody UserTeam userTeam) {
