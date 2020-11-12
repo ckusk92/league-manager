@@ -12,6 +12,8 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 
 CREATE SCHEMA IF NOT EXISTS `league` DEFAULT CHARACTER SET utf8 ;
+drop database if exists `league`;
+create database `league`;
 USE `league` ;
 
 -- -----------------------------------------------------

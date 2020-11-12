@@ -1,5 +1,8 @@
 use league;
 
+insert into user (user_id, username, password)
+    values (1, 'username', 'password');
+
 insert into position (position_id, position)
 	values (1, 'P'),
 	       (2, 'C'),
