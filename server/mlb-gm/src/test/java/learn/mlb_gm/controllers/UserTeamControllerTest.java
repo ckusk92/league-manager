@@ -38,11 +38,11 @@ public class UserTeamControllerTest {
 
     // NOT PASSING
     @Test
-    void addShouldReturn400WhenInvalid() throws Exception {
+    void addShouldReturn400WhenInvalidField() throws Exception {
 
         ObjectMapper jsonMapper = new ObjectMapper();
 
-        UserTeam userTeam = new UserTeam();
+        UserTeam userTeam = new UserTeam(0, 1, 1, false, 105);
         String userTeamJson = jsonMapper.writeValueAsString(userTeam);
 
         var request = post("/userteam")
