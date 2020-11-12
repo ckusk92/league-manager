@@ -70,7 +70,7 @@ public class UserTeamController {
         return ErrorResponse.build(result);
     }
 
-    @DeleteMapping("{userTeamId}")
+    @DeleteMapping("/{userTeamId}")
     public ResponseEntity<Void> deleteById(@PathVariable int userTeamId) {
         if(service.deleteById(userTeamId)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

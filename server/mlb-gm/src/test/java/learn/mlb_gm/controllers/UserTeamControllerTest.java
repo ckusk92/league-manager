@@ -162,7 +162,7 @@ public class UserTeamControllerTest {
     }
 
     @Test
-    void shouldNotUpdateMisingId() throws Exception {
+    void shouldNotUpdateMissingId() throws Exception {
         UserTeam userTeam = new UserTeam(1000, 1, 1, true, 90);
 
         when(repository.update(userTeam)).thenReturn(false);
