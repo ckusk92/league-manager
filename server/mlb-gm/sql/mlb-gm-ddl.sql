@@ -90,6 +90,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `game` ;
 
 CREATE TABLE IF NOT EXISTS `game` (
+  `game_id` INT NOT NULL AUTO_INCREMENT,
   `home_team_id` INT NOT NULL,
   `away_team_id` INT NOT NULL,
   `game_number` INT NOT NULL,
@@ -97,6 +98,7 @@ CREATE TABLE IF NOT EXISTS `game` (
   `away_score` INT NULL,
   `played` TINYINT NOT NULL,
   INDEX `home_team_id_idx` (`away_team_id` ASC, `home_team_id` ASC) VISIBLE,
+  PRIMARY KEY (`game_id`),
   CONSTRAINT `home_team_id`
     FOREIGN KEY (`home_team_id`)
     REFERENCES `user_team` (`user_team_id`),
