@@ -2,9 +2,13 @@ package learn.mlb_gm.domain;
 
 import learn.mlb_gm.data.GameRepository;
 import learn.mlb_gm.models.Game;
+import learn.mlb_gm.models.UserTeam;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class GameService {
@@ -62,6 +66,27 @@ public class GameService {
 
     public boolean deleteById(int gameId) {
         return repository.deleteById(gameId);
+    }
+
+    public void createSchedule(List<UserTeam> userTeams, int numGames) {
+        Random random = new Random();
+        // Loop will repeat once for every game day
+        for(int i = 0; i < numGames; i++) {
+            List<Integer> teamIds = new ArrayList<>();
+
+            // Full up teamIds array in a new order every time
+            while(teamIds.size() < userTeams.size()) {
+                Integer index = random.nextInt(userTeams.size());
+                if(!teamIds.contains(userTeams.get(index).getUserTeamId())) {
+                    teamIds.add(userTeams.get(index).getUserTeamId());
+                }
+            }
+
+            // Adds games to schedule for number of games selected, random matchings
+            for(int j = 0; j < teamIds.size(); j = j + 2) {
+                repository.add(new Game(1, teamIds.get(j), teamIds.get(j+1), i+1, 0, 0, false));
+            }
+        }
     }
 
     private Result<Game> validate(Game game) {

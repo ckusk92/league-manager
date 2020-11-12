@@ -1,5 +1,6 @@
 package learn.mlb_gm.controllers;
 
+import learn.mlb_gm.domain.GameService;
 import learn.mlb_gm.domain.Result;
 import learn.mlb_gm.domain.UserTeamService;
 import learn.mlb_gm.models.InitInfo;
@@ -16,9 +17,12 @@ import java.util.List;
 public class UserTeamController {
 
     private final UserTeamService service;
+    private final GameService gameService;
 
-    public UserTeamController(UserTeamService service) {
+    public UserTeamController(UserTeamService service, GameService gameService) {
+
         this.service = service;
+        this.gameService = gameService;
     }
 
     @GetMapping
@@ -54,6 +58,8 @@ public class UserTeamController {
     @PostMapping("/create")
     public void initiateUserTeams(@RequestBody InitInfo initInfo) {
         service.initiateUserTeams(initInfo);
+        // 1 will be swapped with userId passed in initInfo later
+        gameService.createSchedule(service.findAllForUser(1), initInfo.getNumberOfGames());
     }
 
 
