@@ -69,6 +69,8 @@ public class UserTeamService {
 
     public boolean deleteById(int userTeamId) { return repository.deleteById(userTeamId); }
 
+
+
     public void initiateUserTeams(InitInfo initInfo) {
         Random random = new Random();
 
