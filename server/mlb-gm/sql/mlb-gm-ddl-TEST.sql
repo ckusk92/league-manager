@@ -166,14 +166,17 @@ delimiter //
 create procedure set_known_good_state()
 begin
 
-  delete from game;
+delete from game;
   alter table game auto_increment = 1;
 
-  delete from user_team;
-  alter table user_team auto_increment = 1;
+  delete from record;
+  -- alter table record auto_increment = 1;
 
   delete from team_player;
   alter table team_player auto_increment = 1;
+
+  delete from user_team;
+  alter table user_team auto_increment = 1;
 
   delete from team;
   alter table team auto_increment = 1;
@@ -183,9 +186,6 @@ begin
 
   delete from user;
   alter table user auto_increment = 1;
-
-  delete from record;
-  alter table record auto_increment = 1;
 
   delete from position;
   alter table position auto_increment = 1;
@@ -238,6 +238,9 @@ begin
   insert into team_player (user_team_id, player_id)
   values (1, 1), (1, 2), (1, 3), (1, 4), (1, 5),
          (2, 6), (2, 7), (2, 8), (2, 9), (2, 10);
+
+  insert into record (user_team_id, win, loss)
+  values (1, 5, 4), (2, 4, 5), (3, 9, 0), (4, 0, 9);
 
 end //
 
