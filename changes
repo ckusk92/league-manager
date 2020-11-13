@@ -1,0 +1,978 @@
+[1mdiff --git a/client/src/TeamsCreation.js b/client/src/TeamsCreation.js[m
+[1mindex 4a83230..2282ff7 100644[m
+[1m--- a/client/src/TeamsCreation.js[m
+[1m+++ b/client/src/TeamsCreation.js[m
+[36m@@ -2,119 +2,119 @@[m [mimport React from "react";[m
+ [m
+ [m
+ class TeamsCreation extends React.Component {[m
+[31m-    constructor() {[m
+[31m-[m
+[31m-        super();[m
+[31m-        this.state = {[m
+[31m-            teams: [],[m
+[31m-            numberOfTeams: 0,[m
+[31m-            id: 0,[m
+[31m-            teamName: '', //not sure, but including for now[m
+[31m-            numberOfGames: 0,[m
+[31m-            userTeamChoiceId: 0,[m
+[31m-        };[m
+[31m-    }[m
+[31m-[m
+[31m-    getTeams = () => {[m
+[31m-        fetch("http://localhost:8080/teams")[m
+[31m-            .then((response) => response.json())[m
+[31m-            .then((data) => {[m
+[31m-                this.setState({[m
+[31m-                    teams: data,[m
+[31m-                    id: 0,[m
+[31m-                    teamName: '',[m
+[31m-                })[m
+[31m-[m
+[31m-            });[m
+[31m-    };[m
+[31m-[m
+[31m-    componentDidMount() {[m
+[31m-        this.getTeams();[m
+[31m-    }[m
+[31m-[m
+[31m-    changeHandler = (event) => {[m
+[31m-[m
+[31m-        const target = event.target;[m
+[31m-        const value = target.value;[m
+[31m-        const numberOfTeams = target.name;[m
+[31m-        const teamName = target.name[m
+[31m-        const userTeamChoiceId = target.name[m
+[31m-[m
+[31m-        this.setState({[m
+[31m-            [numberOfTeams]: value,[m
+[31m-            [teamName]: value,[m
+[31m-            [userTeamChoiceId]: value[m
+[31m-        });[m
+[31m-    };[m
+[31m-[m
+[31m-[m
+[31m-    createSeasonHandler = (event) => {[m
+[31m-        event.preventDefault();[m
+[31m-[m
+[31m-        fetch(`http://localhost:8080/teams`, {[m
+[31m-            method: "POST",[m
+[31m-            headers: {[m
+[31m-                "Content-Type": "application/json",[m
+[31m-            },[m
+[31m-            body: JSON.stringify({[m
+[31m-                numberOfTeams: this.state.numberOfTeams,[m
+[31m-                numberOfGames: this.state.numberOfGames,[m
+[31m-                userTeamChoiceId: this.state.userTeamChoiceId[m
+[31m-            }),[m
+[31m-        }).then((response) => {[m
+[31m-            if (response.status === 201) {[m
+[31m-                console.log("Success!");[m
+[31m-                response.json().then((data) => console.log(data));[m
+[31m-                this.getTeams();[m
+[31m-            } else if (response.status === 400) {[m
+[31m-                console.log("Errors!");[m
+[31m-                response.json().then((data) => console.log(data));[m
+[31m-            } else {[m
+[31m-                console.log("oops...");[m
+[31m-            }[m
+[31m-        });[m
+[31m-    };[m
+[31m-[m
+[31m-[m
+[31m-    render() {[m
+[31m-        return ([m
+[31m-            <>[m
+[31m-                <h2 className="text-center"> Create Season!</h2><br /><br />[m
+[31m-[m
+[31m-                <form>[m
+[31m-[m
+[31m-                    <div className="form-group col-6">[m
+[31m-                        <label for="selectNumberOfTeams">Enter the number of teams you to create in your league</label>[m
+[31m-                        <input type="number" className="form-control" name="numberOfTeams" value={this.state.numberOfTeams}[m
+[31m-                            onChange={this.changeHandler} />[m
+[31m-                    </div>[m
+[31m-[m
+[31m-                    <div className="form-group" class="col-6">[m
+[31m-                        <label for="selectNumberOfGames">Enter the number of games to play in the season</label>[m
+[31m-                        <input type="number" className="form-control" name="numberOfGames" value={this.state.numberOfGames}[m
+[31m-                            onChange={this.changeHandler} />[m
+[31m-                    </div><br /><br />[m
+[31m-[m
+[31m-                </form>[m
+[31m-[m
+[31m-                <div className="dropdown">[m
+[31m-                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">[m
+[31m-                        Choose your Team[m
+[32m+[m	[32mconstructor() {[m
+[32m+[m
+[32m+[m		[32msuper();[m
+[32m+[m		[32mthis.state = {[m
+[32m+[m			[32mteams: [],[m
+[32m+[m			[32mnumberOfTeams: 0,[m
+[32m+[m			[32mid: 0,[m
+[32m+[m			[32mteamName: '', //not sure, but including for now[m
+[32m+[m			[32mnumberOfGames: 0,[m
+[32m+[m			[32muserTeamChoiceId: 0,[m
+[32m+[m		[32m};[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mgetTeams = () => {[m
+[32m+[m		[32mfetch("http://localhost:8080/teams")[m
+[32m+[m			[32m.then((response) => response.json())[m
+[32m+[m			[32m.then((data) => {[m
+[32m+[m				[32mthis.setState({[m
+[32m+[m					[32mteams: data,[m
+[32m+[m					[32mid: 0,[m
+[32m+[m					[32mteamName: '',[m
+[32m+[m				[32m})[m
+[32m+[m
+[32m+[m			[32m});[m
+[32m+[m	[32m};[m
+[32m+[m
+[32m+[m	[32mcomponentDidMount() {[m
+[32m+[m		[32mthis.getTeams();[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mchangeHandler = (event) => {[m
+[32m+[m
+[32m+[m		[32mconst target = event.target;[m
+[32m+[m		[32mconst value = target.value;[m
+[32m+[m		[32mconst numberOfTeams = target.name;[m
+[32m+[m		[32mconst teamName = target.name[m
+[32m+[m		[32mconst userTeamChoiceId = target.name[m
+[32m+[m
+[32m+[m		[32mthis.setState({[m
+[32m+[m			[32m[numberOfTeams]: value,[m
+[32m+[m			[32m[teamName]: value,[m
+[32m+[m			[32m[userTeamChoiceId]: value[m
+[32m+[m		[32m});[m
+[32m+[m	[32m};[m
+[32m+[m
+[32m+[m
+[32m+[m	[32mcreateSeasonHandler = (event) => {[m
+[32m+[m		[32mevent.preventDefault();[m
+[32m+[m
+[32m+[m		[32mfetch(`http://localhost:8080/teams`, {[m
+[32m+[m			[32mmethod: "POST",[m
+[32m+[m			[32mheaders: {[m
+[32m+[m				[32m"Content-Type": "application/json",[m
+[32m+[m			[32m},[m
+[32m+[m			[32mbody: JSON.stringify({[m
+[32m+[m				[32mnumberOfTeams: this.state.numberOfTeams,[m
+[32m+[m				[32mnumberOfGames: this.state.numberOfGames,[m
+[32m+[m				[32muserTeamChoiceId: this.state.userTeamChoiceId[m
+[32m+[m			[32m}),[m
+[32m+[m		[32m}).then((response) => {[m
+[32m+[m			[32mif (response.status === 201) {[m
+[32m+[m				[32mconsole.log("Success!");[m
+[32m+[m				[32mresponse.json().then((data) => console.log(data));[m
+[32m+[m				[32mthis.getTeams();[m
+[32m+[m			[32m} else if (response.status === 400) {[m
+[32m+[m				[32mconsole.log("Errors!");[m
+[32m+[m				[32mresponse.json().then((data) => console.log(data));[m
+[32m+[m			[32m} else {[m
+[32m+[m				[32mconsole.log("oops...");[m
+[32m+[m			[32m}[m
+[32m+[m		[32m});[m
+[32m+[m	[32m};[m
+[32m+[m
+[32m+[m
+[32m+[m	[32mrender() {[m
+[32m+[m		[32mreturn ([m
+[32m+[m			[32m<>[m
+[32m+[m				[32m<h2 className="text-center"> Create Season!</h2><br /><br />[m
+[32m+[m
+[32m+[m				[32m<form>[m
+[32m+[m
+[32m+[m					[32m<div className="form-group col-6">[m
+[32m+[m						[32m<label for="selectNumberOfTeams">Enter the number of teams you to create in your league</label>[m
+[32m+[m						[32m<input type="number" className="form-control" name="numberOfTeams" value={this.state.numberOfTeams}[m
+[32m+[m							[32monChange={this.changeHandler} />[m
+[32m+[m					[32m</div>[m
+[32m+[m
+[32m+[m					[32m<div className="form-group" class="col-6">[m
+[32m+[m						[32m<label for="selectNumberOfGames">Enter the number of games to play in the season</label>[m
+[32m+[m						[32m<input type="number" className="form-control" name="numberOfGames" value={this.state.numberOfGames}[m
+[32m+[m							[32monChange={this.changeHandler} />[m
+[32m+[m					[32m</div><br /><br />[m
+[32m+[m
+[32m+[m				[32m</form>[m
+[32m+[m
+[32m+[m				[32m<div className="dropdown">[m
+[32m+[m					[32m<button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">[m
+[32m+[m						[32mChoose your Team[m
+                     </button>[m
+[31m-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">[m
+[31m-                        <button className="dropdown-item" href="#">Chicago Cubs</button>[m
+[31m-                        <button className="dropdown-item" href="#">Cincinatti Reds</button>[m
+[31m-                        <button className="dropdown-item" href="#">Chicago White Sox</button>[m
+[31m-                    </div>[m
+[31m-                </div><br /><br />[m
+[31m-[m
+[31m-                <div>[m
+[31m-                    <button type="submit" class="btn btn-block btn-dark">Create Season</button>[m
+[31m-                </div>[m
+[31m-[m
+[31m-            </>[m
+[31m-        );[m
+[31m-    }[m
+[32m+[m					[32m<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">[m
+[32m+[m						[32m<button className="dropdown-item" href="#">Chicago Cubs</button>[m
+[32m+[m						[32m<button className="dropdown-item" href="#">Cincinatti Reds</button>[m
+[32m+[m						[32m<button className="dropdown-item" href="#">Chicago White Sox</button>[m
+[32m+[m					[32m</div>[m
+[32m+[m				[32m</div><br /><br />[m
+[32m+[m
+[32m+[m				[32m<div>[m
+[32m+[m					[32m<button type="submit" class="btn btn-block btn-dark">Create Season</button>[m
+[32m+[m				[32m</div>[m
+[32m+[m
+[32m+[m			[32m</>[m
+[32m+[m		[32m);[m
+[32m+[m	[32m}[m
+ }[m
+ export default TeamsCreation;[m
+ [m
+[1mdiff --git a/server/mlb-gm/.classpath b/server/mlb-gm/.classpath[m
+[1mdeleted file mode 100644[m
+[1mindex 6e0021f..0000000[m
+[1m--- a/server/mlb-gm/.classpath[m
+[1m+++ /dev/null[m
+[36m@@ -1,55 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<classpath>[m
+[31m-	<classpathentry kind="src" output="target/classes" path="src/main/java">[m
+[31m-		<attributes>[m
+[31m-			<attribute name="optional" value="true"/>[m
+[31m-			<attribute name="maven.pomderived" value="true"/>[m
+[31m-		</attributes>[m
+[31m-	</classpathentry>[m
+[31m-	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">[m
+[31m-		<attributes>[m
+[31m-			<attribute name="maven.pomderived" value="true"/>[m
+[31m-		</attributes>[m
+[31m-	</classpathentry>[m
+[31m-	<classpathentry kind="src" output="target/test-classes" path="src/test/java">[m
+[31m-		<attributes>[m
+[31m-			<attribute name="optional" value="true"/>[m
+[31m-			<attribute name="maven.pomderived" value="true"/>[m
+[31m-			<attribute name="test" value="true"/>[m
+[31m-		</attributes>[m
+[31m-	</classpathentry>[m
+[31m-	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">[m
+[31m-		<attributes>[m
+[31m-			<attribute name="maven.pomderived" value="true"/>[m
+[31m-			<attribute name="test" value="true"/>[m
+[31m-		</attributes>[m
+[31m-	</classpathentry>[m
+[31m-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">[m
+[31m-		<attributes>[m
+[31m-			<attribute name="maven.pomderived" value="true"/>[m
+[31m-		</attributes>[m
+[31m-	</classpathentry>[m
+[31m-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">[m
+[31m-		<attributes>[m
+[31m-			<attribute name="maven.pomderived" value="true"/>[m
+[31m-		</attributes>[m
+[31m-	</classpathentry>[m
+[31m-	<classpathentry kind="src" path="target/generated-sources/annotations">[m
+[31m-		<attributes>[m
+[31m-			<attribute name="optional" value="true"/>[m
+[31m-			<attribute name="maven.pomderived" value="true"/>[m
+[31m-			<attribute name="ignore_optional_problems" value="true"/>[m
+[31m-			<attribute name="m2e-apt" value="true"/>[m
+[31m-		</attributes>[m
+[31m-	</classpathentry>[m
+[31m-	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">[m
+[31m-		<attributes>[m
+[31m-			<attribute name="optional" value="true"/>[m
+[31m-			<attribute name="maven.pomderived" value="true"/>[m
+[31m-			<attribute name="ignore_optional_problems" value="true"/>[m
+[31m-			<attribute name="m2e-apt" value="true"/>[m
+[31m-			<attribute name="test" value="true"/>[m
+[31m-		</attributes>[m
+[31m-	</classpathentry>[m
+[31m-	<classpathentry kind="output" path="target/classes"/>[m
+[31m-</classpath>[m
+[1mdiff --git a/server/mlb-gm/.project b/server/mlb-gm/.project[m
+[1mdeleted file mode 100644[m
+[1mindex 6256b92..0000000[m
+[1m--- a/server/mlb-gm/.project[m
+[1m+++ /dev/null[m
+[36m@@ -1,34 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<projectDescription>[m
+[31m-	<name>mlb-gm</name>[m
+[31m-	<comment></comment>[m
+[31m-	<projects>[m
+[31m-	</projects>[m
+[31m-	<buildSpec>[m
+[31m-		<buildCommand>[m
+[31m-			<name>org.eclipse.jdt.core.javabuilder</name>[m
+[31m-			<arguments>[m
+[31m-			</arguments>[m
+[31m-		</buildCommand>[m
+[31m-		<buildCommand>[m
+[31m-			<name>org.eclipse.m2e.core.maven2Builder</name>[m
+[31m-			<arguments>[m
+[31m-			</arguments>[m
+[31m-		</buildCommand>[m
+[31m-	</buildSpec>[m
+[31m-	<natures>[m
+[31m-		<nature>org.eclipse.jdt.core.javanature</nature>[m
+[31m-		<nature>org.eclipse.m2e.core.maven2Nature</nature>[m
+[31m-	</natures>[m
+[31m-	<filteredResources>[m
+[31m-		<filter>[m
+[31m-			<id>1605115750406</id>[m
+[31m-			<name></name>[m
+[31m-			<type>30</type>[m
+[31m-			<matcher>[m
+[31m-				<id>org.eclipse.core.resources.regexFilterMatcher</id>[m
+[31m-				<arguments>node_modules|.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>[m
+[31m-			</matcher>[m
+[31m-		</filter>[m
+[31m-	</filteredResources>[m
+[31m-</projectDescription>[m
+[1mdiff --git a/server/mlb-gm/.settings/org.eclipse.core.resources.prefs b/server/mlb-gm/.settings/org.eclipse.core.resources.prefs[m
+[1mdeleted file mode 100644[m
+[1mindex 29abf99..0000000[m
+[1m--- a/server/mlb-gm/.settings/org.eclipse.core.resources.prefs[m
+[1m+++ /dev/null[m
+[36m@@ -1,6 +0,0 @@[m
+[31m-eclipse.preferences.version=1[m
+[31m-encoding//src/main/java=UTF-8[m
+[31m-encoding//src/main/resources=UTF-8[m
+[31m-encoding//src/test/java=UTF-8[m
+[31m-encoding//src/test/resources=UTF-8[m
+[31m-encoding/<project>=UTF-8[m
+[1mdiff --git a/server/mlb-gm/.settings/org.eclipse.jdt.apt.core.prefs b/server/mlb-gm/.settings/org.eclipse.jdt.apt.core.prefs[m
+[1mdeleted file mode 100644[m
+[1mindex d4313d4..0000000[m
+[1m--- a/server/mlb-gm/.settings/org.eclipse.jdt.apt.core.prefs[m
+[1m+++ /dev/null[m
+[36m@@ -1,2 +0,0 @@[m
+[31m-eclipse.preferences.version=1[m
+[31m-org.eclipse.jdt.apt.aptEnabled=false[m
+[1mdiff --git a/server/mlb-gm/.settings/org.eclipse.jdt.core.prefs b/server/mlb-gm/.settings/org.eclipse.jdt.core.prefs[m
+[1mdeleted file mode 100644[m
+[1mindex 7797211..0000000[m
+[1m--- a/server/mlb-gm/.settings/org.eclipse.jdt.core.prefs[m
+[1m+++ /dev/null[m
+[36m@@ -1,10 +0,0 @@[m
+[31m-eclipse.preferences.version=1[m
+[31m-org.eclipse.jdt.core.compiler.codegen.methodParameters=generate[m
+[31m-org.eclipse.jdt.core.compiler.codegen.targetPlatform=11[m
+[31m-org.eclipse.jdt.core.compiler.compliance=11[m
+[31m-org.eclipse.jdt.core.compiler.problem.enablePreviewFeatures=disabled[m
+[31m-org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning[m
+[31m-org.eclipse.jdt.core.compiler.problem.reportPreviewFeatures=ignore[m
+[31m-org.eclipse.jdt.core.compiler.processAnnotations=disabled[m
+[31m-org.eclipse.jdt.core.compiler.release=disabled[m
+[31m-org.eclipse.jdt.core.compiler.source=11[m
+[1mdiff --git a/server/mlb-gm/bin/.idea/.gitignore b/server/mlb-gm/bin/.idea/.gitignore[m
+[1mdeleted file mode 100644[m
+[1mindex 26d3352..0000000[m
+[1m--- a/server/mlb-gm/bin/.idea/.gitignore[m
+[1m+++ /dev/null[m
+[36m@@ -1,3 +0,0 @@[m
+[31m-# Default ignored files[m
+[31m-/shelf/[m
+[31m-/workspace.xml[m
+[1mdiff --git a/server/mlb-gm/bin/.idea/compiler.xml b/server/mlb-gm/bin/.idea/compiler.xml[m
+[1mdeleted file mode 100644[m
+[1mindex 72c8bb5..0000000[m
+[1m--- a/server/mlb-gm/bin/.idea/compiler.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,20 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="CompilerConfiguration">[m
+[31m-    <annotationProcessing>[m
+[31m-      <profile name="Maven default annotation processors profile" enabled="true">[m
+[31m-        <sourceOutputDir name="target/generated-sources/annotations" />[m
+[31m-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />[m
+[31m-        <outputRelativeToContentRoot value="true" />[m
+[31m-        <module name="mlb_gm" />[m
+[31m-        <module name="mlb-gm" />[m
+[31m-      </profile>[m
+[31m-    </annotationProcessing>[m
+[31m-  </component>[m
+[31m-  <component name="JavacSettings">[m
+[31m-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">[m
+[31m-      <module name="mlb-gm" options="-parameters" />[m
+[31m-      <module name="mlb_gm" options="-parameters" />[m
+[31m-    </option>[m
+[31m-  </component>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/server/mlb-gm/bin/.idea/encodings.xml b/server/mlb-gm/bin/.idea/encodings.xml[m
+[1mdeleted file mode 100644[m
+[1mindex 63e9001..0000000[m
+[1m--- a/server/mlb-gm/bin/.idea/encodings.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,6 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="Encoding">[m
+[31m-    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />[m
+[31m-  </component>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/server/mlb-gm/bin/.idea/jarRepositories.xml b/server/mlb-gm/bin/.idea/jarRepositories.xml[m
+[1mdeleted file mode 100644[m
+[1mindex 712ab9d..0000000[m
+[1m--- a/server/mlb-gm/bin/.idea/jarRepositories.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,20 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="RemoteRepositoriesConfiguration">[m
+[31m-    <remote-repository>[m
+[31m-      <option name="id" value="central" />[m
+[31m-      <option name="name" value="Central Repository" />[m
+[31m-      <option name="url" value="https://repo.maven.apache.org/maven2" />[m
+[31m-    </remote-repository>[m
+[31m-    <remote-repository>[m
+[31m-      <option name="id" value="central" />[m
+[31m-      <option name="name" value="Maven Central repository" />[m
+[31m-      <option name="url" value="https://repo1.maven.org/maven2" />[m
+[31m-    </remote-repository>[m
+[31m-    <remote-repository>[m
+[31m-      <option name="id" value="jboss.community" />[m
+[31m-      <option name="name" value="JBoss Community repository" />[m
+[31m-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />[m
+[31m-    </remote-repository>[m
+[31m-  </component>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/server/mlb-gm/bin/.idea/misc.xml b/server/mlb-gm/bin/.idea/misc.xml[m
+[1mdeleted file mode 100644[m
+[1mindex 6d752e8..0000000[m
+[1m--- a/server/mlb-gm/bin/.idea/misc.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,14 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="ExternalStorageConfigurationManager" enabled="true" />[m
+[31m-  <component name="MavenProjectsManager">[m
+[31m-    <option name="originalFiles">[m
+[31m-      <list>[m
+[31m-        <option value="$PROJECT_DIR$/pom.xml" />[m
+[31m-      </list>[m
+[31m-    </option>[m
+[31m-  </component>[m
+[31m-  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" project-jdk-name="12" project-jdk-type="JavaSDK">[m
+[31m-    <output url="file://$PROJECT_DIR$/out" />[m
+[31m-  </component>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/server/mlb-gm/bin/.idea/uiDesigner.xml b/server/mlb-gm/bin/.idea/uiDesigner.xml[m
+[1mdeleted file mode 100644[m
+[1mindex e96534f..0000000[m
+[1m--- a/server/mlb-gm/bin/.idea/uiDesigner.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,124 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="Palette2">[m
+[31m-    <group name="Swing">[m
+[31m-      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />[m
+[31m-      </item>[m
+[31m-      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">[m
+[31m-        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />[m
+[31m-        <initial-values>[m
+[31m-          <property name="text" value="Button" />[m
+[31m-        </initial-values>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />[m
+[31m-        <initial-values>[m
+[31m-          <property name="text" value="RadioButton" />[m
+[31m-        </initial-values>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />[m
+[31m-        <initial-values>[m
+[31m-          <property name="text" value="CheckBox" />[m
+[31m-        </initial-values>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />[m
+[31m-        <initial-values>[m
+[31m-          <property name="text" value="Label" />[m
+[31m-        </initial-values>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">[m
+[31m-          <preferred-size width="150" height="-1" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">[m
+[31m-          <preferred-size width="150" height="-1" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">[m
+[31m-          <preferred-size width="150" height="-1" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[31m-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">[m
+[31m-          <preferred-size width="150" height="50" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[31m-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">[m
+[31m-          <preferred-size width="150" height="50" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[31m-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">[m
+[31m-          <preferred-size width="150" height="50" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">[m
+[31m-          <preferred-size width="150" height="50" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">[m
+[31m-          <preferred-size width="150" height="50" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">[m
+[31m-          <preferred-size width="150" height="50" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">[m
+[31m-          <preferred-size width="200" height="200" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">[m
+[31m-          <preferred-size width="200" height="200" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">[m
+[31m-          <preferred-size width="-1" height="20" />[m
+[31m-        </default-constraints>[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />[m
+[31m-      </item>[m
+[31m-      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">[m
+[31m-        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />[m
+[31m-      </item>[m
+[31m-    </group>[m
+[31m-  </component>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/server/mlb-gm/bin/.idea/vcs.xml b/server/mlb-gm/bin/.idea/vcs.xml[m
+[1mdeleted file mode 100644[m
+[1mindex b2bdec2..0000000[m
+[1m--- a/server/mlb-gm/bin/.idea/vcs.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,6 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project version="4">[m
+[31m-  <component name="VcsDirectoryMappings">[m
+[31m-    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />[m
+[31m-  </component>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/server/mlb-gm/bin/.project b/server/mlb-gm/bin/.project[m
+[1mdeleted file mode 100644[m
+[1mindex 6256b92..0000000[m
+[1m--- a/server/mlb-gm/bin/.project[m
+[1m+++ /dev/null[m
+[36m@@ -1,34 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<projectDescription>[m
+[31m-	<name>mlb-gm</name>[m
+[31m-	<comment></comment>[m
+[31m-	<projects>[m
+[31m-	</projects>[m
+[31m-	<buildSpec>[m
+[31m-		<buildCommand>[m
+[31m-			<name>org.eclipse.jdt.core.javabuilder</name>[m
+[31m-			<arguments>[m
+[31m-			</arguments>[m
+[31m-		</buildCommand>[m
+[31m-		<buildCommand>[m
+[31m-			<name>org.eclipse.m2e.core.maven2Builder</name>[m
+[31m-			<arguments>[m
+[31m-			</arguments>[m
+[31m-		</buildCommand>[m
+[31m-	</buildSpec>[m
+[31m-	<natures>[m
+[31m-		<nature>org.eclipse.jdt.core.javanature</nature>[m
+[31m-		<nature>org.eclipse.m2e.core.maven2Nature</nature>[m
+[31m-	</natures>[m
+[31m-	<filteredResources>[m
+[31m-		<filter>[m
+[31m-			<id>1605115750406</id>[m
+[31m-			<name></name>[m
+[31m-			<type>30</type>[m
+[31m-			<matcher>[m
+[31m-				<id>org.eclipse.core.resources.regexFilterMatcher</id>[m
+[31m-				<arguments>node_modules|.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>[m
+[31m-			</matcher>[m
+[31m-		</filter>[m
+[31m-	</filteredResources>[m
+[31m-</projectDescription>[m
+[1mdiff --git a/server/mlb-gm/bin/.settings/org.eclipse.core.resources.prefs b/server/mlb-gm/bin/.settings/org.eclipse.core.resources.prefs[m
+[1mdeleted file mode 100644[m
+[1mindex 99f26c0..0000000[m
+[1m--- a/server/mlb-gm/bin/.settings/org.eclipse.core.resources.prefs[m
+[1m+++ /dev/null[m
+[36m@@ -1,2 +0,0 @@[m
+[31m-eclipse.preferences.version=1[m
+[31m-encoding/<project>=UTF-8[m
+[1mdiff --git a/server/mlb-gm/bin/mlb_gm.iml b/server/mlb-gm/bin/mlb_gm.iml[m
+[1mdeleted file mode 100644[m
+[1mindex 78b2cc5..0000000[m
+[1m--- a/server/mlb-gm/bin/mlb_gm.iml[m
+[1m+++ /dev/null[m
+[36m@@ -1,2 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<module type="JAVA_MODULE" version="4" />[m
+\ No newline at end of file[m
+[1mdiff --git a/server/mlb-gm/bin/pom.xml b/server/mlb-gm/bin/pom.xml[m
+[1mdeleted file mode 100644[m
+[1mindex 6b56a11..0000000[m
+[1m--- a/server/mlb-gm/bin/pom.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,63 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<project xmlns="http://maven.apache.org/POM/4.0.0"[m
+[31m-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"[m
+[31m-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">[m
+[31m-    <modelVersion>4.0.0</modelVersion>[m
+[31m-[m
+[31m-    <groupId>learn</groupId>[m
+[31m-    <artifactId>mlb-gm</artifactId>[m
+[31m-    <version>1.0-SNAPSHOT</version>[m
+[31m-[m
+[31m-[m
+[31m-    <properties>[m
+[31m-        <maven.compiler.source>1.11</maven.compiler.source>[m
+[31m-        <maven.compiler.target>1.11</maven.compiler.target>[m
+[31m-    </properties>[m
+[31m-[m
+[31m-    <!-- The Spring Boot starter parent. Controls <dependencies> versions below.-->[m
+[31m-    <parent>[m
+[31m-        <groupId>org.springframework.boot</groupId>[m
+[31m-        <artifactId>spring-boot-starter-parent</artifactId>[m
+[31m-        <version>2.3.3.RELEASE</version>[m
+[31m-        <relativePath/>[m
+[31m-    </parent>[m
+[31m-[m
+[31m-    <dependencies>[m
+[31m-        <!-- Spring MVC -->[m
+[31m-        <dependency>[m
+[31m-            <groupId>org.springframework.boot</groupId>[m
+[31m-            <artifactId>spring-boot-starter-web</artifactId>[m
+[31m-        </dependency>[m
+[31m-[m
+[31m-        <!-- Database -->[m
+[31m-        <dependency>[m
+[31m-            <groupId>org.springframework.boot</groupId>[m
+[31m-            <artifactId>spring-boot-starter-jdbc</artifactId>[m
+[31m-        </dependency>[m
+[31m-        <dependency>[m
+[31m-            <groupId>mysql</groupId>[m
+[31m-            <artifactId>mysql-connector-java</artifactId>[m
+[31m-        </dependency>[m
+[31m-[m
+[31m-        <!-- Development tools -->[m
+[31m-        <dependency>[m
+[31m-            <groupId>org.springframework.boot</groupId>[m
+[31m-            <artifactId>spring-boot-devtools</artifactId>[m
+[31m-            <scope>runtime</scope>[m
+[31m-        </dependency>[m
+[31m-[m
+[31m-        <!-- Testing -->[m
+[31m-        <dependency>[m
+[31m-            <groupId>org.springframework.boot</groupId>[m
+[31m-            <artifactId>spring-boot-starter-test</artifactId>[m
+[31m-            <scope>test</scope>[m
+[31m-            <!-- 1. New element: exclusions -->[m
+[31m-            <exclusions>[m
+[31m-                <exclusion>[m
+[31m-                    <groupId>org.junit.vintage</groupId>[m
+[31m-                    <artifactId>junit-vintage-engine</artifactId>[m
+[31m-                </exclusion>[m
+[31m-            </exclusions>[m
+[31m-        </dependency>[m
+[31m-    </dependencies>[m
+[31m-</project>[m
+\ No newline at end of file[m
+[1mdiff --git a/server/mlb-gm/bin/sql/mlb-gm-ddl-TEST.sql b/server/mlb-gm/bin/sql/mlb-gm-ddl-TEST.sql[m
+[1mdeleted file mode 100644[m
+[1mindex 88d94b2..0000000[m
+[1m--- a/server/mlb-gm/bin/sql/mlb-gm-ddl-TEST.sql[m
+[1m+++ /dev/null[m
+[36m@@ -1,244 +0,0 @@[m
+[31m--- MySQL Script generated by MySQL Workbench[m
+[31m--- Tue Nov 10 17:58:44 2020[m
+[31m--- Model: New Model    Version: 1.0[m
+[31m--- MySQL Workbench Forward Engineering[m
+[31m-[m
+[31m-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;[m
+[31m-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;[m
+[31m-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';[m
+[31m-[m
+[31m--- -----------------------------------------------------[m
+[31m--- Schema mydb[m
+[31m--- -----------------------------------------------------[m
+[31m-CREATE SCHEMA IF NOT EXISTS `league_test` DEFAULT CHARACTER SET utf8 ;[m
+[31m-drop database if exists league_test;[m
+[31m-create database league_test;[m
+[31m-USE `league_test` ;[m
+[31m-[m
+[31m--- -----------------------------------------------------[m
+[31m--- Table `team`[m
+[31m--- -----------------------------------------------------[m
+[31m-DROP TABLE IF EXISTS `team` ;[m
+[31m-[m
+[31m-CREATE TABLE IF NOT EXISTS `team` ([m
+[31m-  `team_id` INT NOT NULL AUTO_INCREMENT,[m
+[31m-  `name` VARCHAR(45) NOT NULL,[m
+[31m-  PRIMARY KEY (`team_id`))[m
+[31m-ENGINE = InnoDB;[m
+[31m-[m
+[31m-[m
+[31m--- -----------------------------------------------------[m
+[31m--- Table `player`[m
+[31m--- -----------------------------------------------------[m
+[31m-DROP TABLE IF EXISTS `player` ;[m
+[31m-[m
+[31m-CREATE TABLE IF NOT EXISTS `player` ([m
+[31m-  `player_id` INT NOT NULL AUTO_INCREMENT,[m
+[31m-  `first_name` VARCHAR(50) NOT NULL,[m
+[31m-  `last_name` VARCHAR(50) NOT NULL,[m
+[31m-  `position_id` INT NOT NULL,[m
+[31m-  `rating` INT NOT NULL,[m
+[31m-  PRIMARY KEY (`player_id`),[m
+[31m-  CONSTRAINT `player_position_id`[m
+[31m-    FOREIGN KEY (`position_id`)[m
+[31m-    REFERENCES `position` (`position_id`)[m
+[31m-)    [m
+[31m-ENGINE = InnoDB;[m
+[31m-[m
+[31m-[m
+[31m--- -----------------------------------------------------[m
+[31m--- Table `user`[m
+[31m--- -----------------------------------------------------[m
+[31m-DROP TABLE IF EXISTS `user` ;[m
+[31m-[m
+[31m-CREATE TABLE IF NOT EXISTS `user` ([m
+[31m-  `user_id` INT NOT NULL AUTO_INCREMENT,[m
+[31m-  `username` VARCHAR(45) NOT NULL,[m
+[31m-  `password` VARCHAR(45) NOT NULL,[m
+[31m-  PRIMARY KEY (`user_id`))[m
+[31m-ENGINE = InnoDB;[m
+[31m-[m
+[31m-[m
+[31m--- -----------------------------------------------------[m
+[31m--- Table `user_team`[m
+[31m--- -----------------------------------------------------[m
+[31m-DROP TABLE IF EXISTS `user_team` ;[m
+[31m-[m
+[31m-CREATE TABLE IF NOT EXISTS `user_team` ([m
+[31m-  `user_team_id` INT NOT NULL AUTO_INCREMENT,[m
+[31m-  `user_id` INT NOT NULL,[m
+[31m-  `team_id` INT NOT NULL,[m
+[31m-  `user_controlled` TINYINT NOT NULL DEFAULT 0,[m
+[31m-  `rating` INT NOT NULL,[m
+[31m-  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,[m
+[31m-  INDEX `team_id_idx` (`team_id` ASC) VISIBLE,[m
+[31m-  PRIMARY KEY (`user_team_id`),[m
+[31m-  CONSTRAINT `user_id`[m
+[31m-    FOREIGN KEY (`user_id`)[m
+[31m-    REFERENCES `user` (`user_id`),[m
+[31m-  CONSTRAINT `team_id`[m
+[31m-    FOREIGN KEY (`team_id`)[m
+[31m-    REFERENCES `team` (`team_id`)[m
+[31m-  )[m
+[31m-ENGINE = InnoDB;[m
+[31m-[m
+[31m-[m
+[31m--- -----------------------------------------------------[m
+[31m--- Table `game`[m
+[31m--- -----------------------------------------------------[m
+[31m-DROP TABLE IF EXISTS `game` ;[m
+[31m-[m
+[31m-CREATE TABLE IF NOT EXISTS `game` ([m
+[31m-  `game_id` INT NOT NULL AUTO_INCREMENT,[m
+[31m-  `home_team_id` INT NOT NULL,[m
+[31m-  `away_team_id` INT NOT NULL,[m
+[31m-  `game_number` INT NOT NULL,[m
+[31m-  `home_score` INT NULL,[m
+[31m-  `away_score` INT NULL,[m
+[31m-  `played` TINYINT NOT NULL,[m
+[31m-  INDEX `home_team_id_idx` (`away_team_id` ASC, `home_team_id` ASC) VISIBLE,[m
+[31m-  PRIMARY KEY (`game_id`),[m
+[31m-  CONSTRAINT `home_team_id`[m
+[31m-    FOREIGN KEY (`home_team_id`)[m
+[31m-    REFERENCES `user_team` (`user_team_id`),[m
+[31m-  CONSTRAINT `away_team_id`[m
+[31m-    FOREIGN KEY (`away_team_id`)[m
+[31m-    REFERENCES `user_team` (`user_team_id`)[m
+[31m-   )[m
+[31m-ENGINE = InnoDB;[m
+[31m-[m
+[31m-[m
+[31m--- -----------------------------------------------------[m
+[31m--- Table `team_player`[m
+[31m--- -----------------------------------------------------[m
+[31m-DROP TABLE IF EXISTS `team_player` ;[m
+[31m-[m
+[31m-CREATE TABLE IF NOT EXISTS `team_player` ([m
+[31m-  `team_player_id` INT NOT NULL AUTO_INCREMENT,[m
+[31m-  `user_team_id` INT NOT NULL,[m
+[31m-  `player_id` INT NOT NULL,[m
+[31m-  PRIMARY KEY (`team_player_id`),[m
+[31m-  INDEX `user_team_id_idx` (`user_team_id` ASC) VISIBLE,[m
+[31m-  INDEX `player_id_idx` (`player_id` ASC) VISIBLE,[m
+[31m-  CONSTRAINT `user_team_id`[m
+[31m-    FOREIGN KEY (`user_team_id`)[m
+[31m-    REFERENCES `user_team` (`user_team_id`),[m
+[31m-  CONSTRAINT `player_id`[m
+[31m-    FOREIGN KEY (`player_id`)[m
+[31m-    REFERENCES `player` (`player_id`)[m
+[31m-  )[m
+[31m-ENGINE = InnoDB;[m
+[31m-[m
+[31m-[m
+[31m--- -----------------------------------------------------[m
+[31m--- Table `record`[m
+[31m--- -----------------------------------------------------[m
+[31m-DROP TABLE IF EXISTS `record` ;[m
+[31m-[m
+[31m-CREATE TABLE IF NOT EXISTS `record` ([m
+[31m-  `user_team_id` INT NOT NULL,[m
+[31m-  `win` INT NOT NULL,[m
+[31m-  `loss` INT NOT NULL,[m
+[31m-  CONSTRAINT `record_user_team_id`[m
+[31m-    FOREIGN KEY (`user_team_id`)[m
+[31m-    REFERENCES `user_team` (`user_team_id`)[m
+[31m-)[m
+[31m-ENGINE = InnoDB;[m
+[31m-[m
+[31m--- -----------------------------------------------------[m
+[31m--- Table `position`[m
+[31m--- -----------------------------------------------------[m
+[31m-DROP TABLE IF EXISTS `position` ;[m
+[31m-[m
+[31m-CREATE TABLE IF NOT EXISTS `position` ([m
+[31m-  `position_id` INT NOT NULL AUTO_INCREMENT,[m
+[31m-  `position` VARCHAR(2) NOT NULL,[m
+[31m-  PRIMARY KEY (`position_id`)[m
+[31m-)[m
+[31m-ENGINE = InnoDB;[m
+[31m-[m
+[31m-[m
+[31m-SET SQL_MODE=@OLD_SQL_MODE;[m
+[31m-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;[m
+[31m-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;[m
+[31m-[m
+[31m-delimiter //[m
+[31m-create procedure set_known_good_state()[m
+[31m-begin[m
+[31m-[m
+[31m-  delete from game;[m
+[31m-  alter table game auto_increment = 1;[m
+[31m-[m
+[31m-  delete from user_team;[m
+[31m-  alter table user_team auto_increment = 1;[m
+[31m-[m
+[31m-  delete from team_player;[m
+[31m-  alter table team_player auto_increment = 1;[m
+[31m-[m
+[31m-  delete from team;[m
+[31m-  alter table team auto_increment = 1;[m
+[31m-[m
+[31m-  delete from player;[m
+[31m-  alter table player auto_increment = 1;[m
+[31m-[m
+[31m-  delete from user;[m
+[31m-  alter table user auto_increment = 1;[m
+[31m-[m
+[31m-  delete from record;[m
+[31m-  alter table record auto_increment = 1;[m
+[31m-[m
+[31m-  delete from position;[m
+[31m-  alter table position auto_increment = 1;[m
+[31m-[m
+[31m-  insert into position (position_id, position)[m
+[31m-    values (1, 'P'),[m
+[31m-           (2, 'C'),[m
+[31m-           (3, '1B'),[m
+[31m-           (4, '2B'),[m
+[31m-           (5, '3B'),[m
+[31m-           (6, 'SS'),[m
+[31m-           (7, 'LF'),[m
+[31m-           (8, 'CF'),[m
+[31m-           (9, 'RF');[m
+[31m-[m
+[31m-  insert into team (name)[m
+[31m-  values ('Atlanta Braves'),[m
+[31m-       ('Florida Marlins'),[m
+[31m-       ('Philadelphia Phillies'),[m
+[31m-       ('Washington Nationals'),[m
+[31m-       ('New York Mets'),[m
+[31m-       ('Chicago Cubs'),[m
+[31m-       ('St. Louis Cardinals'),[m
+[31m-       ('Cincinatti Reds');[m
+[31m-[m
+[31m-  insert into player (first_name, last_name, position_id, rating)[m
+[31m-  values ('Chance', 'Macfarlane', 1, 52),     [m
+[31m-         ('Mitch', 'Garver', 2, 82),[m
+[31m-         ('Christian', 'Vasquez', 2, 82),[m
+[31m-         ('Tom', 'Murphy', 2, 82),[m
+[31m-         ('Yadier', 'Molina', 2, 81),[m
+[31m-         ('Salvador', 'Perez', 2, 81),[m
+[31m-         ('Willson', 'Conteras', 2, 81),[m
+[31m-         ('Yasir', 'Grey', 3, 51),[m
+[31m-         ('Connor', 'Rasmussen', 3, 63),[m
+[31m-         ('Isaak', 'English', 3, 83),[m
+[31m-         ('Johnny', 'Wilkinson', 3, 68);[m
+[31m-[m
+[31m-  insert into user (username, password)[m
+[31m-  values ('user1', 'password'),[m
+[31m-         ('user2', 'password');[m
+[31m-[m
+[31m-  ins

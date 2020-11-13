@@ -81,17 +81,17 @@ class TeamsCreation extends React.Component {
 	render() {
 		return (
 			<>
-				<h2 className="text-center"> Create Season!</h2><br /><br />
+				<h1 className="text-center bg-primary text-light"> Create Custom Season</h1><br /><br />
 
 				<form className="form-group row" onSubmit={this.createSeasonHandler}>
 
-					<div className="form-group col-6">
+					<div className="form-group col-6 text-danger font-weight-bold">
 						<label for="selectNumberOfTeams">Enter the number of teams you to create in your league</label>
 						<input type="number" className="form-control" name="numberOfTeams" value={this.state.numberOfTeams}
 							onChange={this.numberOfTeamsChangeHandler} />
 					</div>
 
-					<div className="form-group col-6">
+					<div className="form-group col-6 text-danger font-weight-bold">
 						<label for="selectNumberOfGames">Enter the number of games to play in the season</label>
 						<input type="number" className="form-control" name="numberOfGames" value={this.state.numberOfGames}
 							onChange={this.gamesChangeHandler} />
@@ -99,17 +99,17 @@ class TeamsCreation extends React.Component {
 
 					<div className="form-group col-md-3">
 						<div className="select-container">
-							<select className="form-control" value={this.state.team}
+							<select className="form-control text-danger font-weight-bold" value={this.state.team}
 								onChange={this.teamChangeHandler} >
 								{this.state.teams.map((team) =>
-									<option key={team.teamId} value={team.teamId}>{team.teamId + " " + team.name}</option>)}
+									<option key={team.teamId} value={team.teamId}>{team.name}</option>)}
 					))
 						</select><br />
 						</div>
 					</div>
 
 					<div className="form-group col-12">
-						<button type="submit" className="btn btn-success btn-block">Create Season</button>
+						<button type="submit" className="btn btn-primary btn-block font-weight-bold">Create Season</button>
 					</div>
 
 				</form>
