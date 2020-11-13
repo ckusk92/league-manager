@@ -16,7 +16,7 @@ class TeamsCreation extends React.Component {
     }
 
     getTeams = () => {
-        fetch("http://localhost:8080/teams")
+        fetch("http://localhost:8080/team")
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -51,7 +51,7 @@ class TeamsCreation extends React.Component {
     createSeasonHandler = (event) => {
         event.preventDefault();
 
-        fetch(`http://localhost:8080/teams`, {
+        fetch(`http://localhost:8080/userteam/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -75,7 +75,6 @@ class TeamsCreation extends React.Component {
         });
     };
 
-
     render() {
         return (
             <>
@@ -83,33 +82,36 @@ class TeamsCreation extends React.Component {
 
                 <form>
 
-                    <div className="form-group col-6">
+                    <div className="form-group col-4">
                         <label for="selectNumberOfTeams">Enter the number of teams you to create in your league</label>
                         <input type="number" className="form-control" name="numberOfTeams" value={this.state.numberOfTeams}
                             onChange={this.changeHandler} />
                     </div>
 
-                    <div className="form-group" class="col-6">
+                    <div className="form-group col-4">
                         <label for="selectNumberOfGames">Enter the number of games to play in the season</label>
                         <input type="number" className="form-control" name="numberOfGames" value={this.state.numberOfGames}
                             onChange={this.changeHandler} />
+                    </div><br />
+
+
+                    <div className="dropdown">
+                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Choose your Team
+                    </button>
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button className="dropdown-item" href="#">Chicago Cubs</button>
+                            <button className="dropdown-item" href="#">Cincinatti Reds</button>
+                            <button className="dropdown-item" href="#">Chicago White Sox</button>
+                        </div>
                     </div><br /><br />
 
                 </form>
 
-                <div className="dropdown">
-                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Choose your Team
-                    </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button className="dropdown-item" href="#">Chicago Cubs</button>
-                        <button className="dropdown-item" href="#">Cincinatti Reds</button>
-                        <button className="dropdown-item" href="#">Chicago White Sox</button>
-                    </div>
-                </div><br /><br />
+
 
                 <div>
-                    <button type="submit" class="btn btn-block btn-dark">Create Season</button>
+                    <button type="submit" class="btn btn-block btn-dark col-4">Create Season</button>
                 </div>
 
             </>
