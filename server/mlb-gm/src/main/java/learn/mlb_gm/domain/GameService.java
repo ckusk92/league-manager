@@ -23,6 +23,21 @@ public class GameService {
         return repository.findAll();
     }
 
+    public List<Game> getSchedule() {
+//        List<Game> all = repository.findAll();
+//        List<Game> orderedAll = new ArrayList<>();
+//        // Loops through and gets games with game# 1 -> size in order
+//        for(int i = 0; i < all.size(); i++) {
+//            if(all.get(i).getGameNumber() == i + 1 && !orderedAll.contains(all.get(i))) {
+//                orderedAll.add(all.get(i));
+//            }
+//        }
+        // Hardcoded, will change later
+        int userId = 1;
+        List<Game> orderedAll = repository.findAllForUserInOrderOfGame(userId);
+        return orderedAll;
+    }
+
     public Game findById(int gameId) {
         return repository.findById(gameId);
     }

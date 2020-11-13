@@ -23,9 +23,20 @@ public class GameJdbcTemplateRepository implements GameRepository {
     @Override
     public List<Game> findAll() {
         final String sql = "select game_id, home_team_id, away_team_id, " +
-                "game_number, home_score, away_score, played from game";
+                "game_number, home_score, away_score, played from game;";
         return jdbcTemplate.query(sql, new GameMapper());
     }
+
+    @Override
+    public List<Game> findAllForUserInOrderOfGame(int userId) {
+        final String sql = "select game_id, home_team_id, away_team_id, game_number, home_score, away_score, played from " +
+                "game g inner join user_team ut on g.home_team_id = ut.user_team_id or g.away_team_id = ut.user_team_id " +
+                "where ut.user_id = ? and ut.user_controlled = 1 " +
+                "order by g.game_number asc;";
+
+        return jdbcTemplate.query(sql, new GameMapper(), userId);
+    }
+
 
     @Override
     public Game findById(int gameId) {

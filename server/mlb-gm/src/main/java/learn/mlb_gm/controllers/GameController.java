@@ -26,6 +26,15 @@ public class GameController {
         return service.findAll();
     }
 
+    @GetMapping("/schedule/{userId}")
+    public ResponseEntity<List<Game>> getSchedule(@PathVariable int userId) {
+        List<Game> schedule = service.getSchedule();
+        if(schedule.size() == 0) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(schedule);
+    }
+
     @GetMapping("/{gameId}")
     public ResponseEntity<Game> findById(@PathVariable int gameId) {
         Game game = service.findById(gameId);
