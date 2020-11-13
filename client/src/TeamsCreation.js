@@ -2,121 +2,121 @@ import React from "react";
 
 
 class TeamsCreation extends React.Component {
-    constructor() {
+	constructor() {
+		super();
+		this.state = {
+			teams: [],
+			numberOfTeams: 0,
+			teamId: 0,
+			name: '', //not sure, but including for now
+			numberOfGames: 0,
+			userTeamChoiceId: 0,
+		};
 
-        super();
-        this.state = {
-            teams: [],
-            numberOfTeams: 0,
-            id: 0,
-            teamName: '', //not sure, but including for now
-            numberOfGames: 0,
-            userTeamChoiceId: 0,
-        };
-    }
+		this.teamChangeHandler = this.teamChangeHandler.bind(this);
 
-    getTeams = () => {
-        fetch("http://localhost:8080/team")
-            .then((response) => response.json())
-            .then((data) => {
-                this.setState({
-                    teams: data,
-                    id: 0,
-                    teamName: '',
-                })
+	}
 
-            });
-    };
+	getTeams = () => {
+		fetch("http://localhost:8080/team")
+			.then((response) => response.json())
+			.then((data) => {
+				this.setState({
+					teams: data,
+				})
+			});
+	};
 
-    componentDidMount() {
-        this.getTeams();
-    }
+	componentDidMount() {
+		this.getTeams();
+	}
 
-    changeHandler = (event) => {
+	gamesChangeHandler = (event) => {
 
-        const target = event.target;
-        const value = target.value;
-        const numberOfTeams = target.name;
-        const teamName = target.name
-        const userTeamChoiceId = target.name
+		this.setState({
+			numberOfGames: event.target.value
+		});
 
-        this.setState({
-            [numberOfTeams]: value,
-            [teamName]: value,
-            [userTeamChoiceId]: value
-        });
-    };
+	}
 
+	numberOfTeamsChangeHandler = (event) => {
 
-    createSeasonHandler = (event) => {
-        event.preventDefault();
+		this.setState({
+			numberOfTeams: event.target.value
+		});
+	}
 
-        fetch(`http://localhost:8080/userteam/create`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                numberOfTeams: this.state.numberOfTeams,
-                numberOfGames: this.state.numberOfGames,
-                userTeamChoiceId: this.state.userTeamChoiceId
-            }),
-        }).then((response) => {
-            if (response.status === 201) {
-                console.log("Success!");
-                response.json().then((data) => console.log(data));
-                this.getTeams();
-            } else if (response.status === 400) {
-                console.log("Errors!");
-                response.json().then((data) => console.log(data));
-            } else {
-                console.log("oops...");
-            }
-        });
-    };
+	teamChangeHandler = (event) => {
 
-    render() {
-        return (
-            <>
-                <h2 className="text-center"> Create Season!</h2><br /><br />
+		this.setState({
+			teamId: event.target.value
+		});
+	}
 
-                <form>
+	createSeasonHandler = (event) => {
+		event.preventDefault();
 
-                    <div className="form-group col-4">
-                        <label for="selectNumberOfTeams">Enter the number of teams you to create in your league</label>
-                        <input type="number" className="form-control" name="numberOfTeams" value={this.state.numberOfTeams}
-                            onChange={this.changeHandler} />
-                    </div>
+		fetch(`http://localhost:8080/userteam/create`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				numberOfTeams: this.state.numberOfTeams,
+				numberOfGames: this.state.numberOfGames,
+				userTeamChoiceId: this.state.teamId,
+			}),
+		}).then((response) => {
+			if (response.status === 200) {
+				console.log("Success!");
+			} else if (response.status === 400) {
+				console.log("Errors!");
+				response.json().then((data) => console.log(data));
+			} else {
+				console.log("oops...");
+			}
+		});
+	};
 
-                    <div className="form-group col-4">
-                        <label for="selectNumberOfGames">Enter the number of games to play in the season</label>
-                        <input type="number" className="form-control" name="numberOfGames" value={this.state.numberOfGames}
-                            onChange={this.changeHandler} />
-                    </div><br />
+	render() {
+		return (
+			<>
+				<h2 className="text-center"> Create Season!</h2><br /><br />
 
+				<form className="form-group row" onSubmit={this.createSeasonHandler}>
 
-                    <div className="dropdown">
-                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Choose your Team
-                    </button>
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button className="dropdown-item" href="#">Chicago Cubs</button>
-                            <button className="dropdown-item" href="#">Cincinatti Reds</button>
-                            <button className="dropdown-item" href="#">Chicago White Sox</button>
-                        </div>
-                    </div><br /><br />
+					<div className="form-group col-6">
+						<label for="selectNumberOfTeams">Enter the number of teams you to create in your league</label>
+						<input type="number" className="form-control" name="numberOfTeams" value={this.state.numberOfTeams}
+							onChange={this.numberOfTeamsChangeHandler} />
+					</div>
 
-                </form>
+					<div className="form-group col-6">
+						<label for="selectNumberOfGames">Enter the number of games to play in the season</label>
+						<input type="number" className="form-control" name="numberOfGames" value={this.state.numberOfGames}
+							onChange={this.gamesChangeHandler} />
+					</div><br />
 
+					<div className="form-group col-md-3">
+						<div className="select-container">
+							<select className="form-control" value={this.state.team}
+								onChange={this.teamChangeHandler} >
+								{this.state.teams.map((team) =>
+									<option key={team.teamId} value={team.teamId}>{team.teamId + " " + team.name}</option>)}
+					))
+						</select><br />
+						</div>
+					</div>
 
+					<div className="form-group col-12">
+						<button type="submit" className="btn btn-success btn-block">Create Season</button>
+					</div>
 
-                <div>
-                    <button type="submit" class="btn btn-block btn-dark col-4">Create Season</button>
-                </div>
+				</form>
 
-            </>
-        );
-    }
+			</>
+		);
+	}
 }
 export default TeamsCreation;
 

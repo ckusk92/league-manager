@@ -1,0 +1,13 @@
+GET /team HTTP/1.1
+Host: localHost:8080
+
+###
+POST /userteam/create HTTP/1.1
+Host: localHost:8080
+Content-Type: application/json
+
+{
+    "numberOfTeams" : 8,
+    "numberOfGames" : 20,
+    "userTeamChoiceId" : 3
+}
