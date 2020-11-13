@@ -235,6 +235,10 @@ begin
   insert into game (game_id, home_team_id, away_team_id, game_number, home_score, away_score, played)
   values (1, 1, 1, 1, 0, 0, false), (2, 3, 4, 1, 0, 0, false), (3, 1, 3, 2, 0, 0, false), (4, 2, 4, 2, 0, 0, false);
 
+  insert into team_player (user_team_id, player_id)
+  values (1, 1), (1, 2), (1, 3), (1, 4), (1, 5),
+         (2, 6), (2, 7), (2, 8), (2, 9), (2, 10);
+
 end //
 
 delimiter ;  
