@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -24,6 +25,35 @@ public class PlayerJdbcTemplateRepository implements PlayerRepository {
     public List<Player> findAll() {
         final String sql = "select player_id, first_name, last_name, position_id, rating from player";
         return jdbcTemplate.query(sql, new PlayerMapper());
+    }
+
+    @Override
+    public List<Player> findAllActive() {
+        final String sql = "select p.player_id, p.first_name, p.last_name, p.position_id, p.rating from player p " +
+                "inner join team_player tp on p.player_id = tp.player_id;";
+        return jdbcTemplate.query(sql, new PlayerMapper());
+    }
+
+    @Override
+    public List<Player> findFreeAgents() {
+
+        List<Player> all = findAll();
+        List<Player> active = findAllActive();
+        List<Player> freeAgents = new ArrayList<>();
+
+        for(Player player : all) {
+            boolean contains = false;
+            for(Player actPl : active){
+                if(actPl.getPlayerId() == player.getPlayerId()) {
+                    contains = true;
+                }
+            }
+            if(!contains) {
+                freeAgents.add(player);
+            }
+        }
+
+        return freeAgents;
     }
 
     @Override

@@ -17,6 +17,8 @@ public class PlayerService {
 
     public List<Player> findAll() { return repository.findAll(); }
 
+    public List<Player> findFreeAgents() {return repository.findFreeAgents();}
+
     public Player findById(int playerId) { return repository.findById(playerId); }
 
     public Result<Player> add(Player player) {
