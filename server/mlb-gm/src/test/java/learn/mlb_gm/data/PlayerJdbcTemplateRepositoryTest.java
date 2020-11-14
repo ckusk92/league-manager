@@ -34,6 +34,18 @@ public class PlayerJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindFiveActivePlayers() {
+        List<Player> active = repository.findAllActive();
+        assertEquals(10, active.size());
+    }
+
+    @Test
+    void shouldFindOneFreeAgent() {
+        List<Player> freeAgents = repository.findFreeAgents();
+        assertEquals(1, freeAgents.size());
+    }
+
+    @Test
     void shouldFindTomMurphy() {
         Player tom = repository.findById(4);
         assertNotNull(tom);
