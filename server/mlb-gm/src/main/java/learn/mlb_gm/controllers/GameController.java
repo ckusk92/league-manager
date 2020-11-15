@@ -44,6 +44,16 @@ public class GameController {
         return ResponseEntity.ok(game);
     }
 
+    @GetMapping("/simgame")
+    public void simulateGame() {
+        service.simulateGame();
+    }
+
+    @GetMapping("/simseason")
+    public void simulateSeason() {
+        service.simulateSeason();
+    }
+
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody Game game) {
         Result<Game> result = service.add(game);
