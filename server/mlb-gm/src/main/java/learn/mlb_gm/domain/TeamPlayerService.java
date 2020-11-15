@@ -82,21 +82,18 @@ public class TeamPlayerService {
                 while(!draftResult.isSuccess() && !playerAvailable) {
                     int i = random.nextInt(playerRepository.findAll().size());
                     for(Player fa : freeAgents) {
+                        // If randomly selected player is in free agent pool
                         if(fa.getPlayerId() == playerRepository.findById(i).getPlayerId()) {
                             draftResult = add(new TeamPlayer(team.getUserTeamId(), playerRepository.findById(i).getPlayerId()));
-                            playerAvailable = true;
+                            // Only switch boolean if result is successful
+                            if(draftResult.isSuccess()) {
+                                playerAvailable = true;
+                            }
                         }
                     }
-
-                    // This conditional is never true
-//                    if (freeAgents.contains(playerRepository.findById(i))) {
-//                        draftResult = add(new TeamPlayer(team.getUserTeamId(), playerRepository.findById(i).getPlayerId()));
-//                    }
                 }
             }
         }
-
-
         return result;
     }
 
