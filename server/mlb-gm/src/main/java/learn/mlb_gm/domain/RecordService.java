@@ -19,6 +19,10 @@ public class RecordService {
         return repository.findAll();
     }
 
+    public List<Record> getStandings() {
+        return repository.getStandings();
+    }
+
     public Record findForTeam(int userTeamId) {
         return repository.findForTeam(userTeamId);
     }
