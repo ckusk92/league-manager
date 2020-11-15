@@ -5,6 +5,7 @@ public class TeamPlayer {
     private int teamPlayerId;
     private int userTeamId;
     private int playerId;
+    private int rating;
 
     public TeamPlayer() {
 
@@ -15,10 +16,17 @@ public class TeamPlayer {
         this.playerId = playerId;
     }
 
-    public TeamPlayer(int teamPlayerId, int userTeamId, int playerId) {
+    public TeamPlayer(int userTeamId, int playerId, int rating) {
+        this.userTeamId = userTeamId;
+        this.playerId = playerId;
+        this.rating = rating;
+    }
+
+    public TeamPlayer(int teamPlayerId, int userTeamId, int playerId, int rating) {
         this.teamPlayerId = teamPlayerId;
         this.userTeamId = userTeamId;
         this.playerId = playerId;
+        this.rating = rating;
     }
 
     public int getTeamPlayerId() {
@@ -43,5 +51,13 @@ public class TeamPlayer {
 
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }

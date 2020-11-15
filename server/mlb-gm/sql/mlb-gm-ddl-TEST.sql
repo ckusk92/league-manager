@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS `team_player` (
   `team_player_id` INT NOT NULL AUTO_INCREMENT,
   `user_team_id` INT NOT NULL,
   `player_id` INT NOT NULL,
+  `rating` INT NOT NULL DEFAULT 50,
   PRIMARY KEY (`team_player_id`),
   INDEX `user_team_id_idx` (`user_team_id` ASC) VISIBLE,
   INDEX `player_id_idx` (`player_id` ASC) VISIBLE,

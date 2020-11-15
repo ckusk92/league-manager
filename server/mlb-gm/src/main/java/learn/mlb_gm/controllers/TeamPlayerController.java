@@ -3,6 +3,7 @@ package learn.mlb_gm.controllers;
 
 import learn.mlb_gm.domain.Result;
 import learn.mlb_gm.domain.TeamPlayerService;
+import learn.mlb_gm.domain.UserTeamService;
 import learn.mlb_gm.models.TeamPlayer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,12 @@ import java.util.List;
 public class TeamPlayerController {
 
     private final TeamPlayerService service;
+    private final UserTeamService userTeamService;
 
-    public TeamPlayerController(TeamPlayerService service) {
+    public TeamPlayerController(TeamPlayerService service, UserTeamService userTeamService) {
+
         this.service = service;
+        this.userTeamService = userTeamService;
     }
 
     @GetMapping
@@ -56,6 +60,8 @@ public class TeamPlayerController {
         Result<TeamPlayer> result = service.draft(teamPlayer);
 
         if(result.isSuccess()) {
+            // Update team rating whenever a player is drafted
+            userTeamService.updateRating();
             return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
         }
         return ErrorResponse.build(result);

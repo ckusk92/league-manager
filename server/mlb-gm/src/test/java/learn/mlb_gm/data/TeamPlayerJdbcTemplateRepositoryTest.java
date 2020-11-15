@@ -44,7 +44,7 @@ public class TeamPlayerJdbcTemplateRepositoryTest {
 
     @Test
     void shouldAdd() {
-        TeamPlayer teamPlayer = new TeamPlayer(1, 8);
+        TeamPlayer teamPlayer = new TeamPlayer(1, 8, 50);
         TeamPlayer actual = repository.add(teamPlayer);
         assertNotNull(actual);
         assertEquals(NEXT_TEAM_PLAYER_ID, actual.getTeamPlayerId());
@@ -53,14 +53,14 @@ public class TeamPlayerJdbcTemplateRepositoryTest {
 
     @Test
     void shouldUpdate() {
-        TeamPlayer teamPlayer = new TeamPlayer(1, 1, 11);
+        TeamPlayer teamPlayer = new TeamPlayer(1, 1, 11, 50);
         assertTrue(repository.update(teamPlayer));
         assertEquals(11, repository.findById(1).getPlayerId());
     }
 
     @Test
     void shouldNotUpdateMissing() {
-        TeamPlayer teamPlayer = new TeamPlayer(10000, 1, 11);
+        TeamPlayer teamPlayer = new TeamPlayer(10000, 1, 11, 50);
         assertFalse(repository.update(teamPlayer));
     }
 
