@@ -8,6 +8,8 @@ public interface RecordRepository {
 
     public List<Record> findAll();
 
+    public List<Record> getStandings();
+
     public Record findForTeam(int userTeamId);
 
     public Record add(Record record);

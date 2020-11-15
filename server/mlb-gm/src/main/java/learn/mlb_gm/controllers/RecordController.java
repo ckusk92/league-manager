@@ -21,6 +21,9 @@ public class RecordController {
     @GetMapping
     public List<Record> findAll() {return service.findAll();}
 
+    @GetMapping("/standings")
+    public List<Record> standings() {return service.getStandings();}
+
     @GetMapping("/{userTeamId}")
     public ResponseEntity<Record> findForTeam(@PathVariable int userTeamId) {
         Record record = service.findForTeam(userTeamId);

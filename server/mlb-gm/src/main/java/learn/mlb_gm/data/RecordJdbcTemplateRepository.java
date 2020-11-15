@@ -25,6 +25,12 @@ public class RecordJdbcTemplateRepository implements RecordRepository {
     }
 
     @Override
+    public List<Record> getStandings() {
+        final String sql = "select user_team_id, win, loss from record order by win desc";
+        return jdbcTemplate.query(sql, new RecordMapper());
+    }
+
+    @Override
     public Record findForTeam(int userTeamId) {
         final String sql = "select user_team_id, win, loss from record where user_team_id = ?";
         return jdbcTemplate.query(sql, new RecordMapper(), userTeamId).stream().findFirst().orElse(null);
