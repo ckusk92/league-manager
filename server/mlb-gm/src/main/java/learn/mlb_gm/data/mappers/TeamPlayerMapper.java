@@ -14,6 +14,7 @@ public class TeamPlayerMapper implements RowMapper<TeamPlayer> {
         teamPlayer.setTeamPlayerId(resultSet.getInt("team_player_id"));
         teamPlayer.setUserTeamId(resultSet.getInt("user_team_id"));
         teamPlayer.setPlayerId(resultSet.getInt("player_id"));
+        teamPlayer.setRating(resultSet.getInt("rating"));
         return teamPlayer;
     }
 

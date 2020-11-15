@@ -1,7 +1,9 @@
 package learn.mlb_gm.domain;
 
+import learn.mlb_gm.data.TeamPlayerRepository;
 import learn.mlb_gm.data.UserTeamRepository;
 import learn.mlb_gm.models.InitInfo;
+import learn.mlb_gm.models.TeamPlayer;
 import learn.mlb_gm.models.UserTeam;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,11 @@ import java.util.Random;
 public class UserTeamService {
 
     private final UserTeamRepository repository;
+    private final TeamPlayerRepository teamPlayerRepository;
 
-    public UserTeamService(UserTeamRepository repository) {
+    public UserTeamService(UserTeamRepository repository, TeamPlayerRepository teamPlayerRepository) {
         this.repository = repository;
+        this.teamPlayerRepository = teamPlayerRepository;
     }
 
     public List<UserTeam> findAll() {
@@ -93,6 +97,26 @@ public class UserTeamService {
         for(int i = 1; i < initInfo.getNumberOfTeams(); i++) {
             repository.add(new UserTeam(1, teamIds.get(i), false, 50));
         }
+    }
+
+    public void updateRating() {
+        int userId = 1;
+
+        List<UserTeam> allTeams = repository.findAllByUser(userId);
+
+        for(UserTeam team : allTeams) {
+            List<TeamPlayer> allPlayers = teamPlayerRepository.findAllForTeam(team.getUserTeamId());
+
+            double totalRating = 0;
+            for(TeamPlayer player : allPlayers) {
+                totalRating += player.getRating();
+            }
+            int average = (int)(totalRating / allPlayers.size());
+
+            team.setRating(average);
+            repository.update(team);
+        }
+
     }
 
     private Result<UserTeam> validate(UserTeam userTeam) {

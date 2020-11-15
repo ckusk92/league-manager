@@ -57,11 +57,6 @@ public class TeamPlayerService {
             return result;
         }
 
-        if(teamPlayer.getTeamPlayerId() != 0) {
-            result.addMessage("teamPlayerId cannot be set for `add` operation", ResultType.INVALID);
-            return result;
-        }
-
         teamPlayer = repository.add(teamPlayer);
         result.setPayload(teamPlayer);
 
