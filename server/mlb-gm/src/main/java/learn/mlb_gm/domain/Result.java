@@ -13,6 +13,10 @@ public class Result<T> {
         return type;
     }
 
+    public void setType(ResultType type) {
+        this.type = type;
+    }
+
     public boolean isSuccess() {
         return type == ResultType.SUCCESS;
     }

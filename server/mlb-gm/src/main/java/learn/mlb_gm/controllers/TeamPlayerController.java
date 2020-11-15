@@ -51,6 +51,16 @@ public class TeamPlayerController {
         return ErrorResponse.build(result);
     }
 
+    @PostMapping("/draft")
+    public ResponseEntity<Object> draft(@RequestBody TeamPlayer teamPlayer) {
+        Result<TeamPlayer> result = service.draft(teamPlayer);
+
+        if(result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+        }
+        return ErrorResponse.build(result);
+    }
+
     @PutMapping("/{teamPlayerId}")
     public ResponseEntity<Object> update(@PathVariable int teamPlayerId, @RequestBody TeamPlayer teamPlayer) {
         if(teamPlayerId != teamPlayer.getTeamPlayerId()) {
