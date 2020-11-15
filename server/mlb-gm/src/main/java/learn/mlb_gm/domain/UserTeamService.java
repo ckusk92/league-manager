@@ -1,8 +1,10 @@
 package learn.mlb_gm.domain;
 
+import learn.mlb_gm.data.RecordRepository;
 import learn.mlb_gm.data.TeamPlayerRepository;
 import learn.mlb_gm.data.UserTeamRepository;
 import learn.mlb_gm.models.InitInfo;
+import learn.mlb_gm.models.Record;
 import learn.mlb_gm.models.TeamPlayer;
 import learn.mlb_gm.models.UserTeam;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,12 @@ public class UserTeamService {
 
     private final UserTeamRepository repository;
     private final TeamPlayerRepository teamPlayerRepository;
+    private final RecordRepository recordRepository;
 
-    public UserTeamService(UserTeamRepository repository, TeamPlayerRepository teamPlayerRepository) {
+    public UserTeamService(UserTeamRepository repository, TeamPlayerRepository teamPlayerRepository, RecordRepository recordRepository) {
         this.repository = repository;
         this.teamPlayerRepository = teamPlayerRepository;
+        this.recordRepository = recordRepository;
     }
 
     public List<UserTeam> findAll() {
@@ -92,10 +96,15 @@ public class UserTeamService {
             }
         }
 
+        // WILL NEED TO CHANGE WHEN MULTIPLE USERS
+        // RECORD NEEDS TO REFLECT USER TEAM ID
+
         repository.add(new UserTeam(1, teamIds.get(0), true, 50));
+        recordRepository.add(new Record(1, 0, 0));
 
         for(int i = 1; i < initInfo.getNumberOfTeams(); i++) {
             repository.add(new UserTeam(1, teamIds.get(i), false, 50));
+            recordRepository.add(new Record(i + 1, 0, 0));
         }
     }
 

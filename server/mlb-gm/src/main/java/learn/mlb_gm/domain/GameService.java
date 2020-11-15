@@ -1,7 +1,9 @@
 package learn.mlb_gm.domain;
 
 import learn.mlb_gm.data.GameRepository;
+import learn.mlb_gm.data.RecordRepository;
 import learn.mlb_gm.models.Game;
+import learn.mlb_gm.models.Record;
 import learn.mlb_gm.models.UserTeam;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,12 @@ import java.util.Random;
 public class GameService {
 
     private final GameRepository repository;
+    private final RecordRepository recordRepository;
 
-    public GameService(GameRepository repository) {
+    public GameService(GameRepository repository, RecordRepository recordRepository) {
+
         this.repository = repository;
+        this.recordRepository = recordRepository;
     }
 
     public List<Game> findAll() {
@@ -102,6 +107,77 @@ public class GameService {
                 repository.add(new Game(1, teamIds.get(j), teamIds.get(j+1), i+1, 0, 0, false));
             }
         }
+    }
+
+    public void simulateGame() {
+        Random random = new Random();
+        List<Game> allGames = repository.findAll();
+        int gameNumber = 0;
+
+        for(Game game : allGames) {
+            if(!game.isPlayed()) {
+                gameNumber = game.getGameNumber();
+                break;
+            }
+        }
+
+        for(Game game : allGames) {
+            if(game.getGameNumber() == gameNumber) {
+                while(game.getHomeScore() == game.getAwayScore()) {
+                    game.setHomeScore(random.nextInt(11));
+                    game.setAwayScore(random.nextInt(11));
+                }
+
+                game.setPlayed(true);
+                repository.update(game);
+
+                Record homeRecord = recordRepository.findForTeam(game.getHomeTeamId());
+                Record awayRecord = recordRepository.findForTeam(game.getAwayTeamId());
+
+                if(game.getHomeScore() > game.getAwayScore()) {
+                    homeRecord.setWin(homeRecord.getWin() + 1);
+                    awayRecord.setLoss(awayRecord.getLoss() + 1);
+                } else {
+                    awayRecord.setWin(awayRecord.getWin() + 1);
+                    homeRecord.setLoss(homeRecord.getLoss() + 1);
+                }
+
+                recordRepository.update(homeRecord);
+                recordRepository.update(awayRecord);
+            }
+        }
+    }
+
+    public void simulateSeason() {
+        Random random = new Random();
+        List<Game> allGames = repository.findAll();
+
+        for(Game game : allGames) {
+            if(!game.isPlayed()) {
+                while (game.getHomeScore() == game.getAwayScore()) {
+                    game.setHomeScore(random.nextInt(11));
+                    game.setAwayScore(random.nextInt(11));
+                }
+
+                game.setPlayed(true);
+                repository.update(game);
+
+                Record homeRecord = recordRepository.findForTeam(game.getHomeTeamId());
+                Record awayRecord = recordRepository.findForTeam(game.getAwayTeamId());
+
+                if (game.getHomeScore() > game.getAwayScore()) {
+                    homeRecord.setWin(homeRecord.getWin() + 1);
+                    awayRecord.setLoss(awayRecord.getLoss() + 1);
+                } else {
+                    awayRecord.setWin(awayRecord.getWin() + 1);
+                    homeRecord.setLoss(homeRecord.getLoss() + 1);
+                }
+
+                recordRepository.update(homeRecord);
+                recordRepository.update(awayRecord);
+            }
+        }
+
     }
 
     private Result<Game> validate(Game game) {
