@@ -22,26 +22,26 @@ public class UserTeamJdbcTemplateRepository implements UserTeamRepository {
 
     @Override
     public List<UserTeam> findAll() {
-        final String sql = "select user_team_id, user_id, team_id, user_controlled, rating from user_team";
+        final String sql = "select user_team_id, app_user_id, team_id, user_controlled, rating from user_team";
         return jdbcTemplate.query(sql, new UserTeamMapper());
     }
 
     @Override
     public List<UserTeam> findAllByUser(int userId) {
-        final String sql = "select user_team_id, user_id, team_id, user_controlled, rating from user_team where user_id = ?";
+        final String sql = "select user_team_id, app_user_id, team_id, user_controlled, rating from user_team where app_user_id = ?";
         return jdbcTemplate.query(sql, new UserTeamMapper(), userId);
     }
 
     @Override
     public UserTeam findById(int userTeamId) {
-        final String sql = "select user_team_id, user_id, team_id, user_controlled, rating from user_team where user_team_id = ?";
+        final String sql = "select user_team_id, app_user_id, team_id, user_controlled, rating from user_team where user_team_id = ?";
         return jdbcTemplate.query(sql, new UserTeamMapper(), userTeamId).stream().findFirst().orElse(null);
     }
 
 
     @Override
     public UserTeam add(UserTeam userTeam) {
-        final String sql = "insert into user_team (user_id, team_id, user_controlled, rating) values (?, ?, ?, ?)";
+        final String sql = "insert into user_team (app_user_id, team_id, user_controlled, rating) values (?, ?, ?, ?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -61,7 +61,7 @@ public class UserTeamJdbcTemplateRepository implements UserTeamRepository {
 
     @Override
     public boolean update(UserTeam userTeam) {
-        final String sql = "update user_team set user_id = ?, team_id = ?, user_controlled = ?, rating = ? where user_team_id = ?";
+        final String sql = "update user_team set app_user_id = ?, team_id = ?, user_controlled = ?, rating = ? where user_team_id = ?";
         return jdbcTemplate.update(sql, userTeam.getUserId(), userTeam.getTeamId(),
                 userTeam.isUserControlled(), userTeam.getRating(), userTeam.getUserTeamId()) > 0;
     }

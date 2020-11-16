@@ -12,7 +12,7 @@ public class UserTeamMapper implements RowMapper<UserTeam> {
     public UserTeam mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         UserTeam userTeam = new UserTeam();
         userTeam.setUserTeamId(resultSet.getInt("user_team_id"));
-        userTeam.setUserId(resultSet.getInt("user_id"));
+        userTeam.setUserId(resultSet.getInt("app_user_id"));
         userTeam.setTeamId(resultSet.getInt("team_id"));
         if(resultSet.getInt("user_controlled") == 0) {
             userTeam.setUserControlled(false);
