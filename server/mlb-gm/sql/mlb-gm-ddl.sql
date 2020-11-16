@@ -52,16 +52,16 @@ DROP TABLE IF EXISTS `user_team` ;
 
 CREATE TABLE IF NOT EXISTS `user_team` (
   `user_team_id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
+  `app_user_id` INT NOT NULL,
   `team_id` INT NOT NULL,
   `user_controlled` TINYINT NOT NULL DEFAULT 0,
   `rating` INT NOT NULL,
-  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
+  INDEX `app_user_id_idx` (`app_user_id` ASC) VISIBLE,
   INDEX `team_id_idx` (`team_id` ASC) VISIBLE,
   PRIMARY KEY (`user_team_id`),
-  CONSTRAINT `user_id`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`user_id`),
+  CONSTRAINT `app_user_id`
+    FOREIGN KEY (`app_user_id`)
+    REFERENCES `app_user` (`app_user_id`),
   CONSTRAINT `team_id`
     FOREIGN KEY (`team_id`)
     REFERENCES `team` (`team_id`)
