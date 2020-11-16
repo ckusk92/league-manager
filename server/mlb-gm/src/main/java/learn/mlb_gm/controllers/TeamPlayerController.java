@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"localhost:3000"})
 @RequestMapping("/teamplayer")
 public class TeamPlayerController {
 
