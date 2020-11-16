@@ -1,7 +1,14 @@
 use league;
 
-insert into user (user_id, username, password)
-    values (1, 'username', 'password');
+insert into app_user (app_user_id, username, password_hash, disabled)
+    values (1, 'username', 'password', 0);
+
+insert into app_role(`name`)
+    values ('USER'),
+           ('ADMIN');
+
+insert into app_user_role(app_user_id, app_role_id)
+	values (1, 1);
 
 insert into position (position_id, position)
 	values (1, 'P'),

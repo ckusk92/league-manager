@@ -27,7 +27,6 @@ CREATE TABLE IF NOT EXISTS `team` (
   PRIMARY KEY (`team_id`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `player`
 -- -----------------------------------------------------
@@ -45,20 +44,6 @@ CREATE TABLE IF NOT EXISTS `player` (
     REFERENCES `position` (`position_id`)
 )    
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `user` ;
-
-CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`user_id`))
-ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `user_team`
@@ -157,6 +142,48 @@ CREATE TABLE IF NOT EXISTS `position` (
   `position` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`position_id`)
 )
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `app_user` ;
+
+CREATE TABLE IF NOT EXISTS `app_user` (
+  `app_user_id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `password_hash` VARCHAR(2048) NOT NULL,
+  `disabled` boolean not null default(0),
+  PRIMARY KEY (`app_user_id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `app_role`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `app_role` ;
+
+CREATE TABLE IF NOT EXISTS `app_role` (
+  `app_role_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL UNIQUE,
+  PRIMARY KEY (`app_role_id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `app_user_role`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `app_user_role` ;
+
+CREATE TABLE IF NOT EXISTS `app_user_role` (
+  `app_user_id` INT NOT NULL,
+  `app_role_id` INT NOT NULL,
+  CONSTRAINT pk_app_user_role
+    PRIMARY KEY (app_user_id, app_role_id),
+  CONSTRAINT fk_app_user_role_user_id
+    FOREIGN KEY (app_user_id)
+    REFERENCES app_user(app_user_id),
+  CONSTRAINT fk_app_user_role_app_role_id
+    FOREIGN KEY (app_role_id)
+    REFERENCES app_role(app_role_id))
 ENGINE = InnoDB;
 
 
