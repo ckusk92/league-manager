@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -32,6 +33,16 @@ public class TeamPlayerJdbcTemplateRepository implements TeamPlayerRepository {
         final String sql = "select team_player_id, user_team_id, player_id, rating from team_player where user_team_id = ?";
         return jdbcTemplate.query(sql, new TeamPlayerMapper(), userTeamId);
     }
+
+//    @Override
+//    public List<Player> findAllForTeam(int userTeamId) {
+//        final String sql = "select team_player_id, user_team_id, player_id, rating from team_player where user_team_id = ?";
+//        List<TeamPlayer> teamPlayers = jdbcTemplate.query(sql, new TeamPlayerMapper(), userTeamId);
+//        List<Player> players = new ArrayList<>();
+//        for(TeamPlayer teamPlayer : teamPlayers) {
+//            players.add()
+//        }
+//    }
 
     @Override
     public TeamPlayer findById(int teamPlayerId) {
@@ -66,7 +77,7 @@ public class TeamPlayerJdbcTemplateRepository implements TeamPlayerRepository {
 
     @Override
     public boolean update(TeamPlayer teamPlayer) {
-        final String sql = "update team_player set user_team_id = ?, player_id = ?, rating = ?, where team_player_id = ?";
+        final String sql = "update team_player set user_team_id = ?, player_id = ?, rating = ? where team_player_id = ?";
         return jdbcTemplate.update(sql, teamPlayer.getUserTeamId(), teamPlayer.getPlayerId(), teamPlayer.getRating(), teamPlayer.getTeamPlayerId()) > 0;
     }
 

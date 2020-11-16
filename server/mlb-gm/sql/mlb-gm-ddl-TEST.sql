@@ -194,7 +194,7 @@ delimiter //
 create procedure set_known_good_state()
 begin
 
-delete from game;
+  delete from game;
   alter table game auto_increment = 1;
 
   delete from record;
@@ -215,14 +215,14 @@ delete from game;
   delete from position;
   alter table position auto_increment = 1;
 
+  delete from app_user_role;
+  -- alter table app_user_role auto_increment = 1;
+
   delete from app_user;
   alter table app_user auto_increment = 1;
 
   delete from app_role;
   alter table app_role auto_increment = 1;
-
-  delete from app_user_role;
-  -- alter table app_user_role auto_increment = 1;
 
   insert into app_user (app_user_id, username, password_hash, disabled)
     values (1, 'username', 'password', 0);
@@ -268,9 +268,9 @@ delete from game;
          ('Isaak', 'English', 3, 83),
          ('Johnny', 'Wilkinson', 3, 68);
 
-  insert into user (username, password)
-  values ('user1', 'password'),
-         ('user2', 'password');
+  insert into app_user (username, password_hash, disabled)
+  values ('user1', 'password', 0),
+         ('user2', 'password', 0);
 
   insert into user_team (app_user_id, team_id, user_controlled, rating)
   values (1, 1, true, 80), (1, 2, false, 75), (1, 3, false, 82), (1, 4, false, 69),
@@ -279,9 +279,9 @@ delete from game;
   insert into game (game_id, home_team_id, away_team_id, game_number, home_score, away_score, played)
   values (1, 1, 1, 1, 0, 0, false), (2, 3, 4, 1, 0, 0, false), (3, 1, 3, 2, 0, 0, false), (4, 2, 4, 2, 0, 0, false);
 
-  insert into team_player (user_team_id, player_id)
-  values (1, 1), (1, 2), (1, 3), (1, 4), (1, 5),
-         (2, 6), (2, 7), (2, 8), (2, 9), (2, 10);
+  insert into team_player (user_team_id, player_id, rating)
+  values (1, 1, 50), (1, 2, 50), (1, 3, 50), (1, 4, 50), (1, 5, 50),
+         (2, 6, 50), (2, 7, 50), (2, 8, 50), (2, 9, 50), (2, 10, 50);
 
   insert into record (user_team_id, win, loss)
   values (1, 5, 4), (2, 4, 5), (3, 9, 0), (4, 0, 9);
