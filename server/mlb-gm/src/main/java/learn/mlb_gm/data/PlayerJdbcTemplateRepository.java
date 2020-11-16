@@ -21,9 +21,16 @@ public class PlayerJdbcTemplateRepository implements PlayerRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+//    @Override
+//    public List<Player> findAll() {
+//        final String sql = "select player_id, first_name, last_name, position_id, rating from player";
+//        return jdbcTemplate.query(sql, new PlayerMapper());
+//    }
+
+    // Changed ordering of player listing
     @Override
     public List<Player> findAll() {
-        final String sql = "select player_id, first_name, last_name, position_id, rating from player";
+        final String sql = "select player_id, first_name, last_name, position_id, rating from player order by position_id asc, rating desc";
         return jdbcTemplate.query(sql, new PlayerMapper());
     }
 
