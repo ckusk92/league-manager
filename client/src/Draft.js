@@ -30,7 +30,7 @@ class Draft extends React.Component {
     };
 
     getUserTeamPlayers = () => {
-        fetch("http://localhost:8080/teamplayer/team/1")
+        fetch("http://localhost:8080/teamplayer/roster/1")
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -114,7 +114,7 @@ class Draft extends React.Component {
                                 <li
                                     key={teamPlayer.playerId}
                                     className="list-group-item list-group-item-light">
-                                    {"Player ID: " + teamPlayer.playerId + '  Rating: ' + teamPlayer.rating}
+                                    {teamPlayer.firstName + ' ' + teamPlayer.lastName + ', ' + teamPlayer.position + '  Rating: ' + teamPlayer.rating}
                                 </li>
                             ))}
                         </ul>
