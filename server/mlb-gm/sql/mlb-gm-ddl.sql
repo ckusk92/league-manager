@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `position` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `user`
+-- Table `app_user`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `app_user` ;
 
