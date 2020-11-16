@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS `team` (
   PRIMARY KEY (`team_id`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `player`
 -- -----------------------------------------------------
@@ -42,52 +41,8 @@ CREATE TABLE IF NOT EXISTS `player` (
   CONSTRAINT `player_position_id`
     FOREIGN KEY (`position_id`)
     REFERENCES `position` (`position_id`)
-)    
+)
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `app_user` ;
-
-CREATE TABLE IF NOT EXISTS `app_user` (
-  `app_user_id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(45) NOT NULL,
-  `password_hash` VARCHAR(2048) NOT NULL,
-  `disabled` boolean not null default(0),
-  PRIMARY KEY (`app_user_id`))
-ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `app_role`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `app_role` ;
-
-CREATE TABLE IF NOT EXISTS `app_role` (
-  `app_role_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL UNIQUE,
-  PRIMARY KEY (`app_role_id`))
-ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `app_user_role`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `app_user_role` ;
-
-CREATE TABLE IF NOT EXISTS `app_user_role` (
-  `app_user_id` INT NOT NULL,
-  `app_role_id` INT NOT NULL,
-  CONSTRAINT pk_app_user_role
-    PRIMARY KEY (app_user_id, app_role_id),
-  CONSTRAINT fk_app_user_role_user_id
-    FOREIGN KEY (app_user_id)
-    REFERENCES app_user(app_user_id),
-  CONSTRAINT fk_app_user_role_app_role_id
-    FOREIGN KEY (app_role_id)
-    REFERENCES app_role(app_role_id))
-ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `user_team`
@@ -105,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `user_team` (
   PRIMARY KEY (`user_team_id`),
   CONSTRAINT `app_user_id`
     FOREIGN KEY (`app_user_id`)
-    REFERENCES `user` (`app_user_id`),
+    REFERENCES `app_user` (`app_user_id`),
   CONSTRAINT `team_id`
     FOREIGN KEY (`team_id`)
     REFERENCES `team` (`team_id`)
@@ -134,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `game` (
   CONSTRAINT `away_team_id`
     FOREIGN KEY (`away_team_id`)
     REFERENCES `user_team` (`user_team_id`)
-   )
+  )
 ENGINE = InnoDB;
 
 
@@ -147,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `team_player` (
   `team_player_id` INT NOT NULL AUTO_INCREMENT,
   `user_team_id` INT NOT NULL,
   `player_id` INT NOT NULL,
-  `rating` INT NOT NULL DEFAULT 50,
+  `rating` INT NOT NULL,
   PRIMARY KEY (`team_player_id`),
   INDEX `user_team_id_idx` (`user_team_id` ASC) VISIBLE,
   INDEX `player_id_idx` (`player_id` ASC) VISIBLE,
@@ -188,10 +143,52 @@ CREATE TABLE IF NOT EXISTS `position` (
 )
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `app_user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `app_user` ;
+
+CREATE TABLE IF NOT EXISTS `app_user` (
+  `app_user_id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `password_hash` VARCHAR(2048) NOT NULL,
+  `disabled` boolean not null default(0),
+  PRIMARY KEY (`app_user_id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `app_role`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `app_role` ;
+
+CREATE TABLE IF NOT EXISTS `app_role` (
+  `app_role_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL UNIQUE,
+  PRIMARY KEY (`app_role_id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `app_user_role`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `app_user_role` ;
+
+CREATE TABLE IF NOT EXISTS `app_user_role` (
+  `app_user_id` INT NOT NULL,
+  `app_role_id` INT NOT NULL,
+  CONSTRAINT pk_app_user_role
+    PRIMARY KEY (app_user_id, app_role_id),
+  CONSTRAINT fk_app_user_role_user_id
+    FOREIGN KEY (app_user_id)
+    REFERENCES app_user(app_user_id),
+  CONSTRAINT fk_app_user_role_app_role_id
+    FOREIGN KEY (app_role_id)
+    REFERENCES app_role(app_role_id))
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 delimiter //
 create procedure set_known_good_state()
@@ -215,11 +212,27 @@ delete from game;
   delete from player;
   alter table player auto_increment = 1;
 
-  delete from user;
-  alter table user auto_increment = 1;
-
   delete from position;
   alter table position auto_increment = 1;
+
+  delete from app_user;
+  alter table app_user auto_increment = 1;
+
+  delete from app_role;
+  alter table app_role auto_increment = 1;
+
+  delete from app_user_role;
+  -- alter table app_user_role auto_increment = 1;
+
+  insert into app_user (app_user_id, username, password_hash, disabled)
+    values (1, 'username', 'password', 0);
+
+  insert into app_role(`name`)
+    values ('USER'),
+           ('ADMIN');
+
+  insert into app_user_role(app_user_id, app_role_id)
+	values (1, 1);
 
   insert into position (position_id, position)
     values (1, 'P'),
