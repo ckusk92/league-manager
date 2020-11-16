@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import TeamsCreation from './TeamsCreation';
+import Draft from './Draft';
 
 function App() {
   return (
-    <TeamsCreation></TeamsCreation>
+    <Draft></Draft>
   );
 }
 
