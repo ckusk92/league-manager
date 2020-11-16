@@ -8,6 +8,7 @@ import learn.mlb_gm.models.TeamPlayer;
 import learn.mlb_gm.models.UserTeam;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -27,6 +28,17 @@ public class TeamPlayerService {
     public List<TeamPlayer> findAll() {return repository.findAll();}
 
     public List<TeamPlayer> findAllByTeam(int userTeamId) {return repository.findAllForTeam(userTeamId);}
+
+    public List<Player> getRoster(int userTeamId) {
+        List<TeamPlayer> teamPlayers = repository.findAllForTeam(userTeamId);
+        List<Player> players = new ArrayList<>();
+        for(TeamPlayer teamPlayer : teamPlayers) {
+            Player player = playerRepository.findById(teamPlayer.getPlayerId());
+            player.setRating(teamPlayer.getRating());
+            players.add(player);
+        }
+        return players;
+    }
 
     public TeamPlayer findById(int teamPlayerId) {return repository.findById(teamPlayerId);}
 

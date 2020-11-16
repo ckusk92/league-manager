@@ -4,6 +4,7 @@ package learn.mlb_gm.controllers;
 import learn.mlb_gm.domain.Result;
 import learn.mlb_gm.domain.TeamPlayerService;
 import learn.mlb_gm.domain.UserTeamService;
+import learn.mlb_gm.models.Player;
 import learn.mlb_gm.models.TeamPlayer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,12 @@ public class TeamPlayerController {
     public List<TeamPlayer> findAllForTeam(@PathVariable int userTeamId) {
         List<TeamPlayer> allForTeam = service.findAllByTeam(userTeamId);
         return allForTeam;
+    }
+
+    @GetMapping("/roster/{userTeamId}")
+    public List<Player> getRoster(@PathVariable int userTeamId) {
+        List<Player> roster = service.getRoster(userTeamId);
+        return roster;
     }
 
     @GetMapping("/{teamPlayerId}")
