@@ -58,6 +58,19 @@ public class GameService {
         return schedule;
     }
 
+    public int gamesRemaining() {
+        int userId = 1;
+        List<Game> schedule = repository.findAllForUserInOrderOfGame(userId);
+
+        int gamesPlayed = 0;
+        for(Game game : schedule) {
+            if(game.isPlayed()) {
+                gamesPlayed++;
+            }
+        }
+        return schedule.size() - gamesPlayed;
+    }
+
     public Game findById(int gameId) {
         return repository.findById(gameId);
     }
