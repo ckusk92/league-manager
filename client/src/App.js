@@ -18,6 +18,9 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/SeasonFacts">
+          <PlaySeason />
+        </Route>
         <Route path="/PlaySeason">
           <PlaySeason />
         </Route>

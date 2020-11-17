@@ -11,6 +11,10 @@ class PlaySeason extends React.Component {
 
     };
 
+    componentDidMount() {
+        this.getRemainingGames();
+    }
+
     getRemainingGames = () => {
         fetch("http://localhost:8080/game/schedule/1/gamesremaining")
             .then((response) => response.json())
@@ -22,6 +26,9 @@ class PlaySeason extends React.Component {
     }
 
     simGame = () => {
+        if (this.state.numGames === 0) {
+            this.props.history.push("/SeasonFacts")
+        }
         fetch("http://localhost:8080/game/simgame");
         console.log("game simulated");
         this.getRemainingGames();
