@@ -5,6 +5,7 @@ import ViewStandings from './ViewStandings';
 import ViewSchedule from './ViewSchedule';
 import PlaySeason from './PlaySeason';
 import TeamsCreation from './TeamsCreation';
+import SeasonFacts from './SeasonFacts';
 
 import {
   BrowserRouter as Router,
@@ -18,6 +19,9 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/SeasonFacts">
+          <SeasonFacts />
+        </Route>
         <Route path="/PlaySeason">
           <PlaySeason />
         </Route>
