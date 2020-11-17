@@ -1,7 +1,6 @@
 package learn.mlb_gm.data;
 
 import learn.mlb_gm.models.Game;
-import learn.mlb_gm.models.GameWithTeam;
 
 import java.util.List;
 

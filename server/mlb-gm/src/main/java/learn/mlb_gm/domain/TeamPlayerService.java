@@ -2,10 +2,12 @@ package learn.mlb_gm.domain;
 
 import learn.mlb_gm.data.PlayerRepository;
 import learn.mlb_gm.data.TeamPlayerRepository;
+import learn.mlb_gm.data.TeamRepository;
 import learn.mlb_gm.data.UserTeamRepository;
 import learn.mlb_gm.models.Player;
 import learn.mlb_gm.models.TeamPlayer;
 import learn.mlb_gm.models.UserTeam;
+import learn.mlb_gm.models.response_objects.TeamPlayerInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,11 +21,13 @@ public class TeamPlayerService {
     private final TeamPlayerRepository repository;
     private final PlayerRepository playerRepository;
     private final UserTeamRepository userTeamRepository;
+    private final TeamRepository teamRepository;
 
-    public TeamPlayerService(TeamPlayerRepository repository, PlayerRepository playerRepository, UserTeamRepository userTeamRepository) {
+    public TeamPlayerService(TeamPlayerRepository repository, PlayerRepository playerRepository, UserTeamRepository userTeamRepository, TeamRepository teamRepository) {
         this.repository = repository;
         this.playerRepository = playerRepository;
         this.userTeamRepository = userTeamRepository;
+        this.teamRepository = teamRepository;
     }
 
     public List<TeamPlayer> findAll() {return repository.findAll();}
@@ -60,9 +64,63 @@ public class TeamPlayerService {
         return result;
     }
 
-    public Result<TeamPlayer> draft(TeamPlayer teamPlayer) {
+//    public Result<TeamPlayer> draft(TeamPlayer teamPlayer) {
+//        int userId = 1;
+//        Random random = new Random();
+//
+//        Result<TeamPlayer> result = validate(teamPlayer);
+//
+////        if(teamPlayer.getTeamPlayerId() == 0) {
+////            result.addMessage("Must select player", ResultType.INVALID);
+////            return result;
+////        }
+//
+//        if(!result.isSuccess()) {
+//            return result;
+//        }
+//
+//        // Add user selected player to users team if passes validation
+//        teamPlayer = repository.add(teamPlayer);
+//        result.setPayload(teamPlayer);
+//
+//        //CPU teams to draft players
+//        List<UserTeam> teams = userTeamRepository.findAllByUser(userId);
+//
+//        for(UserTeam team : teams) {
+//            if(!team.isUserControlled()) {
+//                // Refresh list every time
+//                List<Player> freeAgents = playerRepository.findFreeAgents();
+//
+//                Result<TeamPlayer> draftResult = new Result<>();
+//                draftResult.setType(ResultType.INVALID);
+//
+//                boolean validPick = false;
+//                boolean positionFree = true;
+//                while(!validPick) {
+//                    int i = random.nextInt(freeAgents.size());
+//                    for(Player onRoster : repository.findAllPlayersForTeam(team.getUserTeamId())) {
+//                        positionFree = true;
+//                        if (freeAgents.get(i).getPosition() == onRoster.getPosition()) {
+//                            positionFree = false;
+//                        }
+//                    }
+//                    if(positionFree) {
+//                        draftResult = add(new TeamPlayer(team.getUserTeamId(), freeAgents.get(i).getPlayerId()));
+//                        if (draftResult.isSuccess()) {
+//                            validPick = true;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return result;
+//    }
+
+    public List<TeamPlayerInfo> draft(TeamPlayer teamPlayer) {
         int userId = 1;
         Random random = new Random();
+
+        List<TeamPlayerInfo> draftedPlayers = new ArrayList<>();
 
         Result<TeamPlayer> result = validate(teamPlayer);
 
@@ -72,67 +130,63 @@ public class TeamPlayerService {
 //        }
 
         if(!result.isSuccess()) {
-            return result;
+            return null;
         }
 
         // Add user selected player to users team if passes validation
         teamPlayer = repository.add(teamPlayer);
-        result.setPayload(teamPlayer);
+
+        TeamPlayerInfo teamPlayerInfo = new TeamPlayerInfo();
+        teamPlayerInfo.setTeamName(teamRepository.findById(teamPlayer.getUserTeamId()).getName());
+        teamPlayerInfo.setFirstName(playerRepository.findById(teamPlayer.getPlayerId()).getFirstName());
+        teamPlayerInfo.setLastName(playerRepository.findById(teamPlayer.getPlayerId()).getLastName());
+        teamPlayerInfo.setPosition(playerRepository.findById(teamPlayer.getPlayerId()).getPosition());
+        teamPlayerInfo.setRating(playerRepository.findById(teamPlayer.getPlayerId()).getRating());
+        draftedPlayers.add(teamPlayerInfo);
 
         //CPU teams to draft players
         List<UserTeam> teams = userTeamRepository.findAllByUser(userId);
 
         for(UserTeam team : teams) {
             if(!team.isUserControlled()) {
-
                 // Refresh list every time
                 List<Player> freeAgents = playerRepository.findFreeAgents();
 
                 Result<TeamPlayer> draftResult = new Result<>();
                 draftResult.setType(ResultType.INVALID);
-                boolean playerAvailable = false;
 
-//                while(!draftResult.isSuccess() && !playerAvailable) {
-//                    // Why do this instead of just grabbing a free agent by index?
-//                    int i = random.nextInt(playerRepository.findAll().size());
-//                    for(Player fa : freeAgents) {
-//                        // If randomly selected player is in free agent pool
-//                        if(fa.getPlayerId() == playerRepository.findById(i).getPlayerId()) { //THROWING NULL POINTER EXCEPTION OCCASIONALLY
-//                            draftResult = add(new TeamPlayer(team.getUserTeamId(), playerRepository.findById(i).getPlayerId()));
-//                            // Only switch boolean if result is successful
-//                            if(draftResult.isSuccess()) {
-//                                playerAvailable = true;
-//                            }
-//                        }
-//                    }
-//                }
-
-                // OTHER ATTEMPT
                 boolean validPick = false;
                 boolean positionFree = true;
                 while(!validPick) {
                     int i = random.nextInt(freeAgents.size());
                     for(Player onRoster : repository.findAllPlayersForTeam(team.getUserTeamId())) {
                         positionFree = true;
-//                        if (freeAgents.get(i).getPosition() == playerRepository.findById(i).getPosition()) { //THROWING NULL POINTER EXCEPTION OCCASIONALLY
-//                            positionFree = false;
-//                        }
                         if (freeAgents.get(i).getPosition() == onRoster.getPosition()) {
                             positionFree = false;
                         }
                     }
                     if(positionFree) {
-                        //draftResult = add(new TeamPlayer(team.getUserTeamId(), playerRepository.findById(i).getPlayerId()));
-                        draftResult = add(new TeamPlayer(team.getUserTeamId(), freeAgents.get(i).getPlayerId()));
-                        // Only switch boolean if result is successful
-                        if (draftResult.isSuccess()) {
+//                        draftResult = add(new TeamPlayer(team.getUserTeamId(), freeAgents.get(i).getPlayerId()));
+//                        teamPlayer = draftResult.getPayload();
+                        teamPlayer = repository.add(new TeamPlayer(team.getUserTeamId(), freeAgents.get(i).getPlayerId()));
+                        teamPlayerInfo = new TeamPlayerInfo();
+                        teamPlayerInfo.setTeamName(teamRepository.findById(teamPlayer.getUserTeamId()).getName());
+                        teamPlayerInfo.setFirstName(playerRepository.findById(teamPlayer.getPlayerId()).getFirstName());
+                        teamPlayerInfo.setLastName(playerRepository.findById(teamPlayer.getPlayerId()).getLastName());
+                        teamPlayerInfo.setPosition(playerRepository.findById(teamPlayer.getPlayerId()).getPosition());
+                        teamPlayerInfo.setRating(playerRepository.findById(teamPlayer.getPlayerId()).getRating());
+                        draftedPlayers.add(teamPlayerInfo);
+//                        if (draftResult.isSuccess()) {
+//                            validPick = true;
+//                        }
+                        if(teamPlayer != null) {
                             validPick = true;
                         }
                     }
                 }
             }
         }
-        return result;
+        return draftedPlayers;
     }
 
     public Result<TeamPlayer> update(TeamPlayer teamPlayer) {

@@ -13,6 +13,7 @@ class Draft extends React.Component {
             rating: 0,
             userTeamId: 1,
             teamPlayers: [],
+            draftedPlayers: [],
             complete: false,
         };
 
@@ -64,9 +65,14 @@ class Draft extends React.Component {
                 'playerId': this.state.playerId
             }),
         }).then((response) => {
-            if (response.status === 201) {
+            //if (response.status === 201) {
+            if (response.status === 200) {    
                 console.log("Success!");
-                response.json().then((data) => console.log(data));
+                response.json().then((data) => {
+                    this.setState({
+                        draftedPlayers: data
+                    })
+                });
                 this.getUserTeamPlayers();
                 // Updates dropdown menu when players are selected
                 this.getfreeAgents();
@@ -131,6 +137,22 @@ class Draft extends React.Component {
                                 key={teamPlayer.playerId}
                                 className="list-group-item list-group-item-light">
                                 {teamPlayer.firstName + ' ' + teamPlayer.lastName + ', ' + teamPlayer.position + '  Rating: ' + teamPlayer.rating}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <br /><br />
+                <div className="float-center col-12 text-xl-center  text-primary font-weight-bold">
+                    Previous Round
+                </div><br /><br />
+                <div className="text-primary text-center font-weight-bold col-12 ">
+                    <ul className="list-group">
+                        {this.state.draftedPlayers.map(draftedPlayer => (
+                            <li
+                                key={draftedPlayer.teamName}
+                                className="list-group-item list-group-item-light">
+                                {draftedPlayer.teamName + ': '}&nbsp;&nbsp;&nbsp;{draftedPlayer.firstName + ', ' + draftedPlayer.lastName + ', ' + draftedPlayer.position + '  Rating: ' + draftedPlayer.rating}
                             </li>
                         ))}
                     </ul>
