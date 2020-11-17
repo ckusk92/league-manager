@@ -1,7 +1,7 @@
 package learn.mlb_gm.data;
 
 import learn.mlb_gm.models.Record;
-import learn.mlb_gm.models.RecordWithTeam;
+import learn.mlb_gm.models.response_objects.RecordWithTeam;
 
 import java.util.List;
 

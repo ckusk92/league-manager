@@ -4,10 +4,13 @@ import learn.mlb_gm.data.GameRepository;
 import learn.mlb_gm.data.RecordRepository;
 import learn.mlb_gm.data.TeamRepository;
 import learn.mlb_gm.models.*;
+<<<<<<< HEAD
 import learn.mlb_gm.models.Record;
+=======
+import learn.mlb_gm.models.response_objects.GameWithTeam;
+>>>>>>> main
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

@@ -2,7 +2,7 @@ package learn.mlb_gm.domain;
 
 import learn.mlb_gm.data.RecordRepository;
 import learn.mlb_gm.models.Record;
-import learn.mlb_gm.models.RecordWithTeam;
+import learn.mlb_gm.models.response_objects.RecordWithTeam;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

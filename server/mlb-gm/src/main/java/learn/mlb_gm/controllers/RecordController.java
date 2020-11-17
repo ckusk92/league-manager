@@ -3,7 +3,7 @@ package learn.mlb_gm.controllers;
 import learn.mlb_gm.domain.RecordService;
 import learn.mlb_gm.domain.Result;
 import learn.mlb_gm.models.Record;
-import learn.mlb_gm.models.RecordWithTeam;
+import learn.mlb_gm.models.response_objects.RecordWithTeam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

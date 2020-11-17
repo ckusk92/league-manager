@@ -1,9 +1,7 @@
 package learn.mlb_gm.data;
 
 import learn.mlb_gm.data.mappers.GameMapper;
-import learn.mlb_gm.data.mappers.GameWithTeamMapper;
 import learn.mlb_gm.models.Game;
-import learn.mlb_gm.models.GameWithTeam;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
