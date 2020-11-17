@@ -63,7 +63,7 @@ public class GameService {
         int userId = 1;
         List<Game> schedule = repository.findAllForUserInOrderOfGame(userId);
 
-        int gamesPlayed = 0;
+        int gamesPlayed = 1;
         for(Game game : schedule) {
             if(game.isPlayed()) {
                 gamesPlayed++;

@@ -8,16 +8,8 @@ class PlaySeason extends React.Component {
             games: [],
             numGames: 0,
         }
-
+        
     };
-
-    simGame = () => {
-        fetch("http://localhost:8080/game/simgame");
-        console.log("game simulated");
-        this.getRemainingGames();
-        console.log(this.state.numGames);
-    }
-
 
     getRemainingGames = () => {
         fetch("http://localhost:8080/game/schedule/1/gamesremaining")
@@ -27,6 +19,13 @@ class PlaySeason extends React.Component {
                     numGames: data,
                 })
             })
+    }
+
+    simGame = () => {
+        fetch("http://localhost:8080/game/simgame");
+        console.log("game simulated");
+        this.getRemainingGames();
+        console.log(this.state.numGames);
     }
 
     render() {
@@ -54,7 +53,7 @@ class PlaySeason extends React.Component {
                     </div><br /><br />
                     <div className="form-group-row">
                         <button className="btn btn-light btn-block" type="button">
-                            Simulate Remainder of Season <span class="badge badge-pill badge-danger"></span>
+                            Simulate Remainder of Season <span class="badge badge-pill badge-danger">10</span>
                         </button>
                     </div><br /><br />
                 </div>
