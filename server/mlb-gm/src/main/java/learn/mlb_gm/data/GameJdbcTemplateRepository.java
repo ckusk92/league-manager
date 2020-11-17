@@ -1,7 +1,9 @@
 package learn.mlb_gm.data;
 
 import learn.mlb_gm.data.mappers.GameMapper;
+import learn.mlb_gm.data.mappers.GameWithTeamMapper;
 import learn.mlb_gm.models.Game;
+import learn.mlb_gm.models.GameWithTeam;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -37,6 +39,16 @@ public class GameJdbcTemplateRepository implements GameRepository {
         return jdbcTemplate.query(sql, new GameMapper(), userId);
     }
 
+//    @Override
+//    public List<GameWithTeam> findAllForUserInOrderOfGameWithTeam(int userId) {
+//        final String sql = "select game_id, home_team_id, away_team_id, game_number, home_score, away_score, played from " +
+//                "game g inner join user_team ut on g.home_team_id = ut.user_team_id or g.away_team_id = ut.user_team_id " +
+//                "inner join team.name on ut.user_team_id = t.user_team_id " +
+//                "where ut.app_user_id = ? and ut.user_controlled = 1 " +
+//                "order by g.game_number asc;";
+//
+//        return jdbcTemplate.query(sql, new GameWithTeamMapper(), userId);
+//    }
 
     @Override
     public Game findById(int gameId) {

@@ -1,6 +1,7 @@
 package learn.mlb_gm.data;
 
 import learn.mlb_gm.models.Game;
+import learn.mlb_gm.models.GameWithTeam;
 
 import java.util.List;
 
@@ -9,6 +10,8 @@ public interface GameRepository {
     public List<Game> findAll();
 
     public List<Game> findAllForUserInOrderOfGame(int userId);
+
+   // public List<GameWithTeam> findAllForUserInOrderOfGameWithTeam(int userId);
 
     public Game findById(int gameId);
 
