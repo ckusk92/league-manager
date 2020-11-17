@@ -6,18 +6,27 @@ class PlaySeason extends React.Component {
         super();
         this.state = {
             games: [],
-            numGames: 10,
+            numGames: 0,
         }
 
     };
 
-
     simGame = () => {
         fetch("http://localhost:8080/game/simgame");
-        this.setState({
-            numGames: this.numGames - 1,
-        });
-        console.log(this.numGames);
+        console.log("game simulated");
+        this.getRemainingGames();
+        console.log(this.state.numGames);
+    }
+
+
+    getRemainingGames = () => {
+        fetch("http://localhost:8080/game/schedule/1/gamesremaining")
+            .then((response) => response.json())
+            .then((data) => {
+                this.setState({
+                    numGames: data,
+                })
+            })
     }
 
     render() {

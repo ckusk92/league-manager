@@ -4,6 +4,7 @@ import learn.mlb_gm.data.GameRepository;
 import learn.mlb_gm.data.RecordRepository;
 import learn.mlb_gm.data.TeamRepository;
 import learn.mlb_gm.models.*;
+import learn.mlb_gm.models.Record;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
