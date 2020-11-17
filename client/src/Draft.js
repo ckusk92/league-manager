@@ -80,8 +80,6 @@ class Draft extends React.Component {
         return (
             <>
                 <h1 className="text-center bg-primary text-light"> Draft Your Team!</h1><br /><br />
-
-                {/* <form className="form-group row" onSubmit={this.createSeasonHandler}> */}
                 <form className="form-row">
 
                     <div className="form-group col-md-5">
