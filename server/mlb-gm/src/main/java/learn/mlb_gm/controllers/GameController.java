@@ -3,6 +3,7 @@ package learn.mlb_gm.controllers;
 import learn.mlb_gm.domain.GameService;
 import learn.mlb_gm.domain.Result;
 import learn.mlb_gm.models.Game;
+import learn.mlb_gm.models.GameWithTeam;
 import learn.mlb_gm.models.InitInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,18 @@ public class GameController {
         return service.findAll();
     }
 
+//    @GetMapping("/schedule/{userId}")
+//    public ResponseEntity<List<Game>> getSchedule(@PathVariable int userId) {
+//        List<Game> schedule = service.getSchedule();
+//        if(schedule.size() == 0) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return ResponseEntity.ok(schedule);
+//    }
+
     @GetMapping("/schedule/{userId}")
-    public ResponseEntity<List<Game>> getSchedule(@PathVariable int userId) {
-        List<Game> schedule = service.getSchedule();
+    public ResponseEntity<List<GameWithTeam>> getSchedule(@PathVariable int userId) {
+        List<GameWithTeam> schedule = service.getSchedule();
         if(schedule.size() == 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

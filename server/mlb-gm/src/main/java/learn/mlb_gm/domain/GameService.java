@@ -2,9 +2,8 @@ package learn.mlb_gm.domain;
 
 import learn.mlb_gm.data.GameRepository;
 import learn.mlb_gm.data.RecordRepository;
-import learn.mlb_gm.models.Game;
-import learn.mlb_gm.models.Record;
-import learn.mlb_gm.models.UserTeam;
+import learn.mlb_gm.data.TeamRepository;
+import learn.mlb_gm.models.*;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
@@ -17,18 +16,20 @@ public class GameService {
 
     private final GameRepository repository;
     private final RecordRepository recordRepository;
+    private final TeamRepository teamRepository;
 
-    public GameService(GameRepository repository, RecordRepository recordRepository) {
+    public GameService(GameRepository repository, RecordRepository recordRepository, TeamRepository teamRepository) {
 
         this.repository = repository;
         this.recordRepository = recordRepository;
+        this.teamRepository = teamRepository;
     }
 
     public List<Game> findAll() {
         return repository.findAll();
     }
 
-    public List<Game> getSchedule() {
+    public List<GameWithTeam> getSchedule() {
 //        List<Game> all = repository.findAll();
 //        List<Game> orderedAll = new ArrayList<>();
 //        // Loops through and gets games with game# 1 -> size in order
@@ -40,7 +41,21 @@ public class GameService {
         // Hardcoded, will change later
         int userId = 1;
         List<Game> orderedAll = repository.findAllForUserInOrderOfGame(userId);
-        return orderedAll;
+        List<GameWithTeam> schedule = new ArrayList<>();
+
+        for(Game game : orderedAll) {
+            GameWithTeam newGame = new GameWithTeam();
+            Team homeTeam = teamRepository.findById(game.getHomeTeamId());
+            Team awayTeam = teamRepository.findById(game.getAwayTeamId());
+            newGame.setHomeTeamName(homeTeam.getName());
+            newGame.setAwayTeamName(awayTeam.getName());
+            newGame.setHomeScore(game.getHomeScore());
+            newGame.setAwayScore(game.getAwayScore());
+            newGame.setPlayed(game.isPlayed());
+            schedule.add(newGame);
+        }
+
+        return schedule;
     }
 
     public Game findById(int gameId) {
