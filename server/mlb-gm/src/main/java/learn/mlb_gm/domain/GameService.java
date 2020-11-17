@@ -142,9 +142,10 @@ public class GameService {
         }
     }
 
-    public void simulateGame() {
+    public List<Game> simulateGame() {
         Random random = new Random();
         List<Game> allGames = repository.findAll();
+        List<Game> returnGames = new ArrayList<>();
         int gameNumber = 0;
 
         for(Game game : allGames) {
@@ -163,6 +164,7 @@ public class GameService {
 
                 game.setPlayed(true);
                 repository.update(game);
+                returnGames.add(game);
 
                 Record homeRecord = recordRepository.findForTeam(game.getHomeTeamId());
                 Record awayRecord = recordRepository.findForTeam(game.getAwayTeamId());
@@ -179,6 +181,7 @@ public class GameService {
                 recordRepository.update(awayRecord);
             }
         }
+        return returnGames;
     }
 
     public void simulateSeason() {
