@@ -11,6 +11,8 @@ public interface TeamPlayerRepository {
 
     public List<TeamPlayer> findAllForTeam(int userTeamId);
 
+    public List<Player> findAllPlayersForTeam(int userTeamId);
+
 //    public List<Player> findAllForTeam(int userTeamId);
 
     public TeamPlayer findById(int teamPlayerId);
