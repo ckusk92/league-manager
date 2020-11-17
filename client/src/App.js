@@ -13,14 +13,14 @@ function App() {
   return (
     <Router>
       <Switch>
-      <Route path="/draft">
+        <Route path="/draft">
           <Draft />
         </Route>
         <Route path="/">
           <TeamsCreation />
         </Route>
-      </Switch>      
-    </Router>    
+      </Switch>
+    </Router>
   );
 }
 
