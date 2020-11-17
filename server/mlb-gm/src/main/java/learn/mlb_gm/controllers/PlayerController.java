@@ -27,6 +27,9 @@ public class PlayerController {
     @GetMapping("/freeagents")
     public List<Player> findFreeAgents() {return service.findFreeAgents();}
 
+    @GetMapping("/selectablefreeagents")
+    public List<Player> findSelectableFreeAgents() {return service.findSelectableFreeAgents();}
+
     @GetMapping("/{playerId}")
     public ResponseEntity<Player> findById(@PathVariable int playerId) {
         Player player = service.findById(playerId);

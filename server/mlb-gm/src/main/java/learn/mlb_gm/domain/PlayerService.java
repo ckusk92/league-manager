@@ -1,23 +1,48 @@
 package learn.mlb_gm.domain;
 
 import learn.mlb_gm.data.PlayerRepository;
+import learn.mlb_gm.data.TeamPlayerRepository;
 import learn.mlb_gm.models.Player;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PlayerService {
 
     private final PlayerRepository repository;
+    private final TeamPlayerRepository teamPlayerRepository;
 
-    public PlayerService(PlayerRepository repository) {
+    public PlayerService(PlayerRepository repository, TeamPlayerRepository teamPlayerRepository) {
         this.repository = repository;
+        this.teamPlayerRepository = teamPlayerRepository;
     }
 
     public List<Player> findAll() { return repository.findAll(); }
 
     public List<Player> findFreeAgents() {return repository.findFreeAgents();}
+
+    public List<Player> findSelectableFreeAgents() {
+            int userId = 1;
+            List<Player> allFreeAgents = repository.findFreeAgents();
+            List<Player> currentTeam = teamPlayerRepository.findAllPlayersForTeam(userId);
+            List<Player> selectableFreeAgents = new ArrayList<>();
+
+            for(Player fa : allFreeAgents) {
+                boolean available = true;
+                for (Player onRoster : currentTeam) {
+                    if (onRoster.getPosition() == fa.getPosition()) {
+                        available = false;
+                    }
+                }
+                if(available) {
+                    selectableFreeAgents.add(fa);
+                }
+            }
+
+            return selectableFreeAgents;
+    }
 
     public Player findById(int playerId) { return repository.findById(playerId); }
 

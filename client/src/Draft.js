@@ -21,7 +21,7 @@ class Draft extends React.Component {
     }
 
     getfreeAgents = () => {
-        fetch("http://localhost:8080/player/freeagents")
+        fetch("http://localhost:8080/player/selectablefreeagents")
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
