@@ -66,37 +66,67 @@ public class TeamPlayerService {
 
         Result<TeamPlayer> result = validate(teamPlayer);
 
+//        if(teamPlayer.getTeamPlayerId() == 0) {
+//            result.addMessage("Must select player", ResultType.INVALID);
+//            return result;
+//        }
+
         if(!result.isSuccess()) {
             return result;
         }
 
+        // Add user selected player to users team if passes validation
         teamPlayer = repository.add(teamPlayer);
         result.setPayload(teamPlayer);
 
-        //CPU Draft players
+        //CPU teams to draft players
         List<UserTeam> teams = userTeamRepository.findAllByUser(userId);
-        List<Player> freeAgents = playerRepository.findFreeAgents();
-        boolean playerAvailable = false;
 
         for(UserTeam team : teams) {
             if(!team.isUserControlled()) {
 
                 // Refresh list every time
-                freeAgents = playerRepository.findFreeAgents();
+                List<Player> freeAgents = playerRepository.findFreeAgents();
 
                 Result<TeamPlayer> draftResult = new Result<>();
                 draftResult.setType(ResultType.INVALID);
-                playerAvailable = false;
-                while(!draftResult.isSuccess() && !playerAvailable) {
-                    int i = random.nextInt(playerRepository.findAll().size());
-                    for(Player fa : freeAgents) {
-                        // If randomly selected player is in free agent pool
-                        if(fa.getPlayerId() == playerRepository.findById(i).getPlayerId()) { //THROWING NULL POINTER EXCEPTION OCCASIONALLY
-                            draftResult = add(new TeamPlayer(team.getUserTeamId(), playerRepository.findById(i).getPlayerId()));
-                            // Only switch boolean if result is successful
-                            if(draftResult.isSuccess()) {
-                                playerAvailable = true;
-                            }
+                boolean playerAvailable = false;
+
+//                while(!draftResult.isSuccess() && !playerAvailable) {
+//                    // Why do this instead of just grabbing a free agent by index?
+//                    int i = random.nextInt(playerRepository.findAll().size());
+//                    for(Player fa : freeAgents) {
+//                        // If randomly selected player is in free agent pool
+//                        if(fa.getPlayerId() == playerRepository.findById(i).getPlayerId()) { //THROWING NULL POINTER EXCEPTION OCCASIONALLY
+//                            draftResult = add(new TeamPlayer(team.getUserTeamId(), playerRepository.findById(i).getPlayerId()));
+//                            // Only switch boolean if result is successful
+//                            if(draftResult.isSuccess()) {
+//                                playerAvailable = true;
+//                            }
+//                        }
+//                    }
+//                }
+
+                // OTHER ATTEMPT
+                boolean validPick = false;
+                boolean positionFree = true;
+                while(!validPick) {
+                    int i = random.nextInt(freeAgents.size());
+                    for(Player onRoster : repository.findAllPlayersForTeam(team.getUserTeamId())) {
+                        positionFree = true;
+//                        if (freeAgents.get(i).getPosition() == playerRepository.findById(i).getPosition()) { //THROWING NULL POINTER EXCEPTION OCCASIONALLY
+//                            positionFree = false;
+//                        }
+                        if (freeAgents.get(i).getPosition() == onRoster.getPosition()) {
+                            positionFree = false;
+                        }
+                    }
+                    if(positionFree) {
+                        //draftResult = add(new TeamPlayer(team.getUserTeamId(), playerRepository.findById(i).getPlayerId()));
+                        draftResult = add(new TeamPlayer(team.getUserTeamId(), freeAgents.get(i).getPlayerId()));
+                        // Only switch boolean if result is successful
+                        if (draftResult.isSuccess()) {
+                            validPick = true;
                         }
                     }
                 }
@@ -130,8 +160,10 @@ public class TeamPlayerService {
     private Result<TeamPlayer> validate(TeamPlayer teamPlayer) {
         Result<TeamPlayer> result = new Result<>();
 
-        // ADD VALIDATION LATER
-        // Player cannot be on two teams in same league
+//        if(teamPlayer.getTeamPlayerId() == 0) {
+//            result.addMessage("Must select player", ResultType.INVALID);
+//            return result;
+//        }
 
         List<TeamPlayer> playersOnTeam = findAllByTeam(teamPlayer.getUserTeamId());
 
