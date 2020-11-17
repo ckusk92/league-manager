@@ -4,7 +4,11 @@ import learn.mlb_gm.data.GameRepository;
 import learn.mlb_gm.data.RecordRepository;
 import learn.mlb_gm.data.TeamRepository;
 import learn.mlb_gm.models.*;
+<<<<<<< HEAD
+import learn.mlb_gm.models.Record;
+=======
 import learn.mlb_gm.models.response_objects.GameWithTeam;
+>>>>>>> main
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -62,7 +66,7 @@ public class GameService {
         int userId = 1;
         List<Game> schedule = repository.findAllForUserInOrderOfGame(userId);
 
-        int gamesPlayed = 0;
+        int gamesPlayed = 1;
         for(Game game : schedule) {
             if(game.isPlayed()) {
                 gamesPlayed++;
