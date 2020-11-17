@@ -3,12 +3,10 @@ package learn.mlb_gm.domain;
 import learn.mlb_gm.data.GameRepository;
 import learn.mlb_gm.data.RecordRepository;
 import learn.mlb_gm.data.TeamRepository;
+import learn.mlb_gm.data.UserTeamRepository;
 import learn.mlb_gm.models.*;
-<<<<<<< HEAD
 import learn.mlb_gm.models.Record;
-=======
 import learn.mlb_gm.models.response_objects.GameWithTeam;
->>>>>>> main
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,12 +19,14 @@ public class GameService {
     private final GameRepository repository;
     private final RecordRepository recordRepository;
     private final TeamRepository teamRepository;
+    private final UserTeamRepository userTeamRepository;
 
-    public GameService(GameRepository repository, RecordRepository recordRepository, TeamRepository teamRepository) {
+    public GameService(GameRepository repository, RecordRepository recordRepository, TeamRepository teamRepository, UserTeamRepository userTeamRepository) {
 
         this.repository = repository;
         this.recordRepository = recordRepository;
         this.teamRepository = teamRepository;
+        this.userTeamRepository = userTeamRepository;
     }
 
     public List<Game> findAll() {
@@ -49,10 +49,11 @@ public class GameService {
 
         for(Game game : orderedAll) {
             GameWithTeam newGame = new GameWithTeam();
-            Team homeTeam = teamRepository.findById(game.getHomeTeamId());
-            Team awayTeam = teamRepository.findById(game.getAwayTeamId());
+            Team homeTeam = teamRepository.findById(userTeamRepository.findById(game.getHomeTeamId()).getTeamId());
+            Team awayTeam = teamRepository.findById(userTeamRepository.findById(game.getAwayTeamId()).getTeamId());
             newGame.setHomeTeamName(homeTeam.getName());
             newGame.setAwayTeamName(awayTeam.getName());
+            newGame.setGameNumber(game.getGameNumber());
             newGame.setHomeScore(game.getHomeScore());
             newGame.setAwayScore(game.getAwayScore());
             newGame.setPlayed(game.isPlayed());
