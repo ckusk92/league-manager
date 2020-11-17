@@ -1,6 +1,7 @@
 package learn.mlb_gm.data;
 
 import learn.mlb_gm.models.Record;
+import learn.mlb_gm.models.RecordWithTeam;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public interface RecordRepository {
 
     public List<Record> findAll();
 
-    public List<Record> getStandings();
+    public List<RecordWithTeam> getStandings();
 
     public Record findForTeam(int userTeamId);
 

@@ -1,7 +1,9 @@
 package learn.mlb_gm.data;
 
 import learn.mlb_gm.data.mappers.RecordMapper;
+import learn.mlb_gm.data.mappers.RecordWithTeamMapper;
 import learn.mlb_gm.models.Record;
+import learn.mlb_gm.models.RecordWithTeam;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -25,9 +27,12 @@ public class RecordJdbcTemplateRepository implements RecordRepository {
     }
 
     @Override
-    public List<Record> getStandings() {
-        final String sql = "select user_team_id, win, loss from record order by win desc";
-        return jdbcTemplate.query(sql, new RecordMapper());
+    public List<RecordWithTeam> getStandings() {
+        final String sql = "select t.name, r.win, r.loss from record r " +
+                "inner join user_team ut on r.user_team_id = ut.user_team_id " +
+                "inner join team t on ut.team_id = t.team_id " +
+                "order by r.win desc";
+        return jdbcTemplate.query(sql, new RecordWithTeamMapper());
     }
 
     @Override
