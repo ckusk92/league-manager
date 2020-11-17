@@ -58,8 +58,8 @@ public class GameController {
     }
 
     @GetMapping("/simgame")
-    public void simulateGame() {
-        service.simulateGame();
+    public List<Game> simulateGame() {
+        return service.simulateGame();
     }
 
     @GetMapping("/simseason")
