@@ -6,9 +6,9 @@ class PlaySeason extends React.Component {
         super();
         this.state = {
             games: [],
-            numGames: 0,
+            numGames: '',
         }
-        
+
     };
 
     getRemainingGames = () => {
@@ -48,12 +48,12 @@ class PlaySeason extends React.Component {
                     </div><br /><br />
                     <div className="form-group-row">
                         <button onClick={() => { this.simGame() }} className="btn btn-light btn-block" type="button">
-                            Simulate One Game <span class="badge badge-pill badge-danger">10</span>
+                            Simulate One Game <span class="badge badge-pill badge-danger">{this.state.numGames}</span>
                         </button>
                     </div><br /><br />
                     <div className="form-group-row">
                         <button className="btn btn-light btn-block" type="button">
-                            Simulate Remainder of Season <span class="badge badge-pill badge-danger">10</span>
+                            Simulate Remainder of Season <span class="badge badge-pill badge-danger">{this.state.numGames}</span>
                         </button>
                     </div><br /><br />
                 </div>
