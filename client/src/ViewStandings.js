@@ -1,4 +1,6 @@
 import React from "react";
+import { withRouter } from "react-router";
+
 
 class ViewStandings extends React.Component {
 
@@ -32,15 +34,30 @@ class ViewStandings extends React.Component {
 
         return (
             <>
-                <ul className="list-group">
-                    {this.state.records.map(record => (
-                        <li
-                            key={record.userTeamId}
-                            className="list-group-item list-group-item-light">
-                            {record.userTeamId + ' W-L: ' + record.win + '-' + record.loss}
-                        </li>
-                    ))}
-                </ul>
+                <h1 className="text-danger text-center">Season Standings</h1>
+                <table className="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Team ID</th>
+                            <th scoope="col">Wins</th>
+                            <th scope="col">Losses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.records.map((record) => (
+                            <tr key={record.userTeamId}>
+                                <td>{record.userTeamId}</td>
+                                <td>{record.win}</td>
+                                <td>{record.loss}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                <button className="btn btn-dark" type="button"
+                    onClick={() => { this.props.history.push("/PlaySeason") }}>
+                    Season's Page
+                </button>
 
             </>
 
@@ -48,4 +65,4 @@ class ViewStandings extends React.Component {
     };
 }
 
-export default ViewStandings;
+export default withRouter(ViewStandings);

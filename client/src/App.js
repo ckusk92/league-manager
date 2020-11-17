@@ -1,7 +1,11 @@
 import './App.css';
 import React from 'react';
 import Draft from './Draft';
+import ViewStandings from './ViewStandings';
+import ViewSchedule from './ViewSchedule';
+import PlaySeason from './PlaySeason';
 import TeamsCreation from './TeamsCreation';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,10 +13,20 @@ import {
   Link
 } from "react-router-dom";
 
+
 function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/PlaySeason">
+          <PlaySeason />
+        </Route>
+        <Route path="/ViewSchedule">
+          <ViewSchedule />
+        </Route>
+        <Route path="/ViewStandings">
+          <ViewStandings />
+        </Route>
         <Route path="/draft">
           <Draft />
         </Route>
