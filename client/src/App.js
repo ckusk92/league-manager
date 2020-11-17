@@ -1,11 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
-
-import ViewSchedule from './Draft';
+import React from 'react';
+import Draft from './Draft';
+import TeamsCreation from './TeamsCreation';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   return (
-    <ViewSchedule></ViewSchedule>
+    <Router>
+      <Switch>
+      <Route path="/draft">
+          <Draft />
+        </Route>
+        <Route path="/">
+          <TeamsCreation />
+        </Route>
+      </Switch>      
+    </Router>    
   );
 }
 

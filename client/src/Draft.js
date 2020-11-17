@@ -66,6 +66,8 @@ class Draft extends React.Component {
                 console.log("Success!");
                 response.json().then((data) => console.log(data));
                 this.getUserTeamPlayers();
+                // Updates dropdown menu when players are selected
+                this.getfreeAgents();
             } else if (response.status === 400) {
                 console.log("Errors!");
                 response.json().then((data) => console.log(data));
@@ -80,6 +82,8 @@ class Draft extends React.Component {
         return (
             <>
                 <h1 className="text-center bg-primary text-light"> Draft Your Team!</h1><br /><br />
+
+                {/* <form className="form-group row" onSubmit={this.createSeasonHandler}> */}
                 <form className="form-row">
 
                     <div className="form-group col-md-5">
@@ -88,14 +92,14 @@ class Draft extends React.Component {
                                 onChange={this.playerChangeHandler} >
                                 {this.state.freeAgents.map((freeAgent) =>
                                     <option key={freeAgent.playerId} value={freeAgent.playerId}>
-                                        {freeAgent.playerId + ". " + freeAgent.firstName + " " + freeAgent.lastName + ", " +
+                                        {freeAgent.firstName + " " + freeAgent.lastName + ", " +
                                             freeAgent.position + ", Rating: " + freeAgent.rating}</option>)}
 					))
 						</select><br />
                         </div>
                     </div>
                     <div className="form-group col-4">
-                        <button class="btn btn-md btn-danger font-weight-bold" type="button"
+                        <button className="btn btn-md btn-danger font-weight-bold" type="button"
                             onClick={this.draftPlayerHandler.bind(this)}>
                             Draft Player
                                   </button>

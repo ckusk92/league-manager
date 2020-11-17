@@ -90,7 +90,7 @@ public class TeamPlayerService {
                     int i = random.nextInt(playerRepository.findAll().size());
                     for(Player fa : freeAgents) {
                         // If randomly selected player is in free agent pool
-                        if(fa.getPlayerId() == playerRepository.findById(i).getPlayerId()) {
+                        if(fa.getPlayerId() == playerRepository.findById(i).getPlayerId()) { //THROWING NULL POINTER EXCEPTION OCCASIONALLY
                             draftResult = add(new TeamPlayer(team.getUserTeamId(), playerRepository.findById(i).getPlayerId()));
                             // Only switch boolean if result is successful
                             if(draftResult.isSuccess()) {
