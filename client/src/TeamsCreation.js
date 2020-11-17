@@ -1,5 +1,6 @@
 import React from "react";
-
+//import { useHistory } from 'react-router-dom';
+import { withRouter } from "react-router";
 
 class TeamsCreation extends React.Component {
 	constructor() {
@@ -15,6 +16,7 @@ class TeamsCreation extends React.Component {
 
 		this.teamChangeHandler = this.teamChangeHandler.bind(this);
 
+		//const history = useHistory();
 	}
 
 	getTeams = () => {
@@ -69,6 +71,8 @@ class TeamsCreation extends React.Component {
 		}).then((response) => {
 			if (response.status === 200) {
 				console.log("Success!");
+				// Redirect here
+				this.props.history.push("/draft");
 			} else if (response.status === 400) {
 				console.log("Errors!");
 				response.json().then((data) => console.log(data));
@@ -86,13 +90,13 @@ class TeamsCreation extends React.Component {
 				<form className="form-group row" onSubmit={this.createSeasonHandler}>
 
 					<div className="form-group col-6 text-danger font-weight-bold">
-						<label for="selectNumberOfTeams">Enter the number of teams you to create in your league</label>
+						<label htmlFor="selectNumberOfTeams">Enter the number of teams you to create in your league</label>
 						<input type="number" className="form-control" name="numberOfTeams" value={this.state.numberOfTeams}
 							onChange={this.numberOfTeamsChangeHandler} />
 					</div>
 
 					<div className="form-group col-6 text-danger font-weight-bold">
-						<label for="selectNumberOfGames">Enter the number of games to play in the season</label>
+						<label htmlFor="selectNumberOfGames">Enter the number of games to play in the season</label>
 						<input type="number" className="form-control" name="numberOfGames" value={this.state.numberOfGames}
 							onChange={this.gamesChangeHandler} />
 					</div><br />
@@ -118,5 +122,5 @@ class TeamsCreation extends React.Component {
 		);
 	}
 }
-export default TeamsCreation;
+export default withRouter(TeamsCreation);
 
