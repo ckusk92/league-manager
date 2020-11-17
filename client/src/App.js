@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import Draft from './Draft';
+import ViewSchedule from './ViewSchedule';
 
 function App() {
   return (
-    <Draft></Draft>
+    <ViewSchedule></ViewSchedule>
   );
 }
 
