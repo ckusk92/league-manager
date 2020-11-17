@@ -36,6 +36,14 @@ public class TeamPlayerJdbcTemplateRepository implements TeamPlayerRepository {
         return jdbcTemplate.query(sql, new TeamPlayerMapper(), userTeamId);
     }
 
+    @Override
+    public List<Player> findAllPlayersForTeam(int userTeamId) {
+        final String sql = "select p.player_id, p.first_name, p.last_name, p.position_id, p.rating from player p " +
+                "inner join team_player tp on p.player_id = tp.player_id " +
+                "where tp.user_team_id = ? order by p.position_id asc";
+        return jdbcTemplate.query(sql, new PlayerMapper(), userTeamId);
+    }
+
 //    @Override
 //    public List<Player> findAllForTeam(int userTeamId) {
 //        final String sql = "select team_player_id, user_team_id, player_id, rating from team_player where user_team_id = ?";
