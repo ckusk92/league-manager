@@ -45,7 +45,7 @@ class ViewStandings extends React.Component {
                     </thead>
                     <tbody>
                         {this.state.records.map((record) => (
-                            <tr key={record.teamName}>
+                            <tr key={record.userTeamId}>
                                 <td>{record.teamName}</td>
                                 <td>{record.win}</td>
                                 <td>{record.loss}</td>
