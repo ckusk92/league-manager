@@ -2,6 +2,7 @@ package learn.mlb_gm.domain;
 
 import learn.mlb_gm.data.RecordRepository;
 import learn.mlb_gm.models.Record;
+import learn.mlb_gm.models.RecordWithTeam;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class RecordService {
         return repository.findAll();
     }
 
-    public List<Record> getStandings() {
+    public List<RecordWithTeam> getStandings() {
         return repository.getStandings();
     }
 

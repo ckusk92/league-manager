@@ -38,15 +38,15 @@ class ViewStandings extends React.Component {
                 <table className="table table-striped">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">Team ID</th>
+                            <th scope="col">Team</th>
                             <th scoope="col">Wins</th>
                             <th scope="col">Losses</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.records.map((record) => (
-                            <tr key={record.userTeamId}>
-                                <td>{record.userTeamId}</td>
+                            <tr key={record.teamName}>
+                                <td>{record.teamName}</td>
                                 <td>{record.win}</td>
                                 <td>{record.loss}</td>
                             </tr>
