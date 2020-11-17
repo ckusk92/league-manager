@@ -6,6 +6,7 @@ import learn.mlb_gm.domain.TeamPlayerService;
 import learn.mlb_gm.domain.UserTeamService;
 import learn.mlb_gm.models.Player;
 import learn.mlb_gm.models.TeamPlayer;
+import learn.mlb_gm.models.response_objects.TeamPlayerInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,8 @@ public class TeamPlayerController {
         return ResponseEntity.ok(teamPlayer);
     }
 
+    @GetMapping("/")
+
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody TeamPlayer teamPlayer) {
         Result<TeamPlayer> result = service.add(teamPlayer);
@@ -61,17 +64,23 @@ public class TeamPlayerController {
         return ErrorResponse.build(result);
     }
 
-    @PostMapping("/draft")
-    public ResponseEntity<Object> draft(@RequestBody TeamPlayer teamPlayer) {
-        Result<TeamPlayer> result = service.draft(teamPlayer);
+//    @PostMapping("/draft")
+//    public ResponseEntity<Object> draft(@RequestBody TeamPlayer teamPlayer) {
+//        Result<TeamPlayer> result = service.draft(teamPlayer);
+//
+//        if(result.isSuccess()) {
+//            // Update team rating whenever a player is drafted
+//            userTeamService.updateRating();
+//            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+//        }
+//        return ErrorResponse.build(result);
+//    }
 
-        if(result.isSuccess()) {
-            // Update team rating whenever a player is drafted
-            userTeamService.updateRating();
-            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
-        }
-        return ErrorResponse.build(result);
+    @PostMapping("/draft")
+    public List<TeamPlayerInfo> draft(@RequestBody TeamPlayer teamPlayer) {
+        return service.draft(teamPlayer);
     }
+
 
     @PutMapping("/{teamPlayerId}")
     public ResponseEntity<Object> update(@PathVariable int teamPlayerId, @RequestBody TeamPlayer teamPlayer) {

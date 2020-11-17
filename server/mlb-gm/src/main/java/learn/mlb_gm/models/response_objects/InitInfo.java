@@ -1,4 +1,4 @@
-package learn.mlb_gm.models;
+package learn.mlb_gm.models.response_objects;
 
 public class InitInfo {
 

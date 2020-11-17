@@ -3,7 +3,7 @@ package learn.mlb_gm.domain;
 import learn.mlb_gm.data.RecordRepository;
 import learn.mlb_gm.data.TeamPlayerRepository;
 import learn.mlb_gm.data.UserTeamRepository;
-import learn.mlb_gm.models.InitInfo;
+import learn.mlb_gm.models.response_objects.InitInfo;
 import learn.mlb_gm.models.Record;
 import learn.mlb_gm.models.TeamPlayer;
 import learn.mlb_gm.models.UserTeam;

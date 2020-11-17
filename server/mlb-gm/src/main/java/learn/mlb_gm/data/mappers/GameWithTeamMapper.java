@@ -1,7 +1,6 @@
 package learn.mlb_gm.data.mappers;
 
-import learn.mlb_gm.models.Game;
-import learn.mlb_gm.models.GameWithTeam;
+import learn.mlb_gm.models.response_objects.GameWithTeam;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

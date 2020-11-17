@@ -3,7 +3,7 @@ package learn.mlb_gm.controllers;
 import learn.mlb_gm.domain.GameService;
 import learn.mlb_gm.domain.Result;
 import learn.mlb_gm.domain.UserTeamService;
-import learn.mlb_gm.models.InitInfo;
+import learn.mlb_gm.models.response_objects.InitInfo;
 import learn.mlb_gm.models.UserTeam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
