@@ -1,5 +1,5 @@
 import React from "react";
-
+import { withRouter } from "react-router";
 
 class Draft extends React.Component {
     constructor() {
@@ -13,6 +13,7 @@ class Draft extends React.Component {
             rating: 0,
             userTeamId: 1,
             teamPlayers: [],
+            complete: false,
         };
 
         this.playerChangeHandler = this.playerChangeHandler.bind(this);
@@ -35,6 +36,7 @@ class Draft extends React.Component {
             .then((data) => {
                 this.setState({
                     teamPlayers: data,
+                    complete: data.length >= 9,
                 })
             })
     }
@@ -79,53 +81,63 @@ class Draft extends React.Component {
     };
 
     render() {
+
+        const {
+            complete,
+        } = this.state;
+
         return (
             <>
                 <h1 className="text-center bg-primary text-light"> Draft Your Team!</h1><br /><br />
 
-                {/* <form className="form-group row" onSubmit={this.createSeasonHandler}> */}
-                <form className="form-row">
+                {!complete && (
+                    <form className="form-row">
 
-                    <div className="form-group col-md-5">
-                        <div className="select-container">
-                            <select className="form-control text-danger font-weight-bold" value={this.state.freeAgent}
-                                onChange={this.playerChangeHandler} >
-                                {this.state.freeAgents.map((freeAgent) =>
-                                    <option key={freeAgent.playerId} value={freeAgent.playerId}>
-                                        {freeAgent.firstName + " " + freeAgent.lastName + ", " +
-                                            freeAgent.position + ", Rating: " + freeAgent.rating}</option>)}
-					))
-						</select><br />
+                        <div className="form-group col-md-5">
+                            <div className="select-container">
+                                <select className="form-control text-danger font-weight-bold" value={this.state.freeAgent}
+                                    onChange={this.playerChangeHandler} >
+                                    {this.state.freeAgents.map((freeAgent) =>
+                                        <option key={freeAgent.playerId} value={freeAgent.playerId}>
+                                            {freeAgent.firstName + " " + freeAgent.lastName + ", " +
+                                                freeAgent.position + ", Rating: " + freeAgent.rating}</option>)}
+                                </select><br />
+                            </div>
                         </div>
+                        <div className="form-group col-4">
+                            <button className="btn btn-md btn-danger font-weight-bold" type="button"
+                                onClick={this.draftPlayerHandler.bind(this)}>
+                                Draft Player
+                                    </button>
+                        </div>
+                    </form>                                     
+                )}
+
+                {complete && (
+                    <div>
+                        <h3>Draft Complete</h3>
+                        <a className="btn btn-md btn-danger font-weight-bold" onClick={() => this.props.history.push('/PlaySeason')}>Continue</a>
                     </div>
-                    <div className="form-group col-4">
-                        <button className="btn btn-md btn-danger font-weight-bold" type="button"
-                            onClick={this.draftPlayerHandler.bind(this)}>
-                            Draft Player
-                                  </button>
-                    </div>
+                )}
 
+                <div className="float-center col-12 text-xl-center  text-primary font-weight-bold">
+                    Current Roster
+                </div><br /><br />
 
-                    <div className="float-center col-12 text-xl-center  text-primary font-weight-bold">
-                        Current Roster
-                    </div><br /><br />
-
-                    <div className="text-primary text-center font-weight-bold col-12 ">
-                        <ul className="list-group">
-                            {this.state.teamPlayers.map(teamPlayer => (
-                                <li
-                                    key={teamPlayer.playerId}
-                                    className="list-group-item list-group-item-light">
-                                    {teamPlayer.firstName + ' ' + teamPlayer.lastName + ', ' + teamPlayer.position + '  Rating: ' + teamPlayer.rating}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </form>
-
+                <div className="text-primary text-center font-weight-bold col-12 ">
+                    <ul className="list-group">
+                        {this.state.teamPlayers.map(teamPlayer => (
+                            <li
+                                key={teamPlayer.playerId}
+                                className="list-group-item list-group-item-light">
+                                {teamPlayer.firstName + ' ' + teamPlayer.lastName + ', ' + teamPlayer.position + '  Rating: ' + teamPlayer.rating}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </>
         );
     }
 }
-export default Draft;
+export default withRouter(Draft);
 
