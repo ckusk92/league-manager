@@ -30,7 +30,9 @@ public class TeamPlayerJdbcTemplateRepository implements TeamPlayerRepository {
 
     @Override
     public List<TeamPlayer> findAllForTeam(int userTeamId) {
-        final String sql = "select team_player_id, user_team_id, player_id, rating from team_player where user_team_id = ?";
+        final String sql = "select tp.team_player_id, tp.user_team_id, tp.player_id, tp.rating from team_player tp " +
+                "inner join player p on tp.player_id = p.player_id " +
+                "where tp.user_team_id = ? order by p.position_id asc";
         return jdbcTemplate.query(sql, new TeamPlayerMapper(), userTeamId);
     }
 
