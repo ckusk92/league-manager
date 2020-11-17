@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router";
 
 class PlaySeason extends React.Component {
     constructor() {
@@ -9,15 +10,17 @@ class PlaySeason extends React.Component {
 
         return (
             <>
-                <h1> 2020 Baseball Season</h1>
+                <h1 className="text-center"> 2020 Baseball Season</h1>
                 <div className="form-group">
                     <div className="form-group-row">
-                        <button type="button">
+                        <button type="button"
+                            onClick={() => { this.props.history.push("/ViewStandings") }}>
                             View Standings
                 </button>
                     </div>
                     <div>
-                        <button type="button">
+                        <button type="button"
+                            onClick={() => { this.props.history.push("/ViewSchedule") }}>
                             View Schedule
                 </button>
                     </div>
@@ -38,4 +41,4 @@ class PlaySeason extends React.Component {
     }
 }
 
-export default PlaySeason;
+export default withRouter(PlaySeason);

@@ -1,4 +1,6 @@
 import React from "react";
+import { withRouter } from "react-router";
+
 
 class ViewSchedule extends React.Component {
 
@@ -30,17 +32,34 @@ class ViewSchedule extends React.Component {
 
         return (
             <>
-                <h2>This season's schedule</h2>
-                <ul className="list-group">
-                    {this.state.schedules.map(schedule => (
-                        <li
-                            key={schedule.gameId}
-                            className="list-group-item list-group-item-light">
-                            {"Game # " + schedule.gameNumber + ' Away team: ' + schedule.awayTeamId + '@ ' + schedule.homeTeamId +
-                                ' *** result(home:away) : ' + schedule.homeScore + ':' + schedule.awayScore}
-                        </li>
-                    ))}
-                </ul>
+                <h2 className="text-danger text-center">Season Schedule</h2>
+                <table className="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Game#</th>
+                            <th scoope="col">Away Team</th>
+                            <th scope="col">Home Team</th>
+                            <th scope="col">Home Score</th>
+                            <th scope="col">Away Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.schedules.map((schedule) => (
+                            <tr key={schedule.gameId}>
+                                <td>{schedule.gameId}</td>
+                                <td>{schedule.awayTeamId}</td>
+                                <td>{schedule.homeTeamId}</td>
+                                <td>{schedule.homeScore}</td>
+                                <td>{schedule.awayScore}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                <button className='btn btn-dark' type="button"
+                    onClick={() => { this.props.history.push("/PlaySeason") }}>
+                    Season's Page
+                </button>
 
             </>
 
@@ -48,4 +67,4 @@ class ViewSchedule extends React.Component {
     };
 }
 
-export default ViewSchedule;
+export default withRouter(ViewSchedule);
