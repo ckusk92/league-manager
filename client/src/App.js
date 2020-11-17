@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import ViewSchedule from './ViewSchedule';
+
+import ViewSchedule from './Draft';
 
 function App() {
   return (
