@@ -27,6 +27,7 @@ class Draft extends React.Component {
             .then((data) => {
                 this.setState({
                     freeAgents: data,
+                    //playerId: data[0].playerId,
                 })
             });
     };
@@ -101,8 +102,10 @@ class Draft extends React.Component {
 
                         <div className="form-group col-md-5">
                             <div className="select-container">
-                                <select className="form-control text-danger font-weight-bold" value={this.state.freeAgent}
-                                    onChange={this.playerChangeHandler} >
+                                <select className="form-control text-danger font-weight-bold" value={this.state.playerId}
+                                    onChange={this.playerChangeHandler}
+                                     >
+                                    <option value="">-- Select Player --</option>     
                                     {this.state.freeAgents.map((freeAgent) =>
                                         <option key={freeAgent.playerId} value={freeAgent.playerId}>
                                             {freeAgent.firstName + " " + freeAgent.lastName + ", " +
