@@ -170,7 +170,8 @@ public class TeamPlayerService {
 //                        teamPlayer = draftResult.getPayload();
                         teamPlayer = repository.add(new TeamPlayer(team.getUserTeamId(), freeAgents.get(i).getPlayerId()));
                         teamPlayerInfo = new TeamPlayerInfo();
-                        teamPlayerInfo.setTeamName(teamRepository.findById(teamPlayer.getUserTeamId()).getName());
+                        //teamPlayerInfo.setTeamName(teamRepository.findById(teamPlayer.getUserTeamId()).getName());
+                        teamPlayerInfo.setTeamName(teamRepository.findById(userTeamRepository.findById(teamPlayer.getUserTeamId()).getTeamId()).getName());
                         teamPlayerInfo.setFirstName(playerRepository.findById(teamPlayer.getPlayerId()).getFirstName());
                         teamPlayerInfo.setLastName(playerRepository.findById(teamPlayer.getPlayerId()).getLastName());
                         teamPlayerInfo.setPosition(playerRepository.findById(teamPlayer.getPlayerId()).getPosition());
