@@ -7,6 +7,8 @@ class PlaySeason extends React.Component {
         this.state = {
             games: [],
             numGames: '',
+            homeTeam: '',
+            awayTeam: '',
         }
 
     };
@@ -26,13 +28,19 @@ class PlaySeason extends React.Component {
     }
 
     simGame = () => {
-        if (this.state.numGames === 1) {
+        if (this.state.numGames <= 1) {
             this.props.history.push("/SeasonFacts")
         }
-        fetch("http://localhost:8080/game/simgame");
-        console.log("game simulated");
-        this.getRemainingGames();
-        console.log(this.state.numGames);
+        fetch("http://localhost:8080/game/simgame")
+            .then((response) => response.json())
+            .then((data) => {
+                this.setState({
+                    games: data,
+                });
+                console.log("game simulated");
+                this.getRemainingGames();
+                console.log(this.state.numGames);
+            })
     }
 
     render() {
@@ -63,6 +71,16 @@ class PlaySeason extends React.Component {
                             Simulate Remainder of Season <span class="badge badge-pill badge-danger">{this.state.numGames}</span>
                         </button>
                     </div><br /><br />
+
+                    <div>
+                        <ul>
+                            {this.state.games.map(game => (
+                                <li key={game.gameId}>
+                                    {'Game #' + game.gameId + ' home team score ' + game.homeScore + ' away team score ' + game.awayScore}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </>
 
