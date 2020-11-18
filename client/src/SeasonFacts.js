@@ -117,17 +117,12 @@ class SeasonFacts extends React.Component {
                     </tbody>
                 </table><br /><br />
 
-                {/* TODO: Add on click handlers once route is created */}
                 <div>
                     <button onClick={() => { this.startNewSeasonOnClickHandler() }} className="btn btn-light col-12">Start a New Season</button>
                 </div><br />
 
                 <div>
                     <button onClick={() => { this.startNewLeaugeOnClickHandler() }} className="btn btn-light col-12">Start a New League</button>
-                </div><br />
-
-                <div>
-                    <button className="btn btn-dark col-12">Exit MLB GM App</button>
                 </div><br />
 
             </>
