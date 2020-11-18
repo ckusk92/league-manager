@@ -126,9 +126,6 @@ class SeasonFacts extends React.Component {
                     <button onClick={() => { this.startNewLeaugeOnClickHandler() }} className="btn btn-light col-12">Start a New League</button>
                 </div><br />
 
-                <div>
-                    <button className="btn btn-dark col-12">Exit MLB GM App</button>
-                </div><br />
 
             </>
         )
