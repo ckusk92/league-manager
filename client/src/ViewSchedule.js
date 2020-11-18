@@ -38,10 +38,10 @@ class ViewSchedule extends React.Component {
                         <tr>
                             <th scope="col">Game#</th>
                             <th scope="col">Home Team</th>
-                            <th scoope="col">Away Team</th>                            
+                            <th scope="col">Away Team</th>
                             <th scope="col">Home Score</th>
                             <th scope="col">Away Score</th>
-                            <th scope="col">Win/Loss</th>                            
+                            <th scope="col">Win/Loss</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,23 +49,23 @@ class ViewSchedule extends React.Component {
                             <tr key={schedule.gameId + schedule.homeTeamName}>
                                 <td>{schedule.gameNumber}</td>
                                 <td>{schedule.homeTeamName}</td>
-                                <td>{schedule.awayTeamName}</td>                                
-                                {schedule.played && 
-                                    <td>{schedule.homeScore}</td>  
+                                <td>{schedule.awayTeamName}</td>
+                                {schedule.played &&
+                                    <td>{schedule.homeScore}</td>
                                 }
                                 {!schedule.played &&
                                     <td> </td>
                                 }
-                                {schedule.played &&                               
+                                {schedule.played &&
                                     <td>{schedule.awayScore}</td>
                                 }
                                 {!schedule.played &&
                                     <td> </td>
                                 }
-                                {schedule.played &&  
-                                    <td>{schedule.result}</td>  
+                                {schedule.played &&
+                                    <td>{schedule.result}</td>
                                 }
-                                {!schedule.played && 
+                                {!schedule.played &&
                                     <td> </td>
                                 }
                             </tr>
