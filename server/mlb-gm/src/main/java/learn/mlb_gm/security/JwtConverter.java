@@ -2,6 +2,8 @@ package learn.mlb_gm.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import learn.mlb_gm.data.AppUserRepository;
+import learn.mlb_gm.models.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,11 +23,11 @@ public class JwtConverter {
     private final int EXPIRATION_MINUTES = 15;
     private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
 
-//    @Autowired
-//    private AppUserRepository appUserRepository;
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     public String getTokenFromUser(User user) {
-//        AppUser appUser = appUserRepository.findByUsername(user.getUsername());
+        AppUser appUser = appUserRepository.findByUsername(user.getUsername());
 
         String authorities = user.getAuthorities().stream()
                 .map(i -> i.getAuthority())
@@ -34,7 +36,7 @@ public class JwtConverter {
         return Jwts.builder()
                 .setIssuer(ISSUER)
                 .setSubject(user.getUsername())
-                //.claim("appUserId", String.valueOf(appUser.getAppUserId()))
+                .claim("appUserId", String.valueOf(appUser.getAppUserId()))
                 .claim("authorities", authorities)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MILLIS))
                 .signWith(key)
