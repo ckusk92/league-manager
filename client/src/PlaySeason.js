@@ -28,9 +28,9 @@ class PlaySeason extends React.Component {
     }
 
     simGame = () => {
-        if (this.state.numGames <= 1) {
-            this.props.history.push("/SeasonFacts")
-        }
+        // if (this.state.numGames <= 1) {
+        //     this.props.history.push("/SeasonFacts")
+        // }
         fetch("http://localhost:8080/game/simgame")
             .then((response) => response.json())
             .then((data) => {
@@ -41,6 +41,11 @@ class PlaySeason extends React.Component {
                 this.getRemainingGames();
                 console.log(this.state.numGames);
             })
+    }
+
+    simSeason = () => {
+        fetch("http://localhost:8080/game/simseason")
+
     }
 
     render() {
@@ -67,7 +72,7 @@ class PlaySeason extends React.Component {
                         </button>
                     </div><br /><br />
                     <div className="form-group-row">
-                        <button className="btn btn-light btn-block" type="button">
+                        <button onClick={() => { this.simSeason() }} className="btn btn-light btn-block" type="button">
                             Simulate Remainder of Season <span class="badge badge-pill badge-danger">{this.state.numGames}</span>
                         </button>
                     </div><br /><br />
