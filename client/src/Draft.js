@@ -152,7 +152,7 @@ class Draft extends React.Component {
                             <li
                                 key={draftedPlayer.teamName}
                                 className="list-group-item list-group-item-light">
-                                {draftedPlayer.teamName + ': '}&nbsp;&nbsp;&nbsp;{draftedPlayer.firstName + ', ' + draftedPlayer.lastName + ', ' + draftedPlayer.position + '  Rating: ' + draftedPlayer.rating}
+                                {draftedPlayer.teamName + ': '}&nbsp;&nbsp;&nbsp;{draftedPlayer.firstName + ' ' + draftedPlayer.lastName + ', ' + draftedPlayer.position + '  Rating: ' + draftedPlayer.rating}
                             </li>
                         ))}
                     </ul>

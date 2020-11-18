@@ -90,13 +90,13 @@ class TeamsCreation extends React.Component {
 				<form className="form-group row" onSubmit={this.createSeasonHandler}>
 
 					<div className="form-group col-6 text-danger font-weight-bold">
-						<label htmlFor="selectNumberOfTeams">Enter the number of teams you to create in your league</label>
+						<label htmlFor="selectNumberOfTeams">Number of Teams in League</label>
 						<input type="number" className="form-control" name="numberOfTeams" value={this.state.numberOfTeams}
 							onChange={this.numberOfTeamsChangeHandler} />
 					</div>
 
 					<div className="form-group col-6 text-danger font-weight-bold">
-						<label htmlFor="selectNumberOfGames">Enter the number of games to play in the season</label>
+						<label htmlFor="selectNumberOfGames">Number of Games in Season</label>
 						<input type="number" className="form-control" name="numberOfGames" value={this.state.numberOfGames}
 							onChange={this.gamesChangeHandler} />
 					</div><br />
