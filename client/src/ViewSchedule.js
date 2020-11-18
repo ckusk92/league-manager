@@ -37,18 +37,19 @@ class ViewSchedule extends React.Component {
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Game#</th>
-                            <th scoope="col">Away Team</th>
                             <th scope="col">Home Team</th>
+                            <th scoope="col">Away Team</th>                            
                             <th scope="col">Home Score</th>
                             <th scope="col">Away Score</th>
+                            <th scope="col">Win/Loss</th>                            
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.schedules.map((schedule) => (
                             <tr key={schedule.gameId + schedule.homeTeamName}>
                                 <td>{schedule.gameNumber}</td>
-                                <td>{schedule.awayTeamName}</td>
                                 <td>{schedule.homeTeamName}</td>
+                                <td>{schedule.awayTeamName}</td>                                
                                 {schedule.played && 
                                     <td>{schedule.homeScore}</td>  
                                 }
@@ -59,6 +60,12 @@ class ViewSchedule extends React.Component {
                                     <td>{schedule.awayScore}</td>
                                 }
                                 {!schedule.played &&
+                                    <td> </td>
+                                }
+                                {schedule.played &&  
+                                    <td>{schedule.result}</td>  
+                                }
+                                {!schedule.played && 
                                     <td> </td>
                                 }
                             </tr>
