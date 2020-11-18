@@ -57,8 +57,13 @@ public class GameController {
         return ResponseEntity.ok(game);
     }
 
+//    @GetMapping("/simgame")
+//    public List<Game> simulateGame() {
+//        return service.simulateGame();
+//    }
+
     @GetMapping("/simgame")
-    public List<Game> simulateGame() {
+    public List<GameWithTeam> simulateGame() {
         return service.simulateGame();
     }
 

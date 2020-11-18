@@ -142,10 +142,10 @@ public class GameService {
         }
     }
 
-    public List<Game> simulateGame() {
+    public List<GameWithTeam> simulateGame() {
         Random random = new Random();
         List<Game> allGames = repository.findAll();
-        List<Game> returnGames = new ArrayList<>();
+        List<GameWithTeam> returnGames = new ArrayList<>();
         int gameNumber = 0;
 
         for(Game game : allGames) {
@@ -164,7 +164,14 @@ public class GameService {
 
                 game.setPlayed(true);
                 repository.update(game);
-                returnGames.add(game);
+                GameWithTeam gameWithTeam = new GameWithTeam();
+                gameWithTeam.setGameId(game.getGameId());
+                gameWithTeam.setHomeTeamName(teamRepository.findById(userTeamRepository.findById(game.getHomeTeamId()).getTeamId()).getName());
+                gameWithTeam.setAwayTeamName(teamRepository.findById(userTeamRepository.findById(game.getAwayTeamId()).getTeamId()).getName());
+                gameWithTeam.setGameNumber(game.getGameNumber());
+                gameWithTeam.setHomeScore(game.getHomeScore());
+                gameWithTeam.setAwayScore(game.getAwayScore());
+                returnGames.add(gameWithTeam);
 
                 Record homeRecord = recordRepository.findForTeam(game.getHomeTeamId());
                 Record awayRecord = recordRepository.findForTeam(game.getAwayTeamId());
