@@ -19,6 +19,8 @@ class ViewFreeAgents extends React.Component {
 
     }
 
+
+
     getfreeAgents = () => {
         fetch("http://localhost:8080/player/freeagents")
             .then((response) => response.json())
@@ -61,7 +63,7 @@ class ViewFreeAgents extends React.Component {
                 'playerId': this.state.playerId
             }),
         }).then((response) => {
-            if (response.status === 200) {    
+            if (response.status === 200) {
                 console.log("Success!");
                 this.getUserTeamPlayers();
                 // Updates dropdown menu when players are selected
@@ -81,15 +83,15 @@ class ViewFreeAgents extends React.Component {
             <>
                 <h1 className="text-center bg-primary text-light">Sign Free Agent</h1><br /><br />
                 <br />
-                <p>Adding a free agent will cause a corresponding player to be dropped from your team.</p> 
+                <p>Adding a free agent will cause a corresponding player to be dropped from your team.</p>
                 <br /><br />
                 <form className="form-row">
                     <div className="form-group col-md-5">
                         <div className="select-container">
                             <select className="form-control text-danger font-weight-bold" value={this.state.playerId}
                                 onChange={this.playerChangeHandler}
-                                    >
-                                <option value="">-- Select Player --</option>     
+                            >
+                                <option value="">-- Select Player --</option>
                                 {this.state.freeAgents.map((freeAgent) =>
                                     <option key={freeAgent.playerId} value={freeAgent.playerId}>
                                         {freeAgent.firstName + " " + freeAgent.lastName + ", " +
@@ -102,9 +104,13 @@ class ViewFreeAgents extends React.Component {
                             onClick={this.signPlayerHandler.bind(this)}>
                             Acquire Player
                         </button>
+                        <button className="btn btn-md btn-dark font-weight-bold" type="button"
+                            onClick={() => { this.props.history.push("/PlaySeason") }}>
+                            Return to Season
+                        </button>
                     </div>
-                </form>                                     
-                
+                </form>
+
 
                 <div className="float-center col-12 text-xl-center  text-primary font-weight-bold">
                     Current Roster
