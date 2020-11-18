@@ -73,12 +73,15 @@ class PlaySeason extends React.Component {
                     </div><br /><br />
 
                     <div>
-                        <ul>
+                        <ul className="list-group col-12 font-weight-bold ">
                             {this.state.games.map(game => (
-                                <li key={game.gameId}>
-                                    {'Game #' + game.gameId + ' home team score ' + game.homeScore + ' away team score ' + game.awayScore}
+                                <li key={game.gameId}
+                                    className="list-group-item list-group-item-warning text-dark text-center">
+                                    {'Game #' + game.gameNumber}<br />
+                                    {game.homeTeamName + ': ' + game.homeScore}<br />
+                                    {game.awayTeamName + ': ' + game.awayScore}
                                 </li>
-                            ))}
+                            ))}<br />
                         </ul>
                     </div>
                 </div>
