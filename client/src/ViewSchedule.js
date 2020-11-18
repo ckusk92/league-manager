@@ -49,8 +49,18 @@ class ViewSchedule extends React.Component {
                                 <td>{schedule.gameNumber}</td>
                                 <td>{schedule.awayTeamName}</td>
                                 <td>{schedule.homeTeamName}</td>
-                                <td>{schedule.homeScore}</td>
-                                <td>{schedule.awayScore}</td>
+                                {schedule.played && 
+                                    <td>{schedule.homeScore}</td>  
+                                }
+                                {!schedule.played &&
+                                    <td> </td>
+                                }
+                                {schedule.played &&                               
+                                    <td>{schedule.awayScore}</td>
+                                }
+                                {!schedule.played &&
+                                    <td> </td>
+                                }
                             </tr>
                         ))}
                     </tbody>
