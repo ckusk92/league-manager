@@ -5,6 +5,7 @@ import learn.mlb_gm.data.TeamPlayerRepository;
 import learn.mlb_gm.data.TeamRepository;
 import learn.mlb_gm.data.UserTeamRepository;
 import learn.mlb_gm.models.Player;
+import learn.mlb_gm.models.Position;
 import learn.mlb_gm.models.TeamPlayer;
 import learn.mlb_gm.models.UserTeam;
 import learn.mlb_gm.models.response_objects.TeamPlayerInfo;
@@ -187,6 +188,29 @@ public class TeamPlayerService {
             }
         }
         return draftedPlayers;
+    }
+
+    public void sign(TeamPlayer teamPlayer) {
+        int userId = 1;
+        Position faPosition = playerRepository.findById(teamPlayer.getPlayerId()).getPosition();
+        List<Player> roster = getRoster(userId);
+        List<TeamPlayer> teamRoster = findAllByTeam(userId);
+
+        for(Player player : roster) {
+            if(player.getPosition() == faPosition) {
+                // Return to free agent list
+                for(TeamPlayer tp : teamRoster) {
+                    if(tp.getPlayerId() == player.getPlayerId()) {
+                        System.out.println(teamPlayer.getTeamPlayerId());
+                        System.out.println(repository.deleteById(tp.getTeamPlayerId()));
+                    }
+                }
+            }
+        }
+
+        // Not sure if rating will be accurate...
+        TeamPlayer newPlayer = new TeamPlayer(userId, teamPlayer.getPlayerId(), teamPlayer.getRating());
+        repository.add(newPlayer);
     }
 
     public Result<TeamPlayer> update(TeamPlayer teamPlayer) {

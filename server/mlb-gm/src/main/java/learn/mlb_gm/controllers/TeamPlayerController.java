@@ -81,6 +81,11 @@ public class TeamPlayerController {
         return service.draft(teamPlayer);
     }
 
+    @PostMapping("/sign")
+    public void sign(@RequestBody TeamPlayer teamPlayer) {
+        service.sign(teamPlayer);
+    }
+
 
     @PutMapping("/{teamPlayerId}")
     public ResponseEntity<Object> update(@PathVariable int teamPlayerId, @RequestBody TeamPlayer teamPlayer) {
