@@ -45,8 +45,8 @@ class ViewSchedule extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.schedules.map((schedule) => (
-                            <tr key={schedule.gameId + schedule.homeTeamName}>
+                        {this.state.schedules.map((schedule, index) => (
+                            <tr key={index}>
                                 <td>{schedule.gameNumber}</td>
                                 <td>{schedule.homeTeamName}</td>
                                 <td>{schedule.awayTeamName}</td>
