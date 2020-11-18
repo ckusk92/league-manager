@@ -9,6 +9,7 @@ class PlaySeason extends React.Component {
             numGames: '',
             homeTeam: '',
             awayTeam: '',
+            useless: '',
         }
 
     };
@@ -45,7 +46,6 @@ class PlaySeason extends React.Component {
 
     simSeason = () => {
         fetch("http://localhost:8080/game/simseason")
-
     }
 
     render() {
