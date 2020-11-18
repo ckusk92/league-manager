@@ -81,7 +81,7 @@ class ViewFreeAgents extends React.Component {
     render() {
         return (
             <>
-                <h1 className="text-center bg-primary text-light">Sign Free Agent</h1><br /><br />
+                <h1>Sign Free Agent</h1><br /><br />
                 <br />
                 <p>Adding a free agent will cause a corresponding player to be dropped from your team.</p>
                 <br /><br />
@@ -100,7 +100,7 @@ class ViewFreeAgents extends React.Component {
                         </div>
                     </div>
                     <div className="form-group col-4">
-                        <button className="btn btn-md btn-danger font-weight-bold" type="button"
+                        <button className="btn btn-dark" type="button"
                             onClick={this.signPlayerHandler.bind(this)}>
                             Acquire Player
                         </button>

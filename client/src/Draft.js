@@ -67,7 +67,7 @@ class Draft extends React.Component {
             }),
         }).then((response) => {
             //if (response.status === 201) {
-            if (response.status === 200) {    
+            if (response.status === 200) {
                 console.log("Success!");
                 response.json().then((data) => {
                     this.setState({
@@ -95,7 +95,7 @@ class Draft extends React.Component {
 
         return (
             <>
-                <h1 className="text-center bg-primary text-light"> Draft Your Team!</h1><br /><br />
+                <h1> Draft Your Team!</h1><br /><br />
 
                 {!complete && (
                     <form className="form-row">
@@ -104,8 +104,8 @@ class Draft extends React.Component {
                             <div className="select-container">
                                 <select className="form-control text-danger font-weight-bold" value={this.state.playerId}
                                     onChange={this.playerChangeHandler}
-                                     >
-                                    <option value="">-- Select Player --</option>     
+                                >
+                                    <option value="">-- Select Player --</option>
                                     {this.state.freeAgents.map((freeAgent) =>
                                         <option key={freeAgent.playerId} value={freeAgent.playerId}>
                                             {freeAgent.firstName + " " + freeAgent.lastName + ", " +
@@ -114,12 +114,12 @@ class Draft extends React.Component {
                             </div>
                         </div>
                         <div className="form-group col-4">
-                            <button className="btn btn-md btn-danger font-weight-bold" type="button"
+                            <button className="btn btn-light" type="button"
                                 onClick={this.draftPlayerHandler.bind(this)}>
                                 Draft Player
                                     </button>
                         </div>
-                    </form>                                     
+                    </form>
                 )}
 
                 {complete && (
@@ -129,7 +129,7 @@ class Draft extends React.Component {
                     </div>
                 )}
 
-                <div className="float-center col-12 text-xl-center  text-primary font-weight-bold">
+                <div>
                     Current Roster
                 </div><br /><br />
 
@@ -146,7 +146,7 @@ class Draft extends React.Component {
                 </div>
 
                 <br /><br />
-                <div className="float-center col-12 text-xl-center  text-primary font-weight-bold">
+                <div>
                     Previous Round
                 </div><br /><br />
                 <div className="text-primary text-center font-weight-bold col-12 ">
