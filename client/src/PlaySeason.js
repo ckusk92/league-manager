@@ -53,34 +53,34 @@ class PlaySeason extends React.Component {
 
         return (
             <>
-                <h1 className="text-center"> 2020 Baseball Season</h1><br />
+                <h1> 2020 Baseball Season</h1><br />
                 <div className="form-group">
                     <div className="block-row">
-                        <button className="btn btn-light btn-block" type="button"
+                        <button className="btn btn-dark btn-block" type="button"
                             onClick={() => { this.props.history.push("/ViewStandings") }}>
                             View Standings
                         </button>
                     </div><br /><br />
                     <div className="form-group-row">
-                        <button className="btn btn-light btn-block" type="button"
+                        <button className="btn btn-dark btn-block" type="button"
                             onClick={() => { this.props.history.push("/ViewSchedule") }}>
                             View Schedule
                         </button>
                     </div><br /><br />
                     <div className="form-group-row">
-                        <button className="btn btn-light btn-block" type="button"
+                        <button className="btn btn-dark btn-block" type="button"
                             onClick={() => { this.props.history.push("/ViewFreeAgents") }}>
                             View Free Agents
                         </button>
                     </div><br /><br />
                     <div className="form-group-row">
-                        <button onClick={() => { this.simGame() }} className="btn btn-light btn-block" type="button">
-                            Simulate One Game <span class="badge badge-pill badge-danger">{this.state.numGames + ' remaining'}</span>
+                        <button onClick={() => { this.simGame() }} className="btn btn-dark btn-block" type="button">
+                            Simulate One Game <span class="badge badge-pill">{this.state.numGames + ' remaining'}</span>
                         </button>
                     </div><br /><br />
                     <div className="form-group-row">
-                        <button onClick={() => { this.simSeason() }} className="btn btn-light btn-block" type="button">
-                            Simulate Remainder of Season <span className="badge badge-pill badge-danger">{this.state.numGames + ' remaining'}</span>
+                        <button onClick={() => { this.simSeason() }} className="btn btn-dark btn-block" type="button">
+                            Simulate Remainder of Season <span className="badge badge-pill">{this.state.numGames + ' remaining'}</span>
                         </button>
                     </div><br /><br />
 
