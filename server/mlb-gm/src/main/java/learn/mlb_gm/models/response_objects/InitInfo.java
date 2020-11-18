@@ -1,9 +1,18 @@
 package learn.mlb_gm.models.response_objects;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 public class InitInfo {
 
+    @Min(value = 4, message = "Must have atleast four teams")
+    @Max(value = 16, message = "May only have sixteen teams at most")
     private int numberOfTeams;
+
+    @Min(value = 1, message = "Must have atleast one game in season")
+    @Max(value = 162, message = "May have up to 162 games in a season")
     private int numberOfGames;
+
     private int userTeamChoiceId;
 
     public int getNumberOfTeams() {

@@ -1,6 +1,7 @@
 import React from "react";
 //import { useHistory } from 'react-router-dom';
 import { withRouter } from "react-router";
+import Errors from './Errors'
 
 class TeamsCreation extends React.Component {
 	constructor() {
@@ -12,6 +13,7 @@ class TeamsCreation extends React.Component {
 			name: '', //not sure, but including for now
 			numberOfGames: 0,
 			userTeamChoiceId: 0,
+			errors: [],
 		};
 
 		this.teamChangeHandler = this.teamChangeHandler.bind(this);
@@ -76,24 +78,42 @@ class TeamsCreation extends React.Component {
 			} else if (response.status === 400) {
 				console.log("Errors!");
 				response.json().then((data) => console.log(data));
+				// const data = await response.json();
+				// this.setState({
+				//   errors: data,
+				// });
 			} else {
-				console.log("oops...");
+				throw new Error(`Unexpected response: ${response}`)
 			}
 		});
 	};
 
 	render() {
+		const {
+			errors,
+		} = this.state;
 		return (
 			<>
 				<h1 className="text-center bg-primary text-light"> Create Custom Season</h1><br /><br />
+
+				<Errors errors={errors} />
 
 				<form className="form-group row" onSubmit={this.createSeasonHandler}>
 
 					<div className="form-group col-6 text-danger font-weight-bold">
 						<label htmlFor="selectNumberOfTeams">Number of Teams in League</label>
-						<input type="number" className="form-control" name="numberOfTeams" value={this.state.numberOfTeams}
-							onChange={this.numberOfTeamsChangeHandler} />
-					</div>
+						<select className="form-control" name="numberOfTeams" value={this.state.numberOfTeams}
+							onChange={this.numberOfTeamsChangeHandler}>
+								<option value=''>-- Select Number --</option>
+								<option value='4'>4</option>
+								<option value='6'>6</option>
+								<option value='8'>8</option>
+								<option value='10'>10</option>
+								<option value='12'>12</option>
+								<option value='14'>14</option>
+								<option value='16'>16</option>
+						</select>
+					</div><br />
 
 					<div className="form-group col-6 text-danger font-weight-bold">
 						<label htmlFor="selectNumberOfGames">Number of Games in Season</label>
@@ -105,6 +125,7 @@ class TeamsCreation extends React.Component {
 						<div className="select-container">
 							<select className="form-control text-danger font-weight-bold" value={this.state.team}
 								onChange={this.teamChangeHandler} >
+									<option value=''>-- Select Team --</option>
 								{this.state.teams.map((team) =>
 									<option key={team.teamId} value={team.teamId}>{team.name}</option>)}
 					))
