@@ -9,6 +9,7 @@ public class GameWithTeam {
     private int homeScore;
     private int awayScore;
     private boolean played;
+    private String result;
 
     public GameWithTeam() {
 
@@ -87,5 +88,13 @@ public class GameWithTeam {
 
     public void setPlayed(boolean played) {
         this.played = played;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

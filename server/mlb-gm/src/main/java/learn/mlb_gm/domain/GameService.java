@@ -57,6 +57,23 @@ public class GameService {
             newGame.setHomeScore(game.getHomeScore());
             newGame.setAwayScore(game.getAwayScore());
             newGame.setPlayed(game.isPlayed());
+
+            if(newGame.isPlayed()) {
+                if(userTeamRepository.findById(game.getHomeTeamId()).isUserControlled()) {
+                    if(newGame.getHomeScore() > newGame.getAwayScore()) {
+                        newGame.setResult("W");
+                    } else {
+                        newGame.setResult("L");
+                    }
+                } else {
+                    if(newGame.getAwayScore() > newGame.getHomeScore()) {
+                        newGame.setResult("W");
+                    } else {
+                        newGame.setResult("L");
+                    }
+                }
+            }
+
             schedule.add(newGame);
         }
 
