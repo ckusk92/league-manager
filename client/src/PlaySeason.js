@@ -58,13 +58,19 @@ class PlaySeason extends React.Component {
                         <button className="btn btn-light btn-block" type="button"
                             onClick={() => { this.props.history.push("/ViewStandings") }}>
                             View Standings
-                </button>
+                        </button>
                     </div><br /><br />
                     <div className="form-group-row">
                         <button className="btn btn-light btn-block" type="button"
                             onClick={() => { this.props.history.push("/ViewSchedule") }}>
                             View Schedule
-                </button>
+                        </button>
+                    </div><br /><br />
+                    <div className="form-group-row">
+                        <button className="btn btn-light btn-block" type="button"
+                            onClick={() => { this.props.history.push("/ViewFreeAgents") }}>
+                            View Free Agents
+                        </button>
                     </div><br /><br />
                     <div className="form-group-row">
                         <button onClick={() => { this.simGame() }} className="btn btn-light btn-block" type="button">
@@ -73,7 +79,7 @@ class PlaySeason extends React.Component {
                     </div><br /><br />
                     <div className="form-group-row">
                         <button onClick={() => { this.simSeason() }} className="btn btn-light btn-block" type="button">
-                            Simulate Remainder of Season <span class="badge badge-pill badge-danger">{this.state.numGames}</span>
+                            Simulate Remainder of Season <span className="badge badge-pill badge-danger">{this.state.numGames}</span>
                         </button>
                     </div><br /><br />
 

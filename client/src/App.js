@@ -6,6 +6,7 @@ import ViewSchedule from './ViewSchedule';
 import PlaySeason from './PlaySeason';
 import TeamsCreation from './TeamsCreation';
 import SeasonFacts from './SeasonFacts';
+import ViewFreeAgents from './ViewFreeAgents';
 
 import {
   BrowserRouter as Router,
@@ -13,6 +14,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+
 
 
 function App() {
@@ -30,6 +32,9 @@ function App() {
         </Route>
         <Route path="/ViewStandings">
           <ViewStandings />
+        </Route>
+        <Route path="/ViewFreeAgents">
+          <ViewFreeAgents />
         </Route>
         <Route path="/draft">
           <Draft />
