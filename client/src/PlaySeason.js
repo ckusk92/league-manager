@@ -47,12 +47,8 @@ class PlaySeason extends React.Component {
     simSeason = () => {
         fetch("http://localhost:8080/game/simseason")
             .then((response) => response.json())
-            .then((data) => {
-                this.setState({
-                    games: data,
-                });
-                this.props.history.push("/SeasonFacts")
-            })
+            .then(data => console.log(data));
+            this.props.history.push("/SeasonFacts")            
     }
 
     render() {
@@ -94,7 +90,7 @@ class PlaySeason extends React.Component {
                         <ul className="list-group col-12 font-weight-bold ">
                             {this.state.games.map(game => (
                                 <li key={game.gameId}
-                                    className="list-group-item list-group-item-warning text-dark text-center">
+                                    className="list-group-item list-group-item-warning text-dark text-center" id="gameResults">
                                     {'Game #' + game.gameNumber}<br />
                                     {game.homeTeamName + ': ' + game.homeScore}<br />
                                     {game.awayTeamName + ': ' + game.awayScore}

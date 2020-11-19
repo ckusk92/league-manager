@@ -15,10 +15,6 @@ body {
     background: #30475e;
 }
 
-li {
-    color: #222831;
-}
-
 .btn {
     background: #30475e;
     color:#f05454;
@@ -34,6 +30,10 @@ h1,h2,h3{
     font-weight: bold;
     border-radius: 16px;
     
+}
+
+#gameResults {
+    color: #f5f100;
 }
 
 .container {
