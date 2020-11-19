@@ -8,9 +8,9 @@ public interface PlayerRepository {
 
     public List<Player> findAll();
 
-    public List<Player> findAllActive();
+    public List<Player> findAllActive(int userId);
 
-    public List<Player> findFreeAgents();
+    public List<Player> findFreeAgents(int userId);
 
     public Player findById(int playerId);
 
