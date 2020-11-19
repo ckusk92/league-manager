@@ -20,8 +20,8 @@ public class RecordService {
         return repository.findAll();
     }
 
-    public List<RecordWithTeam> getStandings() {
-        return repository.getStandings();
+    public List<RecordWithTeam> getStandings(int userId) {
+        return repository.getStandings(userId);
     }
 
     public Record findForTeam(int userTeamId) {

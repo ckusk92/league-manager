@@ -2,6 +2,8 @@ import React from "react";
 //import { useHistory } from 'react-router-dom';
 import { withRouter } from "react-router";
 import Errors from './Errors'
+import Wrigley from "./images/wrigley.jpg"
+import AuthContext from './AuthContext'
 
 class TeamsCreation extends React.Component {
 	constructor() {
@@ -59,7 +61,7 @@ class TeamsCreation extends React.Component {
 
 	createSeasonHandler = (event) => {
 		event.preventDefault();
-
+		//console.log(this.props.auth.user.appUserId);
 		fetch(`http://localhost:8080/userteam/create`, {
 			method: "POST",
 			headers: {
@@ -69,11 +71,11 @@ class TeamsCreation extends React.Component {
 				numberOfTeams: this.state.numberOfTeams,
 				numberOfGames: this.state.numberOfGames,
 				userTeamChoiceId: this.state.teamId,
+				userId: this.context.user.appUserId,				
 			}),
 		}).then((response) => {
 			if (response.status === 200) {
 				console.log("Success!");
-				// Redirect here
 				this.props.history.push("/draft");
 			} else if (response.status === 400) {
 				console.log("Errors!");
@@ -92,6 +94,7 @@ class TeamsCreation extends React.Component {
 		const {
 			errors,
 		} = this.state;
+
 		return (
 			<>
 				<h1> Create Custom Season</h1><br /><br />
@@ -134,15 +137,18 @@ class TeamsCreation extends React.Component {
 						</div>
 					</div>
 
-					<div className="form-group col-12">
-						<button type="submit" className="btn  btn-block btn-light">Create Season</button>
+					<div className="form-group col-12 ">
+						<button type="submit" className="btn  btn-block btn-light ">Create Season</button>
 					</div>
 
 				</form>
-
+				<img src={Wrigley} alt="Wrigley Field" height="600" width="1066"></img>
 			</>
 		);
 	}
 }
+
+TeamsCreation.contextType = AuthContext;
+
 export default withRouter(TeamsCreation);
 

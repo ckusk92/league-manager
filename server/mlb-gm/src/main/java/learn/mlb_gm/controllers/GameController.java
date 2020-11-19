@@ -36,7 +36,7 @@ public class GameController {
 
     @GetMapping("/schedule/{userId}")
     public ResponseEntity<List<GameWithTeam>> getSchedule(@PathVariable int userId) {
-        List<GameWithTeam> schedule = service.getSchedule();
+        List<GameWithTeam> schedule = service.getSchedule(userId);
         if(schedule.size() == 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -45,7 +45,7 @@ public class GameController {
 
     @GetMapping("/schedule/{userId}/gamesremaining")
     public int gamesRemaining(@PathVariable int userId) {
-        return service.gamesRemaining();
+        return service.gamesRemaining(userId);
     }
 
     @GetMapping("/{gameId}")

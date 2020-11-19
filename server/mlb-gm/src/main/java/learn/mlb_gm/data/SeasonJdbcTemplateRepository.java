@@ -14,7 +14,6 @@ public class SeasonJdbcTemplateRepository implements SeasonRepository{
 
     @Override
     public void startNewLeague(int userId) {
-        userId = 1;
         final String sql = "delete g from game g " +
                 "inner join user_team ut on g.home_team_id = ut.user_team_id " +
                 "where ut.app_user_id = ?; ";
@@ -35,8 +34,11 @@ public class SeasonJdbcTemplateRepository implements SeasonRepository{
     }
 
     @Override
-    public void startNewSeason(int userId) {
-        userId = 1;
+    public int startNewSeason(int userId) {
+//        final String countSql = "select g from game g " +
+//                "inner join user_team ut on g.home_team_id = ut.user_team_id " +
+//                "where ut.app_user_id = ?; ";
+
         final String sql = "delete g from game g " +
                 "inner join user_team ut on g.home_team_id = ut.user_team_id " +
                 "where ut.app_user_id = ?; ";
@@ -46,5 +48,8 @@ public class SeasonJdbcTemplateRepository implements SeasonRepository{
                 "inner join user_team ut on r.user_team_id = ut.user_team_id " +
                 "where ut.app_user_id = ?; ";
         jdbcTemplate.update(sql2, userId);
+
+        // Eventually return number of games
+        return 1;
     }
 }

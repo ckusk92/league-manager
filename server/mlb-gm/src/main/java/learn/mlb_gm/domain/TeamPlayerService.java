@@ -35,7 +35,17 @@ public class TeamPlayerService {
 
     public List<TeamPlayer> findAllByTeam(int userTeamId) {return repository.findAllForTeam(userTeamId);}
 
-    public List<Player> getRoster(int userTeamId) {
+    public List<Player> getRoster(int userId) {
+
+        List<UserTeam> userTeams = userTeamRepository.findAllByUser(userId);
+
+        int userTeamId = 0;
+        for(UserTeam userTeam: userTeams) {
+            if(userTeam.isUserControlled()) {
+                userTeamId = userTeam.getUserTeamId();
+            }
+        }
+
         List<TeamPlayer> teamPlayers = repository.findAllForTeam(userTeamId);
         List<Player> players = new ArrayList<>();
         for(TeamPlayer teamPlayer : teamPlayers) {
@@ -65,61 +75,15 @@ public class TeamPlayerService {
         return result;
     }
 
-//    public Result<TeamPlayer> draft(TeamPlayer teamPlayer) {
-//        int userId = 1;
-//        Random random = new Random();
-//
-//        Result<TeamPlayer> result = validate(teamPlayer);
-//
-////        if(teamPlayer.getTeamPlayerId() == 0) {
-////            result.addMessage("Must select player", ResultType.INVALID);
-////            return result;
-////        }
-//
-//        if(!result.isSuccess()) {
-//            return result;
-//        }
-//
-//        // Add user selected player to users team if passes validation
-//        teamPlayer = repository.add(teamPlayer);
-//        result.setPayload(teamPlayer);
-//
-//        //CPU teams to draft players
-//        List<UserTeam> teams = userTeamRepository.findAllByUser(userId);
-//
-//        for(UserTeam team : teams) {
-//            if(!team.isUserControlled()) {
-//                // Refresh list every time
-//                List<Player> freeAgents = playerRepository.findFreeAgents();
-//
-//                Result<TeamPlayer> draftResult = new Result<>();
-//                draftResult.setType(ResultType.INVALID);
-//
-//                boolean validPick = false;
-//                boolean positionFree = true;
-//                while(!validPick) {
-//                    int i = random.nextInt(freeAgents.size());
-//                    for(Player onRoster : repository.findAllPlayersForTeam(team.getUserTeamId())) {
-//                        positionFree = true;
-//                        if (freeAgents.get(i).getPosition() == onRoster.getPosition()) {
-//                            positionFree = false;
-//                        }
-//                    }
-//                    if(positionFree) {
-//                        draftResult = add(new TeamPlayer(team.getUserTeamId(), freeAgents.get(i).getPlayerId()));
-//                        if (draftResult.isSuccess()) {
-//                            validPick = true;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return result;
-//    }
-
-    public List<TeamPlayerInfo> draft(TeamPlayer teamPlayer) {
-        int userId = 1;
+    public List<TeamPlayerInfo> draft(TeamPlayer teamPlayer, int userId) {
         Random random = new Random();
+
+        List<UserTeam> userTeams = userTeamRepository.findAllByUser(userId);
+        for(UserTeam userTeam: userTeams) {
+            if(userTeam.isUserControlled()) {
+                teamPlayer.setUserTeamId(userTeam.getUserTeamId());
+            }
+        }
 
         List<TeamPlayerInfo> draftedPlayers = new ArrayList<>();
 
@@ -190,11 +154,20 @@ public class TeamPlayerService {
         return draftedPlayers;
     }
 
-    public void sign(TeamPlayer teamPlayer) {
-        int userId = 1;
+    public void sign(TeamPlayer teamPlayer, int userId) {
+
+        int userTeamId = 0;
+        List<UserTeam> userTeams = userTeamRepository.findAllByUser(userId);
+        for(UserTeam userTeam: userTeams) {
+            if(userTeam.isUserControlled()) {
+                userTeamId = userTeam.getUserTeamId();
+            }
+        }
+
         Position faPosition = playerRepository.findById(teamPlayer.getPlayerId()).getPosition();
         List<Player> roster = getRoster(userId);
-        List<TeamPlayer> teamRoster = findAllByTeam(userId);
+        // NEEDS USERTEAMID
+        List<TeamPlayer> teamRoster = findAllByTeam(userTeamId);
 
         for(Player player : roster) {
             if(player.getPosition() == faPosition) {
@@ -209,7 +182,7 @@ public class TeamPlayerService {
         }
 
         // Not sure if rating will be accurate...
-        TeamPlayer newPlayer = new TeamPlayer(userId, teamPlayer.getPlayerId(), teamPlayer.getRating());
+        TeamPlayer newPlayer = new TeamPlayer(userTeamId, teamPlayer.getPlayerId(), teamPlayer.getRating());
         repository.add(newPlayer);
     }
 

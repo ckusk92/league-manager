@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -39,7 +40,8 @@ public class UserTeamController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<UserTeam> findAllForUser(@PathVariable int userId) {
+    public List<UserTeam> findAllForUser(@PathVariable int userId, Principal principal) {
+        String userName = principal.getName();
         List<UserTeam> allForUser = service.findAllForUser(userId);
         return allForUser;
     }
@@ -58,7 +60,8 @@ public class UserTeamController {
     public void initiateUserTeams(@RequestBody InitInfo initInfo) {
         service.initiateUserTeams(initInfo);
         // 1 will be swapped with userId passed in initInfo later
-        gameService.createSchedule(service.findAllForUser(1), initInfo.getNumberOfGames());
+        //gameService.createSchedule(service.findAllForUser(1), initInfo.getNumberOfGames());
+        gameService.createSchedule(service.findAllForUser(initInfo.getUserId()), initInfo.getNumberOfGames());
     }
 
 

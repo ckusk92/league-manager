@@ -28,7 +28,7 @@ public class GameJdbcTemplateRepository implements GameRepository {
     }
 
     @Override
-    public List<Game> findAllForUserInOrderOfGame(int userId) {
+    public List<Game> findAllForUserInOrderOfGame(int userId, int userTeamId) {
         final String sql = "select g.game_id, g.home_team_id, g.away_team_id, g.game_number, g.home_score, g.away_score, g.played from " +
                 "game g inner join user_team ut on g.home_team_id = ut.user_team_id or g.away_team_id = ut.user_team_id " +
                 "where ut.app_user_id = ? and ut.user_controlled = 1 " +

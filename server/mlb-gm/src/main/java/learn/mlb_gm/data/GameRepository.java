@@ -8,7 +8,7 @@ public interface GameRepository {
 
     public List<Game> findAll();
 
-    public List<Game> findAllForUserInOrderOfGame(int userId);
+    public List<Game> findAllForUserInOrderOfGame(int userId, int userTeamId);
 
    // public List<GameWithTeam> findAllForUserInOrderOfGameWithTeam(int userId);
 

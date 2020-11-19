@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 public class JwtConverter {
     private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final String ISSUER = "todos";
+    private final String ISSUER = "mlb-gm";
     private final int EXPIRATION_MINUTES = 15;
     private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
 

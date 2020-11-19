@@ -4,6 +4,6 @@ public interface SeasonRepository {
 
     public void startNewLeague(int userId);
 
-    public void startNewSeason(int userId);
+    public int startNewSeason(int userId);
 
 }

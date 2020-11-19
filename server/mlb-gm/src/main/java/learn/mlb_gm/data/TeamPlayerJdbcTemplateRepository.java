@@ -66,15 +66,16 @@ public class TeamPlayerJdbcTemplateRepository implements TeamPlayerRepository {
         final String playerQuery = "select player_id, first_name, last_name, position_id, rating from player where player_id = ?";
         Player player = jdbcTemplate.query(playerQuery, new PlayerMapper(), teamPlayer.getPlayerId()).stream().findFirst().orElse(null);
 
-        final String sql = "insert into team_player (team_player_id, user_team_id, player_id, rating) values (?, ?, ?, ?);";
+        //final String sql = "insert into team_player (team_player_id, user_team_id, player_id, rating) values (?, ?, ?, ?);";
+        final String sql = "insert into team_player (user_team_id, player_id, rating) values (?, ?, ?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, teamPlayer.getTeamPlayerId());
-            ps.setInt(2, teamPlayer.getUserTeamId());
-            ps.setInt(3, teamPlayer.getPlayerId());
-            ps.setInt(4, player.getRating());
+           // ps.setInt(1, teamPlayer.getTeamPlayerId());
+            ps.setInt(1, teamPlayer.getUserTeamId());
+            ps.setInt(2, teamPlayer.getPlayerId());
+            ps.setInt(3, player.getRating());
             return ps;
         }, keyHolder);
         if(rowsAffected <= 0) {

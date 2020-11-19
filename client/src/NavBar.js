@@ -35,7 +35,8 @@ export default function NavBar() {
       {auth.user && (
         <div>
           <p>Hello {auth.user.username}!</p>
-          <button onClick={() => auth.logout()}>Logout</button>
+          <button className="btn" onClick={() => auth.logout()}>Logout</button>
+          <br /><br />
         </div>
       )}
     </nav>
