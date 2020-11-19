@@ -43,7 +43,7 @@ public class GameService {
                userTeamId = userTeam.getUserTeamId();
             }
         }
-
+        // Problem likely here
         List<Game> orderedAll = repository.findAllForUserInOrderOfGame(userId, userTeamId);
         List<GameWithTeam> schedule = new ArrayList<>();
 

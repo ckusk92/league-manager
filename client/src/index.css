@@ -15,6 +15,10 @@ body {
     background: #30475e;
 }
 
+li {
+    color: #222831;
+}
+
 .btn {
     background: #30475e;
     color:#f05454;
