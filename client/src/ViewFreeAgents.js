@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router";
+import AuthContext from './AuthContext';
 
 class ViewFreeAgents extends React.Component {
     constructor() {
@@ -32,7 +33,7 @@ class ViewFreeAgents extends React.Component {
     };
 
     getUserTeamPlayers = () => {
-        fetch("http://localhost:8080/teamplayer/roster/1")
+        fetch(`http://localhost:8080/teamplayer/roster/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -53,7 +54,7 @@ class ViewFreeAgents extends React.Component {
     }
 
     signPlayerHandler = (event) => {
-        fetch(`http://localhost:8080/teamplayer/sign`, {
+        fetch(`http://localhost:8080/teamplayer/sign/${this.context.user.appUserId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -131,5 +132,7 @@ class ViewFreeAgents extends React.Component {
         );
     }
 }
+
+ViewFreeAgents.contextType = AuthContext;
 export default withRouter(ViewFreeAgents);
 

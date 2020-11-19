@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router";
-
+import AuthContext from './AuthContext';
 
 class ViewSchedule extends React.Component {
 
@@ -9,27 +9,23 @@ class ViewSchedule extends React.Component {
         this.state = {
             schedules: [],
         }
-
     }
 
     getSchedule = () => {
-        fetch("http://localhost:8080/game/schedule/1")
+        fetch(`http://localhost:8080/game/schedule/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
                     schedules: data,
                 })
-            });
-    };
-
+            })
+    }
 
     componentDidMount() {
         this.getSchedule();
     }
 
-
     render() {
-
         return (
             <>
                 <h2 className="text-danger text-center">Season Schedule</h2>
@@ -84,4 +80,5 @@ class ViewSchedule extends React.Component {
     };
 }
 
+ViewSchedule.contextType = AuthContext;
 export default withRouter(ViewSchedule);

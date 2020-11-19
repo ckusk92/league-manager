@@ -15,6 +15,8 @@ public class InitInfo {
 
     private int userTeamChoiceId;
 
+    private int userId;
+
     public int getNumberOfTeams() {
         return numberOfTeams;
     }
@@ -37,5 +39,13 @@ public class InitInfo {
 
     public void setUserTeamChoiceId(int userTeamChoiceId) {
         this.userTeamChoiceId = userTeamChoiceId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

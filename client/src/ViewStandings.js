@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router";
-
+import AuthContext from './AuthContext';
 
 class ViewStandings extends React.Component {
 
@@ -13,22 +13,18 @@ class ViewStandings extends React.Component {
     }
 
     getStandings = () => {
-        fetch("http://localhost:8080/record/standings")
+        fetch(`http://localhost:8080/record/standings/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
                     records: data,
                 })
-            });
+            }); 
     };
-
 
     componentDidMount() {
         this.getStandings();
     }
-
-
-
 
     render() {
 
@@ -58,11 +54,12 @@ class ViewStandings extends React.Component {
                     onClick={() => { this.props.history.push("/PlaySeason") }}>
                     Season's Page
                 </button>
-
+                <br />
             </>
 
         )
     };
 }
 
+ViewStandings.contextType = AuthContext;
 export default withRouter(ViewStandings);

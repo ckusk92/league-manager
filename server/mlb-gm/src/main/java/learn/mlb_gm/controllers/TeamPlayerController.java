@@ -37,9 +37,15 @@ public class TeamPlayerController {
         return allForTeam;
     }
 
-    @GetMapping("/roster/{userTeamId}")
-    public List<Player> getRoster(@PathVariable int userTeamId) {
-        List<Player> roster = service.getRoster(userTeamId);
+//    @GetMapping("/roster/{userTeamId}")
+//    public List<Player> getRoster(@PathVariable int userTeamId) {
+//        List<Player> roster = service.getRoster(userTeamId);
+//        return roster;
+//    }
+
+    @GetMapping("/roster/{userId}")
+    public List<Player> getRoster(@PathVariable int userId) {
+        List<Player> roster = service.getRoster(userId);
         return roster;
     }
 
@@ -51,8 +57,6 @@ public class TeamPlayerController {
         }
         return ResponseEntity.ok(teamPlayer);
     }
-
-    @GetMapping("/")
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody TeamPlayer teamPlayer) {
@@ -76,14 +80,14 @@ public class TeamPlayerController {
 //        return ErrorResponse.build(result);
 //    }
 
-    @PostMapping("/draft")
-    public List<TeamPlayerInfo> draft(@RequestBody TeamPlayer teamPlayer) {
-        return service.draft(teamPlayer);
+    @PostMapping("/draft/{userId}")
+    public List<TeamPlayerInfo> draft(@RequestBody TeamPlayer teamPlayer, @PathVariable int userId) {
+        return service.draft(teamPlayer, userId);
     }
 
-    @PostMapping("/sign")
-    public void sign(@RequestBody TeamPlayer teamPlayer) {
-        service.sign(teamPlayer);
+    @PostMapping("/sign/{userId}")
+    public void sign(@RequestBody TeamPlayer teamPlayer, @PathVariable int userId) {
+        service.sign(teamPlayer, userId);
     }
 
 

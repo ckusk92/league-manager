@@ -9,7 +9,7 @@ public interface RecordRepository {
 
     public List<Record> findAll();
 
-    public List<RecordWithTeam> getStandings();
+    public List<RecordWithTeam> getStandings(int userId);
 
     public Record findForTeam(int userTeamId);
 

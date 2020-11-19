@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router";
+import AuthContext from './AuthContext';
 
 class Draft extends React.Component {
     constructor() {
@@ -27,13 +28,12 @@ class Draft extends React.Component {
             .then((data) => {
                 this.setState({
                     freeAgents: data,
-                    //playerId: data[0].playerId,
                 })
             });
     };
 
     getUserTeamPlayers = () => {
-        fetch("http://localhost:8080/teamplayer/roster/1")
+        fetch(`http://localhost:8080/teamplayer/roster/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -56,7 +56,7 @@ class Draft extends React.Component {
     }
 
     draftPlayerHandler = (event) => {
-        fetch(`http://localhost:8080/teamplayer/draft`, {
+        fetch(`http://localhost:8080/teamplayer/draft/${this.context.user.appUserId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -164,5 +164,7 @@ class Draft extends React.Component {
         );
     }
 }
+
+Draft.contextType = AuthContext;
 export default withRouter(Draft);
 

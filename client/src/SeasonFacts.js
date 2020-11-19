@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router";
+import AuthContext from './AuthContext';
 
 class SeasonFacts extends React.Component {
 
@@ -22,17 +23,21 @@ class SeasonFacts extends React.Component {
     }
 
     startNewSeasonOnClickHandler = () => {
-        fetch("http://localhost:8080/season/newseason/1");
+        fetch(`http://localhost:8080/season/newseason/${this.context.user.appUserId}`)
+            .then(response => response.json())
+            .then(data => console.log(data));
         this.props.history.push("/PlaySeason");
     }
 
     startNewLeaugeOnClickHandler = () => {
-        fetch("http://localhost:8080/season/newLeague/1");
+        fetch(`http://localhost:8080/season/newleague/${this.context.user.appUserId}`)
+            .then(response => response.json())
+            .then(data => console.log(data));
         this.props.history.push("/TeamsCreation");
     }
 
     getSchedule = () => {
-        fetch("http://localhost:8080/game/schedule/1")
+        fetch(`http://localhost:8080/game/schedule/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -43,7 +48,7 @@ class SeasonFacts extends React.Component {
 
 
     getStandings = () => {
-        fetch("http://localhost:8080/record/standings")
+        fetch(`http://localhost:8080/record/standings/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -78,7 +83,7 @@ class SeasonFacts extends React.Component {
 
                 <h2 className="text-center font-weight-bold text-danger">Your Season Results</h2><br />
                 <table className="table table-striped">
-                    <thead class="thead-dark">
+                    <thead className="thead-dark">
                         <tr>
                             <th scope="col">Game#</th>
                             <th scope="col">Home Team</th>
@@ -131,5 +136,6 @@ class SeasonFacts extends React.Component {
     }
 }
 
+SeasonFacts.contextType = AuthContext;
 export default withRouter(SeasonFacts);
 
