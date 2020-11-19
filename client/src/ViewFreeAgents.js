@@ -23,7 +23,7 @@ class ViewFreeAgents extends React.Component {
 
 
     getfreeAgents = () => {
-        fetch("http://localhost:8080/player/freeagents")
+        fetch(`http://localhost:8080/player/freeagents/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({

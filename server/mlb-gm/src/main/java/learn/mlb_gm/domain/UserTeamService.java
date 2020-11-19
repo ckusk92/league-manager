@@ -113,8 +113,8 @@ public class UserTeamService {
 //        }
 
         for(int i = 1; i < initInfo.getNumberOfTeams(); i++) {
-            repository.add(new UserTeam(initInfo.getUserId(), teamIds.get(i), false, 50));
-            recordRepository.add(new Record(i + 1, 0, 0));
+            UserTeam userTeam = repository.add(new UserTeam(initInfo.getUserId(), teamIds.get(i), false, 50));
+            recordRepository.add(new Record(userTeam.getUserTeamId(), 0, 0));
         }
     }
 

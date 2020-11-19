@@ -35,17 +35,19 @@ public class PlayerJdbcTemplateRepository implements PlayerRepository {
     }
 
     @Override
-    public List<Player> findAllActive() {
+    public List<Player> findAllActive(int userId) {
         final String sql = "select p.player_id, p.first_name, p.last_name, p.position_id, p.rating from player p " +
-                "inner join team_player tp on p.player_id = tp.player_id;";
-        return jdbcTemplate.query(sql, new PlayerMapper());
+                "inner join team_player tp on p.player_id = tp.player_id " +
+                "inner join user_team ut on tp.user_team_id = ut.user_team_id " +
+                "where ut.app_user_id = ?";
+        return jdbcTemplate.query(sql, new PlayerMapper(), userId);
     }
 
     @Override
-    public List<Player> findFreeAgents() {
+    public List<Player> findFreeAgents(int userId) {
 
         List<Player> all = findAll();
-        List<Player> active = findAllActive();
+        List<Player> active = findAllActive(userId);
         List<Player> freeAgents = new ArrayList<>();
 
         for(Player player : all) {

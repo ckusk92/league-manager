@@ -115,7 +115,7 @@ public class TeamPlayerService {
         for(UserTeam team : teams) {
             if(!team.isUserControlled()) {
                 // Refresh list every time
-                List<Player> freeAgents = playerRepository.findFreeAgents();
+                List<Player> freeAgents = playerRepository.findFreeAgents(userId);
 
                 Result<TeamPlayer> draftResult = new Result<>();
                 draftResult.setType(ResultType.INVALID);

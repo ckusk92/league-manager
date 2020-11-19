@@ -68,8 +68,9 @@ public class GameController {
     }
 
     @GetMapping("/simseason")
-    public void simulateSeason() {
+    public int simulateSeason() {
         service.simulateSeason();
+        return 1;
     }
 
     @PostMapping

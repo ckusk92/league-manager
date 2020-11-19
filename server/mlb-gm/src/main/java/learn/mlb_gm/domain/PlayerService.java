@@ -2,7 +2,9 @@ package learn.mlb_gm.domain;
 
 import learn.mlb_gm.data.PlayerRepository;
 import learn.mlb_gm.data.TeamPlayerRepository;
+import learn.mlb_gm.data.UserTeamRepository;
 import learn.mlb_gm.models.Player;
+import learn.mlb_gm.models.UserTeam;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,20 +15,33 @@ public class PlayerService {
 
     private final PlayerRepository repository;
     private final TeamPlayerRepository teamPlayerRepository;
+    private final UserTeamRepository userTeamRepository;
 
-    public PlayerService(PlayerRepository repository, TeamPlayerRepository teamPlayerRepository) {
+    public PlayerService(PlayerRepository repository, TeamPlayerRepository teamPlayerRepository, UserTeamRepository userTeamRepository) {
         this.repository = repository;
         this.teamPlayerRepository = teamPlayerRepository;
+        this.userTeamRepository = userTeamRepository;
     }
 
     public List<Player> findAll() { return repository.findAll(); }
 
-    public List<Player> findFreeAgents() {return repository.findFreeAgents();}
+    public List<Player> findFreeAgents(int userId) {return repository.findFreeAgents(userId);}
 
-    public List<Player> findSelectableFreeAgents() {
-            int userId = 1;
-            List<Player> allFreeAgents = repository.findFreeAgents();
-            List<Player> currentTeam = teamPlayerRepository.findAllPlayersForTeam(userId);
+    public List<Player> findSelectableFreeAgents(int userId) {
+            List<Player> allFreeAgents = repository.findFreeAgents(userId);
+
+            // Need userTEAMID, NOT USER TEAM
+
+            // Finds userTeamId associated with userId
+            int userTeamId = 0;
+            List<UserTeam> userTeams = userTeamRepository.findAllByUser(userId);
+            for(UserTeam userTeam: userTeams) {
+                if(userTeam.isUserControlled()) {
+                    userTeamId = userTeam.getUserTeamId();
+                }
+            }
+
+            List<Player> currentTeam = teamPlayerRepository.findAllPlayersForTeam(userTeamId);
             List<Player> selectableFreeAgents = new ArrayList<>();
 
             for(Player fa : allFreeAgents) {

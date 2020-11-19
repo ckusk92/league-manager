@@ -24,11 +24,11 @@ public class PlayerController {
         return service.findAll();
     }
 
-    @GetMapping("/freeagents")
-    public List<Player> findFreeAgents() {return service.findFreeAgents();}
+    @GetMapping("/freeagents/{userId}")
+    public List<Player> findFreeAgents(@PathVariable int userId) {return service.findFreeAgents(userId);}
 
-    @GetMapping("/selectablefreeagents")
-    public List<Player> findSelectableFreeAgents() {return service.findSelectableFreeAgents();}
+    @GetMapping("/selectablefreeagents/{userId}")
+    public List<Player> findSelectableFreeAgents(@PathVariable int userId) {return service.findSelectableFreeAgents(userId);}
 
     @GetMapping("/{playerId}")
     public ResponseEntity<Player> findById(@PathVariable int playerId) {
