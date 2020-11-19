@@ -44,8 +44,14 @@ public class SeasonJdbcTemplateRepository implements SeasonRepository{
                 "where ut.app_user_id = ?; ";
         jdbcTemplate.update(sql, userId);
 
-        final String sql2 =  "delete r from record r " +
+//        final String sql2 =  "delete r from record r " +
+//                "inner join user_team ut on r.user_team_id = ut.user_team_id " +
+//                "where ut.app_user_id = ?; ";
+//        jdbcTemplate.update(sql2, userId);
+
+        final String sql2 =  "update record r " +
                 "inner join user_team ut on r.user_team_id = ut.user_team_id " +
+                "set win = 0, loss = 0 " +
                 "where ut.app_user_id = ?; ";
         jdbcTemplate.update(sql2, userId);
 
