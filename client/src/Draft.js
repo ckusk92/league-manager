@@ -138,7 +138,7 @@ class Draft extends React.Component {
                         {this.state.teamPlayers.map(teamPlayer => (
                             <li
                                 key={teamPlayer.playerId}
-                                className="list-group-item list-group-item-light">
+                                className="list-group-item">
                                 {teamPlayer.firstName + ' ' + teamPlayer.lastName + ', ' + teamPlayer.position + '  Rating: ' + teamPlayer.rating}
                             </li>
                         ))}
