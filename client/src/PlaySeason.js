@@ -47,12 +47,8 @@ class PlaySeason extends React.Component {
     simSeason = () => {
         fetch("http://localhost:8080/game/simseason")
             .then((response) => response.json())
-            .then((data) => {
-                this.setState({
-                    games: data,
-                });
-                this.props.history.push("/SeasonFacts")
-            })
+            .then(data => console.log(data));
+            this.props.history.push("/SeasonFacts")            
     }
 
     render() {
