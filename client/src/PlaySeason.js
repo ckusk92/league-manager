@@ -29,7 +29,7 @@ class PlaySeason extends React.Component {
     }
 
     simGame = () => {
-        if (this.state.numGames <= 1) {
+        if (this.state.numGames < 1) {
             this.props.history.push("/SeasonFacts")
         }
         fetch("http://localhost:8080/game/simgame")
