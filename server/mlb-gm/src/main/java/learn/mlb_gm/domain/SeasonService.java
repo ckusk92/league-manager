@@ -16,8 +16,8 @@ public class SeasonService {
         repository.startNewLeague(userId);
     }
 
-    public void startNewSeason(int userId) {
-        repository.startNewSeason(userId);
+    public int startNewSeason(int userId) {
+        return repository.startNewSeason(userId);
     }
 
 }

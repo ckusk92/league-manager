@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import AuthContext from './AuthContext';
 import Errors from './Errors';
 
-export default function Login() {
+export default function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
@@ -15,7 +15,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch('http://localhost:8080/authenticate', {
+    const response = await fetch('http://localhost:8080/create_account', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -26,18 +26,18 @@ export default function Login() {
       })
     });
     
-    if (response.status === 200) {
-     const { jwt_token } = await response.json();
+    if (response.status === 201) {
+     //const { jwt_token } = await response.json();
     
     //   {
     //     "jwt_token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjYWxvcmllLXRyYWNrZXIiLCJzdWIiOiJzbWFzaGRldjUiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYwNTIzNDczNH0.nwWJtPYhD1WlZA9mGo4n5U0UQ3rEW_kulilO2dEg7jo"
     //   }
     
-      auth.login(jwt_token);
+      //auth.login(jwt_token);
     
-      history.push('/');
-    } else if (response.status === 403) {
-      setErrors(['Login failed.']);
+      history.push('/login');
+    } else if (response.status === 400) {
+      setErrors(['Registration failed.']);
     } else {
       setErrors(['Unknown error.']);
     }
@@ -45,7 +45,7 @@ export default function Login() {
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2>Register</h2>
       <Errors errors={errors} />
       <form onSubmit={handleSubmit}>
         <div>
@@ -58,8 +58,7 @@ export default function Login() {
         </div>
         <br />
         <div>
-          <button className="btn" type="submit">Login</button>
-          <Link to="/register"> I don't have an account</Link>
+          <button className="btn" type="submit">Register</button>
         </div>
         <br />
       </form>

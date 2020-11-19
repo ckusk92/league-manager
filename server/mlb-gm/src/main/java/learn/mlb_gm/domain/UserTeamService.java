@@ -30,8 +30,8 @@ public class UserTeamService {
         return repository.findAll();
     }
 
-    public UserTeam findById(int userTeamId) {
-        return repository.findById(userTeamId);
+    public UserTeam findById(int userId) {
+        return repository.findById(userId);
     }
 
     public List<UserTeam> findAllForUser(int userTeamId) {
@@ -80,7 +80,9 @@ public class UserTeamService {
 
 
     public void initiateUserTeams(InitInfo initInfo) {
+        System.out.println(initInfo.getUserId());
         Random random = new Random();
+        int userId = 1;
 
         //TODO Use userId in repo.add statements
 
@@ -99,11 +101,19 @@ public class UserTeamService {
         // WILL NEED TO CHANGE WHEN MULTIPLE USERS
         // RECORD NEEDS TO REFLECT USER TEAM ID
 
-        repository.add(new UserTeam(1, teamIds.get(0), true, 50));
-        recordRepository.add(new Record(1, 0, 0));
+//        repository.add(new UserTeam(1, teamIds.get(0), true, 50));
+//        recordRepository.add(new Record(1, 0, 0));
+
+        UserTeam usersTeam = repository.add(new UserTeam(initInfo.getUserId(), teamIds.get(0), true, 50));
+        recordRepository.add(new Record(usersTeam.getUserTeamId(), 0, 0));
+
+//        for(int i = 1; i < initInfo.getNumberOfTeams(); i++) {
+//            repository.add(new UserTeam(1, teamIds.get(i), false, 50));
+//            recordRepository.add(new Record(i + 1, 0, 0));
+//        }
 
         for(int i = 1; i < initInfo.getNumberOfTeams(); i++) {
-            repository.add(new UserTeam(1, teamIds.get(i), false, 50));
+            repository.add(new UserTeam(initInfo.getUserId(), teamIds.get(i), false, 50));
             recordRepository.add(new Record(i + 1, 0, 0));
         }
     }

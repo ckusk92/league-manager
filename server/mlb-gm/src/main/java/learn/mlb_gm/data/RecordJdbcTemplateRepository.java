@@ -27,12 +27,13 @@ public class RecordJdbcTemplateRepository implements RecordRepository {
     }
 
     @Override
-    public List<RecordWithTeam> getStandings() {
+    public List<RecordWithTeam> getStandings(int userId) {
         final String sql = "select t.name, r.win, r.loss from record r " +
                 "inner join user_team ut on r.user_team_id = ut.user_team_id " +
                 "inner join team t on ut.team_id = t.team_id " +
+                "where ut.app_user_id = ? " +
                 "order by r.win desc";
-        return jdbcTemplate.query(sql, new RecordWithTeamMapper());
+        return jdbcTemplate.query(sql, new RecordWithTeamMapper(), userId);
     }
 
     @Override

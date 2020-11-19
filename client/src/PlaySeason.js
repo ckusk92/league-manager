@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router";
+import AuthContext from './AuthContext';
 
 class PlaySeason extends React.Component {
     constructor() {
@@ -9,7 +10,6 @@ class PlaySeason extends React.Component {
             numGames: '',
             homeTeam: '',
             awayTeam: '',
-            useless: '',
         }
 
     };
@@ -19,7 +19,7 @@ class PlaySeason extends React.Component {
     }
 
     getRemainingGames = () => {
-        fetch("http://localhost:8080/game/schedule/1/gamesremaining")
+        fetch(`http://localhost:8080/game/schedule/${this.context.user.appUserId}/gamesremaining`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -75,7 +75,7 @@ class PlaySeason extends React.Component {
                     </div><br /><br />
                     <div className="form-group-row">
                         <button onClick={() => { this.simGame() }} className="btn btn-dark btn-block" type="button">
-                            Simulate One Game <span class="badge badge-pill">{this.state.numGames + ' remaining'}</span>
+                            Simulate One Game <span className="badge badge-pill">{this.state.numGames + ' remaining'}</span>
                         </button>
                     </div><br /><br />
                     <div className="form-group-row">
@@ -103,4 +103,5 @@ class PlaySeason extends React.Component {
     }
 }
 
+PlaySeason.contextType = AuthContext;
 export default withRouter(PlaySeason);

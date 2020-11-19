@@ -12,6 +12,8 @@ import SeasonFacts from './SeasonFacts';
 import ViewFreeAgents from './ViewFreeAgents';
 import Login from './Login'
 import AuthContext from './AuthContext';
+import NavBar from './NavBar';
+import Register from './Register'
 
 import {
   BrowserRouter as Router,
@@ -70,32 +72,49 @@ function App() {
   return (
     <AuthContext.Provider value={auth}>
       <Router>
-        <Switch>
-          <Route path="/SeasonFacts">
-            <SeasonFacts />
-          </Route>
-          <Route path="/PlaySeason">
-            <PlaySeason />
-          </Route>
-          <Route path="/ViewSchedule">
-            <ViewSchedule />
-          </Route>
-          <Route path="/ViewStandings">
-            <ViewStandings />
-          </Route>
-          <Route path="/ViewFreeAgents">
-            <ViewFreeAgents />
-          </Route>
-          <Route path="/draft">
-            <Draft />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/">
-            <TeamsCreation />
-          </Route>
-        </Switch>
+        <div>
+          <NavBar />        
+          <Switch>
+            <Route path="/SeasonFacts">
+              <SeasonFacts />
+            </Route>
+            <Route path="/PlaySeason">
+              {user ? (
+              <PlaySeason />
+              ) : (
+                <Redirect to="/login" /> 
+              )}
+            </Route>
+            <Route path="/ViewSchedule">
+              <ViewSchedule />
+            </Route>
+            <Route path="/ViewStandings">
+              <ViewStandings />
+            </Route>
+            <Route path="/ViewFreeAgents">
+              <ViewFreeAgents />
+            </Route>
+            <Route path="/draft">
+              <Draft />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>            
+            <Route path="/">
+              {user ? (
+              <TeamsCreation/>
+              ) : (
+                <Redirect to="/login" /> 
+              )}
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>        
+          </div>
       </Router>
     </AuthContext.Provider>
   );

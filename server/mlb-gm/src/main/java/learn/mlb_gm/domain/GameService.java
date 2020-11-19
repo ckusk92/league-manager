@@ -33,18 +33,18 @@ public class GameService {
         return repository.findAll();
     }
 
-    public List<GameWithTeam> getSchedule() {
-//        List<Game> all = repository.findAll();
-//        List<Game> orderedAll = new ArrayList<>();
-//        // Loops through and gets games with game# 1 -> size in order
-//        for(int i = 0; i < all.size(); i++) {
-//            if(all.get(i).getGameNumber() == i + 1 && !orderedAll.contains(all.get(i))) {
-//                orderedAll.add(all.get(i));
-//            }
-//        }
-        // Hardcoded, will change later
-        int userId = 1;
-        List<Game> orderedAll = repository.findAllForUserInOrderOfGame(userId);
+    public List<GameWithTeam> getSchedule(int userId) {
+
+        // Finds userTeamId associated with userId
+        int userTeamId = 0;
+        List<UserTeam> userTeams = userTeamRepository.findAllByUser(userId);
+        for(UserTeam userTeam: userTeams) {
+            if(userTeam.isUserControlled()) {
+               userTeamId = userTeam.getUserTeamId();
+            }
+        }
+
+        List<Game> orderedAll = repository.findAllForUserInOrderOfGame(userId, userTeamId);
         List<GameWithTeam> schedule = new ArrayList<>();
 
         for(Game game : orderedAll) {
@@ -80,9 +80,17 @@ public class GameService {
         return schedule;
     }
 
-    public int gamesRemaining() {
-        int userId = 1;
-        List<Game> schedule = repository.findAllForUserInOrderOfGame(userId);
+    public int gamesRemaining(int userId) {
+        int userTeamId = 0;
+        List<UserTeam> userTeams = userTeamRepository.findAllByUser(userId);
+        for(UserTeam userTeam: userTeams) {
+            if(userTeam.isUserControlled()) {
+                userTeamId = userTeam.getUserTeamId();
+            }
+        }
+
+        // THIS IS BROKEN COME FIX THIS NEXT
+        List<Game> schedule = repository.findAllForUserInOrderOfGame(userId, userTeamId);
 
         int gamesPlayed = 0;
         for(Game game : schedule) {
@@ -154,7 +162,8 @@ public class GameService {
 
             // Adds games to schedule for number of games selected, random matchings
             for(int j = 0; j < teamIds.size(); j = j + 2) {
-                repository.add(new Game(1, teamIds.get(j), teamIds.get(j+1), i+1, 0, 0, false));
+                //repository.add(new Game(1, teamIds.get(j), teamIds.get(j+1), i+1, 0, 0, false));
+                repository.add(new Game(teamIds.get(j), teamIds.get(j+1), i+1, 0, 0, false));
             }
         }
     }
