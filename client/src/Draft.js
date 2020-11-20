@@ -23,7 +23,7 @@ class Draft extends React.Component {
     }
 
     getfreeAgents = () => {
-        fetch(`http://localhost:8080/player/selectablefreeagents/${this.context.user.appUserId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/player/selectablefreeagents/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -33,7 +33,7 @@ class Draft extends React.Component {
     };
 
     getUserTeamPlayers = () => {
-        fetch(`http://localhost:8080/teamplayer/roster/${this.context.user.appUserId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/teamplayer/roster/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -56,7 +56,7 @@ class Draft extends React.Component {
     }
 
     draftPlayerHandler = (event) => {
-        fetch(`http://localhost:8080/teamplayer/draft/${this.context.user.appUserId}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/teamplayer/draft/${this.context.user.appUserId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

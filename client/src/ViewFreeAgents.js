@@ -23,7 +23,7 @@ class ViewFreeAgents extends React.Component {
 
 
     getfreeAgents = () => {
-        fetch(`http://localhost:8080/player/freeagents/${this.context.user.appUserId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/player/freeagents/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -33,7 +33,7 @@ class ViewFreeAgents extends React.Component {
     };
 
     getUserTeamPlayers = () => {
-        fetch(`http://localhost:8080/teamplayer/roster/${this.context.user.appUserId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/teamplayer/roster/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -54,7 +54,7 @@ class ViewFreeAgents extends React.Component {
     }
 
     signPlayerHandler = (event) => {
-        fetch(`http://localhost:8080/teamplayer/sign/${this.context.user.appUserId}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/teamplayer/sign/${this.context.user.appUserId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

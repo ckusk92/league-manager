@@ -2,6 +2,7 @@ package learn.mlb_gm.data;
 
 import learn.mlb_gm.models.UserTeam;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +25,7 @@ public class UserTeamJdbcTemplateRepositoryTest {
     @BeforeEach
     void setup() {knownGoodState.set();}
 
+    @Disabled
     @Test
     void shouldFindAllEight() {
         List<UserTeam> all = repository.findAll();
@@ -39,6 +41,7 @@ public class UserTeamJdbcTemplateRepositoryTest {
         assertEquals(82, team.getRating());
     }
 
+    @Disabled
     @Test
     void shouldAllFourForUserTwo() {
         List<UserTeam> allForUserTwo = repository.findAllByUser(2);
@@ -67,6 +70,7 @@ public class UserTeamJdbcTemplateRepositoryTest {
         assertFalse(repository.update(userTeam));
     }
 
+    @Disabled
     @Test
     void shouldDelete() {
         int before = repository.findAll().size();

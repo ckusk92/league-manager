@@ -12,7 +12,7 @@ class ViewSchedule extends React.Component {
     }
 
     getSchedule = () => {
-        fetch(`http://localhost:8080/game/schedule/${this.context.user.appUserId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/game/schedule/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({

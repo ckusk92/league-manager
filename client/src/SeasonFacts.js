@@ -23,21 +23,21 @@ class SeasonFacts extends React.Component {
     }
 
     startNewSeasonOnClickHandler = () => {
-        fetch(`http://localhost:8080/season/newseason/${this.context.user.appUserId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/season/newseason/${this.context.user.appUserId}`)
             .then(response => response.json())
             .then(data => console.log(data));
         this.props.history.push("/PlaySeason");
     }
 
     startNewLeaugeOnClickHandler = () => {
-        fetch(`http://localhost:8080/season/newleague/${this.context.user.appUserId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/season/newleague/${this.context.user.appUserId}`)
             .then(response => response.json())
             .then(data => console.log(data));
         this.props.history.push("/TeamsCreation");
     }
 
     getSchedule = () => {
-        fetch(`http://localhost:8080/game/schedule/${this.context.user.appUserId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/game/schedule/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -48,7 +48,7 @@ class SeasonFacts extends React.Component {
 
 
     getStandings = () => {
-        fetch(`http://localhost:8080/record/standings/${this.context.user.appUserId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/record/standings/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({

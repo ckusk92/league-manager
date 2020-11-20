@@ -5,6 +5,8 @@ import learn.mlb_gm.domain.ResultType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDateTime;
+
 public class ErrorResponse {
 
     public static <T> ResponseEntity<Object> build(Result<T> result) {
@@ -15,5 +17,19 @@ public class ErrorResponse {
             status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(result.getMessages(), status);
+    }
+
+    private final LocalDateTime timestamp = LocalDateTime.now();
+    private final String message;
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+    public String getMessage() {
+        return message;
+    }
+
+    public ErrorResponse(String message) {
+        this.message = message;
     }
 }

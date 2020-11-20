@@ -19,7 +19,7 @@ class PlaySeason extends React.Component {
     }
 
     getRemainingGames = () => {
-        fetch(`http://localhost:8080/game/schedule/${this.context.user.appUserId}/gamesremaining`)
+        fetch(`${process.env.REACT_APP_API_URL}/game/schedule/${this.context.user.appUserId}/gamesremaining`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -32,7 +32,7 @@ class PlaySeason extends React.Component {
         if (this.state.numGames < 1) {
             this.props.history.push("/SeasonFacts")
         }
-        fetch("http://localhost:8080/game/simgame")
+        fetch(`${process.env.REACT_APP_API_URL}/game/simgame`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({
@@ -45,7 +45,7 @@ class PlaySeason extends React.Component {
     }
 
     simSeason = () => {
-        fetch("http://localhost:8080/game/simseason")
+        fetch(`${process.env.REACT_APP_API_URL}/game/simseason`)
             .then((response) => response.json())
             .then(data => console.log(data));
             this.props.history.push("/SeasonFacts")            

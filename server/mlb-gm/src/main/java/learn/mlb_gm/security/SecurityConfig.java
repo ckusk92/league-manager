@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("http://localhost:3000", "http://mlb-gm.s3.us-east-2.amazonaws.com")
                         .allowedMethods("*");
             }
         };

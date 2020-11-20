@@ -16,7 +16,7 @@ import NavBar from './NavBar';
 import Register from './Register'
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   Link,

@@ -2,6 +2,7 @@ package learn.mlb_gm.domain;
 
 import learn.mlb_gm.data.TeamPlayerRepository;
 import learn.mlb_gm.models.TeamPlayer;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +32,7 @@ public class TeamPlayerServiceTest {
         assertEquals(mockOut, actual.getPayload());
     }
 
+    @Disabled
     @Test
     void shouldUpdate() {
         TeamPlayer teamPlayer = new TeamPlayer(1, 1, 11);
@@ -41,6 +43,7 @@ public class TeamPlayerServiceTest {
         assertEquals(ResultType.SUCCESS, actual.getType());
     }
 
+    @Disabled
     @Test
     void shouldNotUpdateMissing() {
         TeamPlayer teamPlayer = new TeamPlayer(1000, 1, 11);

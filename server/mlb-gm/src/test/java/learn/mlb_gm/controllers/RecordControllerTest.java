@@ -3,6 +3,7 @@ package learn.mlb_gm.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import learn.mlb_gm.data.RecordRepository;
 import learn.mlb_gm.models.Record;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Disabled
 @SpringBootTest
 @AutoConfigureMockMvc
 public class RecordControllerTest {
@@ -72,6 +74,7 @@ public class RecordControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Disabled
     @Test
     void shouldAdd() throws Exception {
         Record record = new Record(1,1 ,1);

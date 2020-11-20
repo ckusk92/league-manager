@@ -13,7 +13,7 @@ class ViewStandings extends React.Component {
     }
 
     getStandings = () => {
-        fetch(`http://localhost:8080/record/standings/${this.context.user.appUserId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/record/standings/${this.context.user.appUserId}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({

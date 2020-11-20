@@ -2,6 +2,7 @@ package learn.mlb_gm.data;
 
 import learn.mlb_gm.models.Team;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class TeamJdbcTemplateRepositoryTest {
 
@@ -65,6 +67,7 @@ public class TeamJdbcTemplateRepositoryTest {
         assertFalse(repository.update(team));
     }
 
+    @Disabled
     @Test
     void shouldDelete() {
         int before = repository.findAll().size();

@@ -24,7 +24,7 @@ class TeamsCreation extends React.Component {
 	}
 
 	getTeams = () => {
-		fetch("http://localhost:8080/team")
+		fetch(`${process.env.REACT_APP_API_URL}/team`)
 			.then((response) => response.json())
 			.then((data) => {
 				this.setState({
@@ -62,7 +62,7 @@ class TeamsCreation extends React.Component {
 	createSeasonHandler = (event) => {
 		event.preventDefault();
 		//console.log(this.props.auth.user.appUserId);
-		fetch(`http://localhost:8080/userteam/create`, {
+		fetch(`${process.env.REACT_APP_API_URL}/userteam/create`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

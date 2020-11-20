@@ -3,6 +3,7 @@ package learn.mlb_gm.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import learn.mlb_gm.data.UserTeamRepository;
 import learn.mlb_gm.models.UserTeam;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Disabled
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserTeamControllerTest {
@@ -50,6 +52,7 @@ public class UserTeamControllerTest {
                 .andExpect(content().json(expectedJson));
     }
 
+    @Disabled
     @Test
     void shouldFindAllForUser2() throws Exception {
         List<UserTeam> userTeams = List.of(
